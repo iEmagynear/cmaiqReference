@@ -1,0 +1,77 @@
+<app-header></app-header>
+<div class="Wrraper">
+  <div class="container">
+    <div class="contact" [ngStyle] = "{'height': innerHeight}">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <div class="contact_form">
+            <h3>{{"Sign Out.Contact Us" | translate}}</h3>
+            <form [formGroup]="contactUs" (ngSubmit)="contactUsSubmit()">
+              <div class="form-group" *ngIf="showMsgSuccess">
+                <div class="col-xs-12">
+                  <p class="alert alert-success">
+                    <strong>We have received your message. Thank you!</strong>
+                  </p>
+                </div>
+              </div>
+              <div class="form-group" *ngIf="showMsgError">
+                  <div class="col-xs-12">
+                    <p class="alert alert-danger">
+                      <strong>{{errormsg}}</strong>
+                    </p>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label>{{"Sign Out.Your Name" | translate}}:</label>
+                <input type="text" name="name" formControlName="name" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>{{ "Select MLS" | translate}}:</label>
+                <select name="mlsName" formControlName="mlsName" class="form-control">
+                  <!-- <option value="">--{{ 'Sign Out.Select Default MLS' | translate }}--</option> -->
+                  <option *ngFor="let mls of mlsData" value="{{mls.itemName}}">{{mls.itemName}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>{{"My Account.Company Name" | translate}}:</label>
+                <input type="text" name="companyname" formControlName="companyname" class="form-control">
+              </div>
+              <div class="form-group">
+                  <label>{{"Sign Out.Your Email" | translate}}:</label>
+                  <input type="email" name="email" formControlName="email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>{{"Sign Out.Message" | translate}}:</label>
+                    <textarea name="message" formControlName="message" class="form-control"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" [disabled]="!contactUs.valid">{{"Sign Out.Send Message" | translate}}</button>
+                  </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="contact_Address">
+            <h3>{{"Sign Out.Our Office" | translate}}</h3>
+            <address>
+                <h5>{{ 'Charts.List.Address' | translate }}:</h5>
+                  <h6>401 Seacoast Parkway,<br/>
+                    Mt Pleasant,<br/>
+                    SC 29464</h6>
+            </address>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3352.169531134514!2d-79.8649842846332!3d32.84076268803913!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88fe71da03879439%3A0x9015f15cc5327d30!2s401%20Seacoast%20Pkwy%2C%20Mt%20Pleasant%2C%20SC%2029464%2C%20USA!5e0!3m2!1sen!2sin!4v1571217634349!5m2!1sen!2sin" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loaderWrraper"  *ngIf="loader">
+    <div class="loader">
+      <div class="outCircle">
+        <div class="icon">
+          <i class="pi pi-home"></i>
+        </div>
+      </div>
+    </div>
+    </div>

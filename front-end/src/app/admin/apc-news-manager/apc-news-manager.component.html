@@ -1,0 +1,145 @@
+<div class="Dashboard">
+  <mat-sidenav-container class="Dashboard_Sidenav" autosize>
+
+    <mat-sidenav #sidenav class="Dashboard_Sidenav_Example" [ngClass]="status ? 'slideOn' : 'slideOff'" mode="side"
+      opened="true">
+      <mat-toolbar class="example-toolbar">
+        <mat-icon class="navtoggle" (click)="toggle()">menu</mat-icon>
+        <span class="example-fill-remaining-space"></span>
+      </mat-toolbar>
+      <app-left-sidebar></app-left-sidebar>
+    </mat-sidenav>
+
+    <div class="DashboardTab">
+      <mat-card>
+        <app-admin-header></app-admin-header>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <div class="DashboardLayout">
+            <div class="TopLayout">
+              <div class="row no-gutters">
+                <div class="col-12 m-auto">
+                  <div class="Searchwrp">
+                    <div class="Search-sm-12">
+                      <div class="Searchdropdown float-left">
+                        <!-- <button class="float-left" type="button" (click)="deleteMultiAdminUser()">Delete</button> -->
+                        <div class="addbutton">
+                          <button type="button float-right" (click)="addNew()">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <!--Add News Modal-->
+                    <div *ngIf="addNews" class="MLSWrraper">
+                      <div class="MLSWrraper_add">
+                        <a class="closemodal" (click)="closeaddNew()" href="javascript:void(0)"><i
+                            class="pi pi-times-circle"></i></a>
+                        <h3>ADD News</h3>
+                        <form [formGroup]="addNewsForm" (ngSubmit)="addNewsFormSubmit()">
+                          <div class="form-group" *ngIf="showMsgSuccess">
+
+                            <div class="col-xs-12">
+                              <p class="alert alert-success">
+                                <strong>News Added Successfully!</strong>
+                              </p>
+                            </div>
+                          </div>
+                          <div class="form-group" *ngIf="showMsgError">
+                            <div class="col-xs-12">
+                              <p class="alert alert-danger">
+                                <strong>{{errormsg}}</strong>
+                              </p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control" formControlName="title" placeholder="Title">
+                          </div>
+                          <div class="form-group">
+                            <label>News Content</label>
+                            <ckeditor [editor]="Editor" formControlName="content"
+                              [config]="{ toolbar: ['bold','|','italic','|','link','|' ] }"></ckeditor>
+
+                          </div>
+
+                          <div class="form-group p-2 float-left w-100">
+                            <button type="button" (click)="closeaddNew()">Cancel</button>
+                            <button type="submit">Confirm</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="TableLayout">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col">
+                              <span>S No.</span>
+                            </th>
+                            <th scope="col">
+                              <span>Title</span>
+                            </th>
+                            <th scope="col">
+                              <span>Description</span>
+                            </th>
+
+                            <th scope="col">
+                              <span>Created Date</span>
+
+                            </th>
+                            <th scope="col">
+                              <span>Updated Date</span>
+                            </th>
+                            <th scope="col"><span>Actions</span></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let admin of news; let i=index">
+                            <td>{{i+1}}</td>
+                            <td *ngIf="admin.title">{{admin.title}}</td>
+                            <td *ngIf="!admin.title">-</td>
+                            <td *ngIf="admin.content" [innerHTML]="admin.content"></td>
+                            <td *ngIf="!admin.content">-</td>
+                            <td *ngIf="admin.created">{{admin.created | date}}</td>
+                            <td *ngIf="!admin.created">-</td>
+                            <td *ngIf="admin.updated">{{admin.updated | date}}</td>
+                            <td *ngIf="!admin.updated">-</td>
+                            <td>
+                              <a href="javascript:void(0)" (click)="navigateToView(admin._id)">
+                                <mat-icon aria-hidden="false">edit</mat-icon>
+
+                              </a>
+                              <a href="javascript:void(0)" (click)="deleteNews(admin._id)">
+                                <mat-icon aria-hidden="false">delete</mat-icon>
+
+                              </a>
+                            </td>
+                          </tr>
+                          <!-- <tr *ngIf="users.length == 0">
+                        <td class="text-center" colspan="8">No Data Found.</td>
+                      </tr> -->
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+  </mat-sidenav-container>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>

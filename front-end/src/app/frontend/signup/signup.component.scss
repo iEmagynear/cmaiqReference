@@ -1,0 +1,104 @@
+@import '../../../assets/scss/variable';
+@import '../../../assets/scss/mixin';
+
+
+.Signup{
+    @include size(100%,100%);
+    display: table;
+    background-image: url(../../../assets/images/login-bg2.jpg);
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    @include relative(top 0 left 0);
+    &:after{
+        content: '';
+        @include size(100%,100%);
+        @include absolute(top 0 left 0);
+        background-color: rgba($color: $black, $alpha: 0.3);
+    }
+    &_wrraper{
+        @include size(600px,auto);
+        margin: 30px auto 60px auto;
+        @include box-shadow(0px,0px,3px,rgba($color: $black, $alpha: 0.8));
+        padding: 0px 50px 30px;
+        @include radius(5px);
+        background-color: rgba($color: $deepGray, $alpha: 0.8);
+        @include relative(top 0 left 0);
+        z-index: 9;
+        @include breakpoint(xs){
+            @include size(90%,auto);
+            padding: 0px 20px 30px;
+            margin: 10px auto 40px auto;
+        }
+        h1{
+            font-size: 28px;
+            line-height: 28px;
+            font-weight: 500;
+            color: rgba($color: $white, $alpha: 1.0);
+            text-align: center;
+            padding: 20px 0 0;
+            margin: 0 0 1.5rem;
+
+            @include breakpoint(xs) {
+                font-size: 18px;
+                line-height: 20px;
+            }
+        }
+
+        a {
+            font-size: 16px;
+            line-height: 18px;
+            font-weight: 400;
+            color: rgba($color: $white, $alpha: 1.0);
+    
+            &:hover {
+                text-decoration: underline;
+            }
+            &.clrSec { color: rgba($color: $white, $alpha: 1); font-weight: 600;
+                &:hover, &:focus { color: $white; }
+            }
+        }
+
+        p {color:rgba($color: $white, $alpha: 1.0);font-size:16px;}
+
+        label{
+            font-size: 15px;
+            line-height: 20px;
+            font-weight: 400;
+            color: rgba($color: $grey, $alpha: 1.0);
+        }
+
+        button[type="submit"] {
+            background-color: $secondry;
+            color: $white;
+            @include radius(25px);
+            padding: 12px 25px;
+            border: 0;
+            @include box-shadow(0px, 2px, 3px, rgba($color: $black, $alpha: 1.0));
+            cursor: pointer;
+            display: block;
+            width: 100%;
+
+            &:hover {
+                background-color: rgba($color: $grey, $alpha: 1.0);
+            }
+    
+            &:disabled {
+                background-color: rgba($color: $secondry, $alpha: 0.7);
+                cursor: default;
+            }
+        }
+
+    }
+    .invalid-feedback{
+        color: red;
+        padding: 5px 0 0;
+    }
+}
+app-header + .Wrraper {
+    display: table;
+    min-height: calc(100vh - 122px) !important;
+    height: calc(100vh - 122px) !important;
+    overflow: hidden;
+}

@@ -1,0 +1,96 @@
+<div class="Dashboard">
+  <mat-sidenav-container class="Dashboard_Sidenav" autosize>
+
+    <mat-sidenav #sidenav class="Dashboard_Sidenav_Example" [ngClass]="status ? 'slideOn' : 'slideOff'" mode="side"
+      opened="true">
+      <mat-toolbar class="example-toolbar">
+        <mat-icon class="navtoggle" (click)="toggle()">menu</mat-icon>
+        <span class="example-fill-remaining-space"></span>
+      </mat-toolbar>
+      <app-left-sidebar></app-left-sidebar>
+    </mat-sidenav>
+
+    <div class="DashboardTab">
+      <mat-card>
+        <div class="HeaderWpr">
+          <div class="Headerlft">
+            <a class="backbtn" href="javascript:void(0)" [routerLink]="['/admin']"
+              [queryParams]="{activeTab:'mlsGroupTab'}"><i class="pi pi-arrow-circle-left"></i></a>
+          </div>
+        </div>
+      </mat-card>
+      <mat-card>
+        <form [formGroup]="editMemberGroup">
+          <div class="DashboardTab_update">
+            <h3>Edit MLS</h3>
+            <div class="form-group">
+              <label for="mlsname">MLS Name</label>
+              <input type="hidden" class="form-control" autocomplete="off" formControlName="_id">
+              <input type="text" class="form-control" autocomplete="off" formControlName="name">
+            </div>
+            <!-- <div class="form-group">
+              <label for="mlsname">MLS Api name</label>
+              <input type="text" class="form-control" autocomplete="off" formControlName="chart_api">
+            </div> -->
+            <div class="form-group">
+              <label for="mlsname">MLS Api name</label>
+              <select class="form-control" formControlName="chart_api" (change)="enableServerId($event.target.value)">
+                <option value="">Select MLS Api name
+                </option>
+                <option *ngFor="let chartapi of chartapi_array" [value]="chartapi">{{chartapi}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="adduser_Checkbox">Enable CSV Upload To Genrate Chart
+                <input type="checkbox" formControlName="enableCSVUpload">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="adduser_Checkbox">IsEnable Status
+                <input type="checkbox" formControlName="status">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="mlsname">Alias</label>
+              <input type="text" class="form-control" autocomplete="off" formControlName="alias">
+            </div>
+            <div class="form-group">
+              <label for="mlsname">ServerId</label>
+              <input type="text" class="form-control" autocomplete="off" formControlName="server_id" disabled=true>
+            </div>
+            <div class="form-group">
+              <label class="adduser_Checkbox">Rental
+                <input type="checkbox" formControlName="status">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <!-- <div class="form-group">
+              <label for="mlsname">Zip Url</label>
+              <input type="text" class="form-control" autocomplete="off" formControlName="zips_url">
+            </div>
+            <div class="form-group">
+              <label for="mlsname">Subs Url</label>
+              <input type="text" class="form-control" autocomplete="off" formControlName="subs_url">
+            </div> -->
+            <div class="form-group text-right">
+              <button type="submit" (click)="editMlsGroupSubmit()">Update</button>
+            </div>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+
+  </mat-sidenav-container>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

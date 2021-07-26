@@ -1,0 +1,461 @@
+<div class="container-fluid">
+  <div class="row">
+    <header [style.opacity]="isActive ? '0' : '1'" class="fixed-top">
+      <div class="container-fluid">
+        <nav
+          [style.pointer-events]="isActive ? 'none' : 'auto'"
+          class="navbar navbar-expand-xl navbar-dark"
+        >
+          <a class="navbar-brand" [routerLink]="['/']">
+            <img src="assets/images/apc_logo_white.png" alt="cmaIQ" />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-center"
+            id="navbarTogglerDemo03"
+          >
+            <ul class="navbar-nav mr-0">
+              <li
+                class="nav-item dropdown"
+                *ngIf="(loginFlag || samlFlag) && nrSelect && checkmember"
+              >
+                <a
+                  [className]="
+                    currentUrl == '/new-chart/client' ||
+                    currentUrl == '/new-chart/view-client'
+                      ? 'nav-link dropdown-toggle active'
+                      : 'nav-link dropdown-toggle'
+                  "
+                  href="javascript:void(0)"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {{ "Client.label" | translate }}
+                </a>
+                <div
+                  class="dropdown-menu"
+                  aria-labelledby="navbarDropdownMenuLink"
+                >
+                  <a
+                    [className]="
+                      currentUrl == '/new-chart/client'
+                        ? 'dropdown-item active'
+                        : 'dropdown-item'
+                    "
+                    [routerLink]="['/new-chart/client']"
+                    href="javascript:void(0)"
+                    >{{ "Client.AddClient.label" | translate }}</a
+                  >
+                  <a
+                    [className]="
+                      currentUrl == '/new-chart/view-client'
+                        ? 'dropdown-item active'
+                        : 'dropdown-item'
+                    "
+                    [routerLink]="['/new-chart/view-client']"
+                    href="javascript:void(0)"
+                    >{{ "Client.ViewClientList.label" | translate }}</a
+                  >
+                </div>
+              </li>
+              <li
+                class="nav-item dropdown"
+                *ngIf="(loginFlag || samlFlag) && nrSelect && checkmember"
+              >
+                <a
+                  [className]="
+                    currentUrl == '/new-chart/property' ||
+                    currentUrl == '/new-chart/view-property'
+                      ? 'nav-link dropdown-toggle active'
+                      : 'nav-link dropdown-toggle'
+                  "
+                  href="javascript:void(0)"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {{ "Property.label" | translate }}
+                </a>
+                <div
+                  class="dropdown-menu"
+                  aria-labelledby="navbarDropdownMenuLink"
+                >
+                  <a
+                    [className]="
+                      currentUrl == '/new-chart/property'
+                        ? 'dropdown-item active'
+                        : 'dropdown-item'
+                    "
+                    [routerLink]="['/new-chart/property']"
+                    href="javascript:void(0)"
+                    >{{ "Property.AddProperty.label" | translate }}</a
+                  >
+                  <a
+                    [className]="
+                      currentUrl == '/new-chart/view-property'
+                        ? 'dropdown-item active'
+                        : 'dropdown-item'
+                    "
+                    [routerLink]="['/new-chart/view-property']"
+                    href="javascript:void(0)"
+                    >{{ "Property.ViewPropertyList.label" | translate }}</a
+                  >
+                </div>
+              </li>
+              <li
+                class="nav-item"
+                *ngIf="(loginFlag || samlFlag) && nrSelect && checkmember"
+              >
+                <a
+                  [className]="
+                    currentUrl == '/mycharts' ? 'nav-link active' : 'nav-link'
+                  "
+                  [routerLink]="['/mycharts']"
+                  href="javascript:void(0)"
+                  >{{ "MyCharts.label" | translate }}</a
+                >
+              </li>
+              <!-- <li class="nav-item" *ngIf="((samlFlag && investFlag)) && nrSelect && checkmember">
+                <a [className]="(currentUrl == '/investment-analysis') ? 'nav-link active' : 'nav-link'"
+                  [routerLink]="['/investment-analysis']" href="javascript:void(0)">Investment Analysis</a>
+              </li> -->
+              <li
+                class="nav-item dropdown"
+                *ngIf="loginFlag && nrSelect && checkmember"
+              >
+                <a
+                  [className]="
+                    currentUrl == '/new-chart/property-value-analysis' ||
+                    currentUrl == '/investment-analysis'
+                      ? 'nav-link dropdown-toggle active'
+                      : 'nav-link dropdown-toggle'
+                  "
+                  href="javascript:void(0)"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  href="javascript:void(0)"
+                >
+                  {{ "NewCharts.label" | translate }}
+                </a>
+                <div
+                  class="dropdown-menu"
+                  aria-labelledby="navbarDropdownMenuLink"
+                >
+                  <a
+                    [className]="
+                      currentUrl == '/new-chart/property-value-analysis'
+                        ? 'dropdown-item dropdown-toggle active'
+                        : 'dropdown-item dropdown-toggle'
+                    "
+                    href="javascript:void(0)"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Property Value Analysis
+                  </a>
+                  <ul class="navbar-nav mr-auto">
+                    <li
+                      class="nav-item dropdown"
+                      *ngIf="loginFlag && nrSelect && checkmember"
+                    >
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="navbarDropdownMenuLink"
+                      >
+                        <a
+                          *ngIf="active_investment"
+                          class="dropdown-item"
+                          (click)="openDialog()"
+                          >For Client</a
+                        >
+                        <a
+                          *ngIf="active_investment"
+                          class="dropdown-item"
+                          (click)="openDialogProspecting()"
+                          >Explore</a
+                        >
+                      </div>
+                    </li>
+                  </ul>
+                  <a
+                    *ngIf="active_investment"
+                    [className]="
+                      currentUrl == '/investment-analysis'
+                        ? 'dropdown-item active'
+                        : 'dropdown-item'
+                    "
+                    [routerLink]="['/investment-analysis']"
+                    href="javascript:void(0)"
+                    >Investment Analysis</a
+                  >
+                </div>
+              </li>
+              <li class="nav-item dropdown" *ngIf="checkSuperAdmin">
+                <a
+                  class="nav-link dropdown-toggle"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  href="javascript:void(0)"
+                  id="dashboardDropdown"
+                  >{{ "Dashboard.label" | translate }}</a
+                >
+                <div class="dropdown-menu" aria-labelledby="dashboardDropdown">
+                  <a
+                    class="dropdown-item"
+                    *ngIf="checkmlsadmin"
+                    [routerLink]="['/admin/dashboard']"
+                    >MLS Admin</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    *ngIf="checkSuperAdmin"
+                    [routerLink]="['/admin']"
+                    >Super Admin</a
+                  >
+                </div>
+              </li>
+              <li
+                class="nav-item"
+                *ngIf="loginFlag && !nrSelect && !checkSuperAdmin"
+              >
+                <a
+                  [className]="
+                    currentUrl == '/my-account/mls-setting'
+                      ? 'nav-link active'
+                      : 'nav-link'
+                  "
+                  [routerLink]="['/my-account/mls-setting']"
+                  href="javascript:void(0)"
+                  >Request MLS</a
+                >
+              </li>
+            </ul>
+            <ul
+              *ngIf="!userFlag && !checkSuperAdmin"
+              class="navbar-nav nav-signup ml-auto"
+            >
+              <!-- <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/signup']" routerLinkActive="active" href="javascript:void(0)"><i
+                    class="pi pi-user-plus"></i> {{ 'Sign Out.Sign Up' | translate }}</a>
+              </li> -->
+              <li class="nav-item sign">
+                <a
+                  class="nav-link roundedBtn"
+                  [routerLink]="['/login']"
+                  routerLinkActive="active"
+                  href="javascript:void(0)"
+                >
+                  {{ "Sign Out.Sign In" | translate }}
+                </a>
+                <a
+                  class="nav-link roundedBtn"
+                  [routerLink]="['/signup']"
+                  routerLinkActive="active"
+                  href="javascript:void(0)"
+                >
+                  {{ "Sign Out.Sign Up" | translate }}
+                </a>
+              </li>
+            </ul>
+            <ul *ngIf="loginFlag || samlFlag" class="navbar-nav nav-signup">
+              <li class="nav-item" *ngIf="!checkSuperAdmin && checkmlsadmin">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  [routerLink]="['/admin/dashboard']"
+                  href="javascript:void(0)"
+                  >{{ "Dashboard.label" | translate }}</a
+                >
+              </li>
+              <!--<li *ngIf="loginFlag" class="nav-item">
+                <a class="nav-link" href="https://intercom.help/theAPC/en">
+                  <img src="assets/images/IMLSHelp.png" alt="IMLSHelpButton" width="78px" height="23px">
+                </a>
+              </li>-->
+              <li class="nav-item" *ngIf="mls_array">
+                <ul class="MLS_type">
+                  <li
+                    *ngIf="mls_array.length > 0"
+                    (change)="mlsSwitch($event.target.value)"
+                    class="dropdown Commontooltipwrp"
+                  >
+                    <a
+                      href="javascript:void(0)"
+                      class="dropdown-toggle nav-link"
+                      data-toggle="dropdown"
+                    >
+                      {{ mlsName }}
+                    </a>
+                    <ul class="dropdown-menu">
+                      <a
+                        *ngFor="let mls of mls_array"
+                        (click)="onGroup(mls)"
+                        class="dropdown-item"
+                        href="javascript:void(0)"
+                      >
+                        {{ mls.mls_name }}</a
+                      >
+                    </ul>
+                    <a
+                      *ngIf="clearSelect"
+                      class="clearSelect"
+                      (click)="clearPropertType()"
+                      ><i class="pi pi-times-circle"></i
+                    ></a>
+                  </li>
+                </ul>
+              </li>
+              <li *ngIf="loginFlag" class="nav-item dropdown">
+                <a
+                  [className]="
+                    currentUrl == '/my-account/profile' ||
+                    currentUrl == '/my-account/mls-setting'
+                      ? 'nav-link dropdown-toggle active'
+                      : 'nav-link dropdown-toggle'
+                  "
+                  href="javascript:void(0)"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="pi pi-user-plus"></i>
+                  {{ "My Account.label" | translate }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navBarMyAccount">
+                  <a
+                    [className]="
+                      currentUrl == '/my-account/profile'
+                        ? 'dropdown-item active'
+                        : 'dropdown-item'
+                    "
+                    [routerLink]="['/my-account/profile']"
+                    href="javascript:void(0)"
+                    ><i class="pi pi-user"></i>
+                    {{ "My Account.Profile" | translate }}</a
+                  >
+                  <a
+                    *ngIf="!samlFlag"
+                    [className]="
+                      currentUrl == '/my-account/mls-setting'
+                        ? 'dropdown-item active'
+                        : 'dropdown-item'
+                    "
+                    [routerLink]="['/my-account/mls-setting']"
+                    href="javascript:void(0)"
+                    ><i class="pi pi-cog"></i>
+                    {{ "MLS Setting.label" | translate }}</a
+                  >
+                  <a *ngIf="!samlFlag" class="dropdown-item" (click)="signout()"
+                    ><i class="pi pi-sign-in"></i>
+                    {{ "Sign Out.label" | translate }}</a
+                  >
+                </div>
+              </li>
+            </ul>
+            <!-- <ul *ngIf="checkSuperAdmin" class="navbar-nav nav-signup">
+              <li class="nav-item">
+                <a class="nav-link" (click)="signout()" href="javascript:void(0)"><i class="pi pi-sign-in"></i>
+                  Sign
+                  Out</a>
+              </li>
+            </ul> -->
+          </div>
+          <div class="lang">
+            <ul class="lang_type">
+              <li class="dropdown flags">
+                <a
+                  href="javascript:void(0)"
+                  class="dropdown-toggle nav-link"
+                  data-toggle="dropdown"
+                >
+                  <span class="flag" [ngClass]="currentLang | lowercase"></span
+                  >{{ currentLang }}
+                </a>
+                <ul class="dropdown-menu">
+                  <a
+                    *ngFor="let lang of translate.getLangs()"
+                    (click)="onLngChange(lang)"
+                    class="dropdown-item"
+                    href="javascript:void(0)"
+                  >
+                    <span class="flag" [ngClass]="lang | lowercase"></span
+                    >{{ lang }}
+                  </a>
+                </ul>
+              </li>
+              <li class="dropdown" *ngIf="showCurrency">
+                <a
+                  href="javascript:void(0)"
+                  class="dropdown-toggle nav-link"
+                  data-toggle="dropdown"
+                >
+                  {{ currentCur }}
+                </a>
+                <ul class="dropdown-menu">
+                  <a
+                    class="dropdown-item"
+                    (click)="onCurChange('USD')"
+                    href="javascript:void(0)"
+                    >USD</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    (click)="onCurChange('MXN')"
+                    href="javascript:void(0)"
+                    >MXN</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    (click)="onCurChange('CAD')"
+                    href="javascript:void(0)"
+                    >CAD</a
+                  >
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <!-- <label>
+          {{ 'HOME.SELECT' | translate }}
+          <select #langSelect (change)="changeLanguage(langSelect.value)">
+            <option *ngFor="let lang of translate.getLangs()" [value]="lang"
+              [selected]="lang === translate.currentLang">{{ lang }}</option>
+          </select>
+        </label> -->
+      </div>
+    </header>
+
+    <div *ngIf="floating && active_import" class="floating">
+      <button
+        type="button"
+        class="btn btn-default btn-flt"
+        (click)="openFloating()"
+      >
+        <i class="pi pi-upload mr-2"></i>Import
+      </button>
+    </div>
+  </div>
+</div>

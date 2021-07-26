@@ -1,0 +1,22 @@
+<app-header></app-header>
+<div class="Wrraper" [ngStyle]="{'min-height': innerHeight}">
+  <div class="Flexmls">
+    <div class="container">
+      <a *ngIf="eulaFlag" [routerLink]="['/eula']" class="btn btn-primary float-left d-block d-sm-block d-md-block d-lg-none d-print-none">
+        Back</a>
+      <a *ngIf="toaFlag" [routerLink]="['/toa']" class="btn btn-primary float-left d-block d-sm-block d-md-block d-lg-none d-print-none">
+        Back</a>
+      <iframe src="assets/pdf/APC_Privacy_Statement.pdf" width="1200px" height="1300px"></iframe>
+    </div>
+  </div>
+</div>
+
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

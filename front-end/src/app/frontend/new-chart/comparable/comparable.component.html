@@ -1,0 +1,576 @@
+<app-header [redirect]="(Id == 'redirectBackToAnalysis' || redirect == true)?true:false"
+(childMessage)="showMessageFromChild($event)"></app-header>
+<div class="Wrraper">
+    <my-slide-panel class="comparable" [activePane]="isLeftVisible ? 'left' : 'right'">
+      <div leftPane [hidden]="!hiddenOmp">
+          <div class="container">
+            <div class="row align-items-start">
+              <div class="col-xs-12 col-sm-12 col-md-4">
+                <div class="comparable_list">
+                  <!-- <h5>{{mls_name}}</h5> -->
+
+                  <form [formGroup]="addChart" (ngSubmit)="addChartSub()">
+
+                    <!-- <h6 class="text-right"><a class="btn addclient"
+                        (click)="openDialog()">{{ 'NewCharts.Add Property' | translate }}</a></h6> -->
+
+                    <div class="showft_label" [hidden]="showft">
+                      <div class="form-group">
+                        <label>{{ 'NewCharts.Select Property' | translate }} </label>
+                        <ul class="property_type">
+                          <li class="dropdown Commontooltipwrp">
+                        <a href="javascript:void(0)">
+                              <span class="thumbnail" *ngIf="selectedImg"
+                                [ngStyle]="{'background-image': 'url(' + selectedImg + ')'}"></span>
+                        <label>{{groupName}}</label>
+                        </a>
+                        <input type="hidden" formControlName="groupName" />
+                        <!-- <ul class="dropdown-menu">
+                              <li *ngFor="let label of properties">
+                                <a (click)="onGroup(label)" href="javascript:void(0)">
+                                  <span class="thumbnail"
+                                    [ngStyle]="{'background-image': 'url(' + label.property_image + ')'}"></span>
+                                  {{label.address}}</a>
+                        </li>
+                            </ul> -->
+                        <!-- <a *ngIf="clearSelect" class="clearSelect" (click)="clearPropertType()"><i
+                            class="pi pi-times-circle"></i></a> -->
+                        </li>
+                        </ul>
+                        <p class="selectPropertyerror" *ngIf="selectPropertyMsg">Select a property from list</p>
+                      </div>
+                    </div>
+                    <!-- <div class="form-group" [hidden]="!showft">
+                      <h6 class="showsqr">{{ 'NewCharts.OR' | translate }}</h6>
+                    </div> -->
+                    <div class="showft highLight" [hidden]="!showft">
+                      <div class="form-group">
+                        <label>{{ 'NewCharts.Address/Title' | translate }}</label>
+                        <input type="text" formControlName="chart_title"
+                          placeholder="{{ 'NewCharts.ChartTitle' | translate }}" class="form-control" disabled />
+                      </div>
+                      <div class="form-group m-0">
+                        <label>{{ 'NewCharts.Property Square Footage' | translate }}</label>
+                        <input type="text"
+                          [ngClass]="{'border-danger': (f.sqr_ft.errors?.pattern || f.sqr_ft.errors?.minlength || f.sqr_ft.errors?.maxlength)}"
+                          formControlName="sqr_ft" placeholder="{{ 'NewCharts.Enter 3-5 Digit Number' | translate }}"
+                          class="form-control" disabled />
+                      </div>
+                    </div>
+                    <div [hidden]="isExtraFields">
+
+                      <div [hidden]="!hasRental">
+                        <div class="form-group">
+                          <label>{{ 'NewCharts.Listing Type' | translate }}</label>
+                          <select [attr.disabled]="readonly" formControlName="listing_type" class="form-control">
+                            <option value="Residential">{{ 'NewCharts.Residential' | translate }}</option>
+                            <option value="Rental">{{ 'NewCharts.Rental' | translate }}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div [hidden]="addChart.controls.listing_type.value == 'Rental'">
+                        <div *ngIf="!PCBORShow" class="form-group">
+                          <label>{{ 'NewCharts.Property Type' | translate }}</label>
+                          <select formControlName="property_type" class="form-control">
+                            <option value="">{{ 'NewCharts.All' | translate }}</option>
+                            <option value="Single Family Detached">{{ 'NewCharts.Single Family Detached' | translate }}
+                            </option>
+                            <option value="Single Family Attached">{{ 'NewCharts.Single Family Attached' | translate }}
+                            </option>
+                          </select>
+                        </div>
+
+                        <div *ngIf="PCBORShow" class="form-group">
+                          <label>{{ 'NewCharts.Property Type' | translate }}</label>
+                          <select formControlName="property_type" class="form-control">
+                            <option value="">{{ 'NewCharts.All' | translate }}</option>
+                            <option value="Single Family Detached">{{ 'NewCharts.Single Family Detached' | translate }}
+                            </option>
+                            <option value="Condominium">{{ 'NewCharts.Condominium' | translate }}</option>
+                          </select>
+                        </div>
+
+                        <div [hidden]="addChart.controls.property_type.value != 'Condominium'" class="form-group">
+                          <label>Condominium Type</label>
+                          <select formControlName="pcbor_prop_type" class="form-control">
+                            <option value="">All</option>
+                            <option value="Townhouse">Townhouse</option>
+                            <option value="Stacked/Multi-Unit">Stacked/Multi-Unit</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label>{{ 'NewCharts.Year Built' | translate }}</label>
+                        <div class="range">
+                          <input type="text" [ngClass]="{'border-danger': (f.min_year.errors?.pattern)}"
+                            formControlName="min_year" maxlength="4" placeholder="{{ 'NewCharts.Min Year' | translate }}"
+                            class="form-control currency" />
+                        </div>
+                        <span class="joint">{{ 'NewCharts.to' | translate }}</span>
+                        <div class="range">
+                          <input type="text" [ngClass]="{'border-danger': (f.max_year.errors?.pattern)}"
+                            formControlName="max_year" placeholder="{{ 'NewCharts.Max Year' | translate }}" maxlength="4"
+                            class="form-control currency" />
+                        </div>
+                      </div>
+
+
+                      <div *ngIf="PCBORShow">
+                        <div class="form-group">
+                          <label>Area</label>
+                          <ul class="sub_zip">
+                            <li *ngFor="let area of areas; let i = index">{{area}} <a href="javascript:void(0)"
+                                (click)="removeArea(i)"><i class="pi pi-times-circle"></i></a></li>
+                          </ul>
+                          <div class="AddRemove dropdown" [hidden]="pcborAreaSelected">
+                            <input formControlName="entered_area" list="browsers3" class="form-control addnew"
+                              (change)="onSortChange3($event)">
+                            <datalist id="browsers3" *ngIf="pcborAreas.length>0">
+                              <option *ngFor="let area of pcborAreas" [value]="area">
+                            </datalist>
+                            <a class="addbtn" (click)="addArea()">{{ 'NewCharts.Add' | translate }}</a>
+                          </div>
+                          <p [hidden]="pcborAreaSelected">{{ 'NewCharts.Pleaseclick' | translate }}</p>
+                        </div>
+
+                        <div [ngClass]="(zipCode.length>0)?'greyoutme form-group':'form-group'" [hidden]="!pcborAreaSelected">
+                          <label>{{ 'NewCharts.Subdivision(s)' | translate }}</label>
+                          <ul class="sub_zip">
+                            <li *ngFor="let division of subDivisions; let i = index">{{division}} <a href="javascript:void(0)"
+                                (click)="removeDiv(i)"><i class="pi pi-times-circle"></i></a></li>
+                          </ul>
+                          <div class="AddRemove dropdown">
+                            <div class="ChartLoader" *ngIf="loadersub">
+                              <div class="LoaderCircle">
+                                <div class="icon">
+                                  <i class="pi pi-home"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <input formControlName="entered_sub" list="browsers" (input)="textChanged($event.target.value)"
+                              class="form-control addnew" (change)="onSortChange($event)">
+                            <datalist id="browsers" *ngIf="Subs.length>0">
+                              <option *ngFor="let sub of Subs" [value]="sub">
+                            </datalist>
+                            <a class="addbtn" (click)="addSubDivision()">{{ 'NewCharts.Add' | translate }}</a>
+                          </div>
+
+                          <p>{{ 'NewCharts.Pleaseclick' | translate }}</p>
+                        </div>
+                      </div>
+
+
+
+                      <div [ngClass]="(zipCode.length>0)?'greyoutme form-group':'form-group'" *ngIf="!PCBORShow">
+                        <label>{{ 'NewCharts.Subdivision(s)' | translate }}</label>
+                        <ul class="sub_zip">
+                          <li *ngFor="let division of subDivisions; let i = index">{{division}} <a href="javascript:void(0)"
+                              (click)="removeDiv(i)"><i class="pi pi-times-circle"></i></a></li>
+                        </ul>
+                        <input type="checkbox" id="wildcardCheck" (click)="wildcardCheckValid()">&nbsp;Enable Wildcard Search
+                        <div class="AddRemove dropdown">
+                          <div class="ChartLoader" *ngIf="loadersub">
+                            <div class="LoaderCircle">
+                              <div class="icon">
+                                <i class="pi pi-home"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <input formControlName="entered_sub" list="browsers" (input)="textChanged($event.target.value)"
+                            class="form-control addnew" (change)="onSortChange($event)">
+                          <datalist id="browsers" *ngIf="Subs.length>0">
+                            <option *ngFor="let sub of Subs" [value]="sub">
+                          </datalist>
+                          <a class="addbtn" (click)="addSubDivision()">{{ 'NewCharts.Add' | translate }}</a>
+                        </div>
+
+                        <p>{{ 'NewCharts.Pleaseclick' | translate }}</p>
+                      </div>
+
+                      <div class="form-group">
+                        <label>{{ 'NewCharts.Price Range' | translate }}</label>
+                        <div class="range">
+                          <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" min="0" [ngClass]="{'border-danger': (f.min_price.errors?.pattern)}"
+                              formControlName="min_price" placeholder="{{ 'NewCharts.Min Price' | translate }}"
+                              class="form-control currency" mask="comma_separator.3" />
+                          </div>
+                        </div>
+                        <span class="joint">{{ 'NewCharts.to' | translate }}</span>
+                        <div class="range">
+                          <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" min="0" [ngClass]="{'border-danger': (f.max_price.errors?.pattern)}"
+                              formControlName="max_price" placeholder="{{ 'NewCharts.Max Price' | translate }}"
+                              class="form-control currency" mask="comma_separator.3" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label> {{ 'NewCharts.Square Footage' | translate }}</label>
+                        <div class="range">
+                          <input type="text" [ngClass]="{'border-danger': (f.min_square_footage.errors?.pattern)}"
+                            formControlName="min_square_footage" placeholder="{{ 'NewCharts.Min Sqft' | translate }}"
+                            class="form-control">
+                        </div>
+                        <span class="joint">{{ 'NewCharts.to' | translate }}</span>
+                        <div class="range">
+                          <input type="text" [ngClass]="{'border-danger': (f.max_square_footage.errors?.pattern)}"
+                            formControlName="max_square_footage" placeholder="{{ 'NewCharts.Max Sqft' | translate }}"
+                            class="form-control">
+                        </div>
+                      </div>
+
+                      <div [hidden]="!hasRental || !isCTAR">
+                        <div class="form-group" [hidden]="addChart.controls.listing_type.value == 'Residential'">
+                          <label> {{ 'NewCharts.Furnished' | translate }}</label>
+                          <select formControlName="furnished" class="form-control">
+                            <option value="">N/A</option>
+                            <option value="No">{{ 'NewCharts.No' | translate }}</option>
+                            <option value="Yes">{{ 'NewCharts.Yes' | translate }}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div [ngClass]="(subDivisions.length>0)?'greyoutme form-group':'form-group'">
+                        <label> {{ 'NewCharts.Zip Code' | translate }}</label>
+                        <ul class="sub_zip">
+                          <li *ngFor="let division of zipCode; let i = index">{{division}} <a href="javascript:void(0)"
+                              (click)="removeZip(i)"><i class="pi pi-times-circle"></i></a></li>
+                        </ul>
+                        <div class="AddRemove">
+                          <div class="ChartLoader" *ngIf="loaderzip">
+                            <div class="LoaderCircle">
+                              <div class="icon">
+                                <i class="pi pi-home"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <input formControlName="entered_zip" list="browsers2" (input)="textChanged2($event.target.value)"
+                            class="form-control addnew" (change)="onSortChange2($event)">
+                          <datalist id="browsers2" *ngIf="Zips.length>0">
+                            <option *ngFor="let zip of Zips" [value]="zip">
+                          </datalist>
+                          <a class="addbtn" (click)="addZipCode()">{{ 'NewCharts.Add' | translate }} </a>
+
+                        </div>
+                        <p>{{ 'NewCharts.Pleaseclick' | translate }}</p>
+                      </div>
+                      <div class="form-group">
+                        <label>{{ 'NewCharts.Date Range' | translate }}</label>
+                        <div class="range">
+                          <p-calendar [locale]="es" [maxDate]="maximumDate" formControlName="min_date" [yearNavigator]="true"
+                            [monthNavigator]="true" yearRange="2017:2020" dateFormat="mm/dd/yy" dataType="string"
+                            placeholder="Min Year">
+                          </p-calendar>
+                        </div>
+                        <span class="joint">{{ 'NewCharts.to' | translate }}</span>
+                        <div class="range">
+                          <input type="text" class="form-control" readonly formControlName="max_date" />
+                          <!-- <p-calendar [maxDate]="maximumDate" [minDate]="maximumDate" formControlName="max_date" [yearNavigator]="true" [monthNavigator]="true"
+                          yearRange="2019:2050" [readonlyInput]="true" dateFormat="mm/dd/yy" dataType="string" placeholder="Max Year">
+                        </p-calendar> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div [hidden]="!isExtraFields">
+
+                      <div [hidden]="!hasRental">
+                        <div class="form-group">
+                          <label>{{ 'NewCharts.Listing Type' | translate }}</label>
+                          <select [attr.disabled]="readonly" formControlName="listing_type" class="form-control">
+                            <option value="Residential">{{ 'NewCharts.Residential' | translate }}</option>
+                            <option value="Rental">{{ 'NewCharts.Rental' | translate }}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div [hidden]="addChart.controls.listing_type.value == 'Rental'">
+                        <div class="form-group" *ngIf="extraFields?.property_type">
+                          <label> {{ 'NewCharts.'+extraFields?.property_type | translate }}</label>
+                          <select formControlName="property_type" class="form-control">
+                            <option value="">{{ 'NewCharts.All' | translate }}</option>
+                            <option value="Single Family Detached">{{ 'NewCharts.Single Family Detached' | translate }}
+                            </option>
+                            <option value="Single Family Attached">{{ 'NewCharts.Single Family Attached' | translate }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group" *ngIf="extraFields?.water_front">
+                        <label> {{ 'NewCharts.'+extraFields?.water_front | translate }}</label>
+                        <select formControlName="waterfront" class="form-control">
+                          <option value="">N/A</option>
+                          <option value="yes">{{ 'NewCharts.Yes' | translate }}</option>
+                          <option value="no">No</option>
+                        </select>
+                      </div>
+                      <div class="form-group" *ngIf="extraFields?.private_pool">
+                        <label> {{ 'NewCharts.'+extraFields?.private_pool | translate }}</label>
+                        <select formControlName="private_pool" class="form-control">
+                          <option value="">N/A</option>
+                          <option value="yes">{{ 'NewCharts.Yes' | translate }}</option>
+                          <option value="no">No</option>
+                        </select>
+                      </div>
+                      <div class="form-group" *ngIf="extraFields?.HOPA">
+                        <label> {{ 'NewCharts.'+extraFields?.HOPA | translate }}</label>
+                        <select formControlName="hopa" class="form-control">
+                          <option value="">N/A</option>
+                          <option value="yes">{{ 'NewCharts.Yes' | translate }}</option>
+                          <option value="no">No</option>
+                        </select>
+                      </div>
+                      <div class="form-group" *ngIf="extraFields?.HOA">
+                        <label> {{ 'NewCharts.'+extraFields?.HOA | translate }}</label>
+                        <select formControlName="hoa" class="form-control">
+                          <option value="">N/A</option>
+                          <option value="yes">{{ 'NewCharts.Yes' | translate }}</option>
+                          <option value="no">No</option>
+                        </select>
+                      </div>
+                      <div [ngClass]="(zipCode.length>0)?'greyoutme form-group':'form-group'" *ngIf="extraFields?.sub_zip">
+                        <label>{{ 'NewCharts.'+extraFields?.sub_zip | translate }}</label>
+                        <ul class="sub_zip">
+                          <li *ngFor="let division of subDivisions; let i = index">{{division}} <a href="javascript:void(0)"
+                              (click)="removeDiv(i)"><i class="pi pi-times-circle"></i></a></li>
+                        </ul>
+                        <div class="AddRemove dropdown">
+                          <div class="ChartLoader" *ngIf="loadersub">
+                            <div class="LoaderCircle">
+                              <div class="icon">
+                                <i class="pi pi-home"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <input formControlName="entered_sub" list="browsers" (input)="textChanged($event.target.value)"
+                            class="form-control addnew" (change)="onSortChange($event)">
+                          <datalist id="browsers" *ngIf="Subs.length>0">
+                            <option *ngFor="let sub of myOptions" [value]="sub">
+                          </datalist>
+                          <a class="addbtn" (click)="addSubDivision()">{{ 'NewCharts.Add' | translate }}</a>
+                        </div>
+
+                        <p>{{ 'NewCharts.Pleaseclick' | translate }}</p>
+                      </div>
+                      <div class="form-group" *ngIf="extraFields?.folio_number">
+                        <label> {{ 'NewCharts.'+extraFields?.folio_number | translate }}</label>
+                        <input type="text" formControlName="folionumber"
+                          placeholder="{{ 'NewCharts.Folio Number' | translate }}" class="form-control" />
+                      </div>
+                      <div class="form-group" *ngIf="extraFields?.year_built">
+                        <label>{{ 'NewCharts.'+extraFields?.year_built | translate }}</label>
+                        <div class="range">
+                          <input type="text" [ngClass]="{'border-danger': (f.min_year.errors?.pattern)}"
+                            formControlName="min_year" maxlength="4" placeholder="{{ 'NewCharts.Min Year' | translate }}"
+                            class="form-control currency" />
+                        </div>
+                        <span class="joint">{{ 'NewCharts.to' | translate }}</span>
+                        <div class="range">
+                          <input type="text" [ngClass]="{'border-danger': (f.max_year.errors?.pattern)}"
+                            formControlName="max_year" placeholder="{{ 'NewCharts.Max Year' | translate }}" maxlength="4"
+                            class="form-control currency" />
+                        </div>
+                      </div>
+
+                      <div class="form-group" *ngIf="extraFields?.price_range">
+                        <label>{{ 'NewCharts.'+extraFields?.price_range | translate }}</label>
+                        <div class="range">
+                          <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" min="0" [ngClass]="{'border-danger': (f.min_price.errors?.pattern)}"
+                              formControlName="min_price" placeholder="{{ 'NewCharts.Min Price' | translate }}"
+                              class="form-control currency" mask="comma_separator.3" />
+                          </div>
+                        </div>
+                        <span class="joint">{{ 'NewCharts.to' | translate }}</span>
+                        <div class="range">
+                          <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" min="0" [ngClass]="{'border-danger': (f.max_price.errors?.pattern)}"
+                              formControlName="max_price" placeholder="{{ 'NewCharts.Max Price' | translate }}"
+                              class="form-control currency" mask="comma_separator.3" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group" *ngIf="extraFields?.square_footage">
+                        <label>{{ 'NewCharts.'+extraFields?.square_footage | translate }}</label>
+                        <div class="range">
+                          <input type="text" [ngClass]="{'border-danger': (f.min_square_footage.errors?.pattern)}"
+                            formControlName="min_square_footage" placeholder="{{ 'NewCharts.Min Sqft' | translate }}"
+                            class="form-control">
+                        </div>
+                        <span class="joint">{{ 'NewCharts.to' | translate }}</span>
+                        <div class="range">
+                          <input type="text" [ngClass]="{'border-danger': (f.max_square_footage.errors?.pattern)}"
+                            formControlName="max_square_footage" placeholder="{{ 'NewCharts.Max Sqft' | translate }}"
+                            class="form-control">
+                        </div>
+                      </div>
+                      <div [hidden]="!hasRental">
+                        <div class="form-group" [hidden]="addChart.controls.listing_type.value == 'Residential'">
+                          <label> {{ 'NewCharts.Furnished' | translate }}</label>
+                          <select formControlName="furnished" class="form-control">
+                            <option value="">N/A</option>
+                            <option value="No">{{ 'NewCharts.No' | translate }}</option>
+                            <option value="Yes">{{ 'NewCharts.Yes' | translate }}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div [ngClass]="(subDivisions.length>0)?'greyoutme form-group':'form-group'" *ngIf="extraFields?.zip_code">
+                        <label>{{ 'NewCharts.'+extraFields?.zip_code | translate }}</label>
+                        <ul class="sub_zip">
+                          <li *ngFor="let division of zipCode; let i = index">{{division}} <a href="javascript:void(0)"
+                              (click)="removeZip(i)"><i class="pi pi-times-circle"></i></a></li>
+                        </ul>
+                        <div class="AddRemove">
+                          <div class="ChartLoader" *ngIf="loaderzip">
+                            <div class="LoaderCircle">
+                              <div class="icon">
+                                <i class="pi pi-home"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <input formControlName="entered_zip" list="browsers2" (input)="textChanged2($event.target.value)"
+                            class="form-control addnew" (change)="onSortChange2($event)">
+                          <datalist id="browsers2" *ngIf="Zips.length>0">
+                            <option *ngFor="let zip of myOptions2" [value]="zip">
+                          </datalist>
+                          <a class="addbtn" (click)="addZipCode()">{{ 'NewCharts.Add' | translate }} </a>
+                        </div>
+                        <p>{{ 'NewCharts.Pleaseclick' | translate }}</p>
+                      </div>
+                      <div class="form-group">
+                        <label>{{ 'NewCharts.Date Range'| translate }}</label>
+                        <div class="range">
+                          <p-calendar [locale]="es" [maxDate]="maximumDate" formControlName="min_date" [yearNavigator]="true"
+                            [monthNavigator]="true" yearRange="2017:2020" dateFormat="mm/dd/yy" dataType="string"
+                            placeholder="Min Year">
+                          </p-calendar>
+                        </div>
+                        <span class="joint">{{ 'NewCharts.to' | translate }}</span>
+                        <div class="range">
+                          <input type="text" class="form-control" readonly formControlName="max_date" />
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group text-right">
+                      <button type="submit" class="ml-3 mb-2"
+                        [disabled]="!addChart.valid || f.entered_area.value !=''">{{ 'NewCharts.Search' | translate }}
+                        <div *ngIf="f.entered_area.value !=''" class="tooltip">
+                          <h6>{{ 'NewCharts.tooltip' | translate }}</h6>
+                        </div>
+                      </button>
+
+                      <button type="button" class="ml-3 mb-2 ompBtn" [disabled]="ShowChartBtn && (cancel_count < 7 || cancel_count > 100)" (click)="omp()">OMPs <span *ngIf="ompCount>0" class="badge badge-primary">{{(ompCount)}}</span>
+                        <div class="tooltip" *ngIf="cancel_count < 7 || cancel_count > 100">
+                          <h6>Selected Closed Properties should be between 7 to 100.</h6>
+                        </div>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-8 bgWhite">
+                <div *ngIf="Id == 'redirectBackToAnalysis' || redirect == true" class="text-left"><a
+                    class="btn addclient btn-link" (click)="backtoanalysis()">
+                    <i style="vertical-align: text-top;" class="pi pi-angle-left"></i>
+                    {{ 'Charts.Back To Investment Analysis' | translate }}</a>
+                </div>
+                <div class="comparable_chart">
+                  <h1>{{total_count}} {{ 'NewCharts.Total Results' | translate }}</h1>
+                  <ul>
+                    <li><span></span> {{active_count}} {{ 'NewCharts.Active' | translate }}</li>
+                    <li><span></span> {{pending_count}} {{ 'NewCharts.Pending' | translate }}</li>
+                    <li><span></span> {{cancel_count}}
+                      {{ ((addChart.controls.listing_type.value == 'Residential')?'NewCharts.Closed':'NewCharts.Rented') | translate }}
+                    </li>
+                  </ul>
+
+                  <div class="comparable_chart_map">
+
+                    <agm-map #AgmMap [latitude]="lat" [longitude]="lng" [zoom]="zoom" [streetViewControl]="false"
+                      [scrollwheel]="true" [zoomControl]="true" [mapTypeControl]="false" [fullscreenControl]="false"
+                      [scaleControl]="false" (mapReady)="onMapReady($event)" (mapClick)="mapClicked($event)"
+                      (zoomChange)=zoomChange($event)>
+                    </agm-map>
+
+                  </div>
+                  <!-- {{ShowChartBtn}}
+                  {{genChartButtonError}} -->
+                  <div *ngIf="ShowChartBtn" class="comparable_chart_btn">
+                    <!-- <button type="submit">Property Details</button> -->
+
+                    <button type="submit" (click)="enable_polygon()" *ngIf="showpolygon && showPolygonButton"
+                      [disabled]="!enablepolygon">
+                      {{ 'NewCharts.Enable Polygon' | translate }}
+                      <div class="tooltip">
+                        <h6 *ngIf="!resultsCheck">{{ 'NewCharts.Prior' | translate }}</h6>
+                        <h6 *ngIf="resultsCheck">{{ 'NewCharts.Click' | translate }}</h6>
+                      </div>
+                    </button>
+
+                    <button type="submit" (click)="clear_polygon()"
+                      *ngIf="clearpolygon">{{ 'NewCharts.Clear Polygon' | translate }}
+                      <div class="tooltip">
+                        <h6>{{ 'NewCharts.Remove polygon from the map.' | translate }}</h6>
+                      </div>
+                    </button>
+
+                    <button type="submit" (click)="enable_circle()" *ngIf="showCircle && showCircleButton"
+                      [disabled]="!enableCircle">
+                      {{ 'NewCharts.Enable Circle' | translate }}
+                      <div class="tooltip">
+                        <h6 *ngIf="!resultsCheck">{{ 'NewCharts.Prior Circle' | translate }}</h6>
+                        <h6 *ngIf="resultsCheck">{{ 'NewCharts.Click Circle' | translate }}</h6>
+                      </div>
+                    </button>
+
+                    <button type="submit" (click)="clear_circle()" *ngIf="clearCircle">Clear Circle
+                      <div class="tooltip">
+                        <h6>{{ 'NewCharts.Remove circle from the map.' | translate }}</h6>
+                      </div>
+                    </button>
+
+                    <button *ngIf="genChartButtonError" type="submit"
+                      [disabled]="genChartButtonError">{{ 'NewCharts.Generate Chart' | translate }}
+                      <div class="tooltip" *ngIf="currentApi == 'Bridge'">
+                        <h6>{{ 'NewCharts.Searchmust' | translate }}</h6>
+                      </div>
+                     <div class="tooltip" *ngIf="currentApi != 'Bridge'">
+                       <div *ngIf="!hasThree">
+                         <h6>{{ "NewCharts.Searchmust" | translate }}</h6>
+                       </div>
+                       <div *ngIf="hasThree">
+                         <h6>{{ "NewCharts.Searchmust2" | translate }}</h6>
+                       </div>
+                     </div>
+                    </button>
+
+                    <button type="submit" (click)="generate_chart()"
+                      *ngIf="!genChartButtonError">{{ 'NewCharts.Generate Chart' | translate }}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+      </div>
+      <div rightPane [hidden]="hiddenOmp">
+        <app-omp [offMarketHomes]="offMarketHomes" *ngIf="callomp" (ompformdataCount)="ompformdataCountHandler($event);" (ompformdata)="ompformdataHandler($event)"></app-omp>
+      </div>
+    </my-slide-panel>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

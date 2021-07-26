@@ -1,0 +1,130 @@
+{
+	"testimonials" : [
+		{
+			"id": "1",
+			"clientName": "Steve N.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "I wish this was around 15 years ago. I love it.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "2",
+			"clientName": "Cindy M.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "I have waited 28 years for a simple program to communicate well with our clients.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "3",
+			"clientName": "Larry H.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "Awesome software. Saves time & more accurate than a standard analysis. More importantly, it's best for our Buyers & Sellers.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "4",
+			"clientName": "Trenton S.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "cma<em>IQ</em> is without a doubt the most helpful, time saving tool in the business. Now that I utilize this tool daily, I don't know how I was able to operate my business without it.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "5",
+			"clientName": "Jon C.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "Love the tool!",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "6",
+			"clientName": "Arnold R.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "This App is awesome. Easy to use and a great visual.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "7",
+			"clientName": "Jonathan W.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "cma<em>IQ</em> is a completely new revolutionary way to accurately predict selling price. I have saved many hours of research and been able to show my clients exactly what the house will sell for without argument.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "8",
+			"clientName": "Meghan B.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "cma<em>IQ</em> has completely changed the way I view and communicate home values with customers. Truly revolutionary. I wish I had this 4 years ago!",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "9",
+			"clientName": "Martha N.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "I’ve already created so many reports and got a total of 30K in scheduled reductions. I’m officially your #1 Fan!!!",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "10",
+			"clientName": "Blake F.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "cma<em>IQ</em> is a fantastic program!",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "11",
+			"clientName": "Christian K.",
+			"clientDesignation": "Investor Client",
+			"description": "I love this tool. Easy to read and understand. Lots of comparison. Fantastic and essential for buying, selling.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "12",
+			"clientName": "Jese D.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "cma<em>IQ</em> has been a complete game changer for my business. One of the most helpful and easy to use tools, it has become a staple in my real estate.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "13",
+			"clientName": "Shawn M.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "cma<em>IQ</em> is revolutionary. It gets to the core of accurate pricing and gives me that much more confidence in conveying value to my clients.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "14",
+			"clientName": "Janis S.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "cma<em>IQ</em> saves so much time in trying to determine the value of a property.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "15",
+			"clientName": "McClain J.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "I will use this software with every future client.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "16",
+			"clientName": "Hunter R.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "Our team uses cma<em>IQ</em> on a daily basis. It has been incredibly valuable to us and has become our first option to determine market value. We prepare an cma<em>IQ</em> for every listing appointment and include it in our new agent training. I can not recommend it highly enough.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "17",
+			"clientName": "Aaron B.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "I have found cma<em>IQ</em> to be an indispensable tool for both buyer and seller clients to assist them in better illustrating the reasonable market range and position of a property in conjunction with other reports. The interactive platform quickly translates in contrast to the one dimensional CMA which provides little context or frame of reference.",
+			"icon":"assets/images/testimonial.png"
+		},
+		{
+			"id": "18",
+			"clientName": "Dana B.",
+			"clientDesignation": "Keller Williams Realty",
+			"description": "cma<em>IQ</em> is awesome! So great. I'm speechless. Helped me encourage my buyers to write an offer. They were worried that the sellers were overpriced. Multiple offers on a million dollar house. We got the house!  I love it!",
+			"icon":"assets/images/testimonial.png"
+		}
+	]
+}

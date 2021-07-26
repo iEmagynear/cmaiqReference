@@ -1,0 +1,30 @@
+<app-header (childMessage)="showMessageFromChild($event)"></app-header>
+<div class="Wrraper">
+	<div class="testimonial">
+		<div class="container">
+			<h1>{{ 'Testimonials.label' | translate }} </h1>
+			<div class="row">
+
+				<div class="col-sm-4" *ngFor="let testimonial of clientTestimonials">
+					<div class="testimonial_wrraper">
+						<div class="testimonial_card">
+							<img src="assets/images/testimonial-top-bg.png" class="bg-img" alt="">
+							<div class="testimonial_card_section">
+								<div class="icon">
+									<img src="{{testimonial.icon}}" alt="">
+								</div>
+								<div>
+									<h4 class="testimonial_card_title">{{testimonial.clientName}}</h4>
+									<p class="testimonial_card_designation">{{testimonial.clientDesignation}}</p>
+								</div>
+							</div>
+							<div class="testimonial_card_comment" [innerHTML]="testimonial.description"></div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>

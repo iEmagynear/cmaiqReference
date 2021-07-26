@@ -1,0 +1,221 @@
+<div class="Dashboard">
+  <mat-sidenav-container class="Dashboard_Sidenav" autosize>
+
+    <mat-sidenav #sidenav class="Dashboard_Sidenav_Example" [ngClass]="status ? 'slideOn' : 'slideOff'" mode="side"
+      opened="true">
+      <mat-toolbar class="example-toolbar">
+        <mat-icon class="navtoggle" (click)="toggle()">menu</mat-icon>
+        <span class="example-fill-remaining-space"></span>
+      </mat-toolbar>
+      <app-left-sidebar></app-left-sidebar>
+    </mat-sidenav>
+
+    <div class="DashboardTab">
+      <mat-card>
+        <app-admin-header></app-admin-header>
+      </mat-card>
+      <mat-card>
+        <div class="row no-gutters">
+          <div class="col-12 col-md-10 col-lg-8 m-auto">
+            <form [formGroup]="confValues" (ngSubmit)="confValueSubmit()">
+              <div class="DashboardTab_value">
+                <h3>Edit Default Values</h3>
+                <div class="form-group" id="scrollId" *ngIf="showMsgSuccess">
+                  <div class="col-xs-12">
+                    <p class="alert alert-success">
+                      <strong>Default Values Updated Successfully!</strong>
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group" *ngIf="showMsgError">
+                  <div class="col-xs-12">
+                    <p class="alert alert-danger">
+                      <strong>{{errormsg}}</strong>
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <h4>Property Information</h4>
+                  </div>
+                  
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Improvements($)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Improvements">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Total Improvement Value (% Property Value)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="TotalImprovementValue">
+                  </div>
+                  
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Building Value (% Property Value)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="BuildingValue">
+                  </div>
+
+                  <div class="col-12">
+                    <h4>Miscellaneous Rates</h4>
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Rate of Inflation (%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="RateofInflation">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>House Value Appreciation (%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="HouseValueAppreciation">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Cost of Sale (%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="CostofSale">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Estimated Vacancy (%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="EstimatedVacancy">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Nominal Federal Income Tax Rate(%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off"
+                      formControlName="NominalFederalIncomeTaxRate">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Nominal State Income Tax Rate(%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="NominalStateIncomeTaxRate">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Nominal Local Income Tax Rate(%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="NominalLocalIncomeTaxRate">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Nominal Straight Line Recapture Tax Rate(%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off"
+                      formControlName="NominalStraightLineRecaptureTaxRate">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Nominal Federal Capital Gain Tax Rate(%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off"
+                      formControlName="NominalFederalCapitalGainTaxRate">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Nominal State Capital Gain Tax Rate(%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off"
+                      formControlName="NominalStateCapitalGainTaxRate">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Nominal Local Capital Gain Tax Rate(%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off"
+                      formControlName="NominalLocalCapitalGainTaxRate">
+                  </div>
+                  <div class="col-12">
+                    <h4>First Mortgage </h4>
+                  </div>
+
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Interest Rate(%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="FmInterestRate">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Term (years)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="FmTerm">
+                  </div>
+                  <div class="col-12">
+                    <h4>Second Mortgage </h4>
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Loan to Value % or Loan Amount($)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="SmLoantoValueorLoanAmount">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Interest Rate(%)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="SmInterestRate">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Term (years)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="SmTerm">
+                  </div>
+                  <div class="col-12">
+                    <h4>Expenses (Enter negative numbers)</h4>
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>HOA Dues (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Hoa">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Regime fee (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="RegimeFee">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Repairs & Maint. (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Repairs">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Electric & Gas (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Electric">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Water & Sewer (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Water">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Accounting (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Accounting">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Liscenses/Permits (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Liscenses">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Advertising (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Advertising">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Trash Collection (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Trash">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Alarm monitoring (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="monitoring">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Yard maintenance (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="maintenance">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Pest Control (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Pest">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Property Management (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Management">
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Other (month)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="Other">
+                  </div>
+                  <div class="col-12">
+                    <h4>Cash Investment Required </h4>
+                  </div>
+                  <div class="form-group col-12 col-sm-6 adduser">
+                    <label>Estimated Closing Costs($)<span class="rqfield">*</span></label>
+                    <input type="number" min="0" class="form-control" autocomplete="off" formControlName="EstimatedClosingCosts">
+                  </div>
+
+                </div>
+                <div class="form-group text-right">
+                  <button [disabled]="!confValues.valid" type="submit">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </mat-sidenav-container>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>

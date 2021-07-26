@@ -1,0 +1,354 @@
+<div class="analytics">
+  <div class="row no-gutters">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table headColor">
+          <tbody>
+            <tr>
+              <th colspan="4">{{'APC Investment Analysis.Subject Property Data' | translate}}</th>
+            </tr>
+            <tr>
+              <th>{{'APC Investment Analysis.Property Value' | translate}}</th>
+              <th>{{'APC Investment Analysis.Rental Value (mo)' | translate}}</th>
+              <th>{{'APC Investment Analysis.P & I (mo)' | translate}}</th>
+              <th>{{'APC Investment Analysis.Expenses (mo)' | translate}}</th>
+            </tr>
+            <tr>
+              <td>{{ SubjectPropertyValue | convert:currentcurrency:'1.0-0' }}</td>
+              <td>{{ dic9 | convert:currentcurrency:'1.0-0' }}</td>
+              <td>{{ SubjectPIValue | convert:currentcurrency:'1.0-0' }}</td>
+              <td>{{ SubjectExpencesValue | convert:currentcurrency:'1.0-0' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table calculation">
+          <thead>
+            <tr>
+              <th>{{'APC Investment Analysis.Subject Property Analytics' | translate}}</th>
+              <th colspan="3">{{'APC Investment Analysis.Cumulative Calculations' | translate}}
+                <table class="table">
+                <thead>
+                  
+                </thead>
+              </table>
+              </th>
+            </tr>
+            <tr>
+              <th></th>
+              <th><span>{{'APC Investment Analysis.Years' | translate}} 1-5</span></th>
+              <th><span>{{'APC Investment Analysis.Years' | translate}} 1-10</span></th>
+              <th><span>{{'APC Investment Analysis.Years' | translate}} 1-30</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{'APC Investment Analysis.Investment Return' | translate}}</td>
+              <td>{{InvestmentReturn1to5 | convert:currentcurrency:'1.0-0' }}</td>
+              <td>{{InvestmentReturn1to10 | convert:currentcurrency:'1.0-0' }}</td>
+              <td>{{InvestmentReturn1to30 | convert:currentcurrency:'1.0-0' }}</td>
+            </tr>
+            <tr>
+              <td>{{'APC Investment Analysis.Annual Rate of Return on Equity' | translate}}</td>
+              <td>{{AnnualizedRateofReturn[4] | number:'1.1-1'}}%</td>
+              <td>{{AnnualizedRateofReturn[9] | number:'1.1-1'}}%</td>
+              <td>{{AnnualizedRateofReturn[29] | number:'1.1-1'}}%</td>
+            </tr>
+            <tr>
+              <td>{{'APC Investment Analysis.Cash Flow (before taxes)' | translate}}</td>
+              <td>{{InvestmentReturn1to5CFBT | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{InvestmentReturn1to10CFBT | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{InvestmentReturn1to30CFBT | convert:currentcurrency:'1.0-0'}}</td>
+            </tr>
+            <tr>
+              <td>{{'APC Investment Analysis.Tax Benefit / Liability' | translate}}</td>
+              <td>{{InvestmentReturn1to5TaxSavings | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{InvestmentReturn1to10TaxSavings | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{InvestmentReturn1to30TaxSavings | convert:currentcurrency:'1.0-0'}}</td>
+            </tr>
+            <tr>
+              <td>{{'APC Investment Analysis.Principal Paydown' | translate}}</td>
+              <td>{{InvestmentReturn1to5TPP | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{InvestmentReturn1to10TPP | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{InvestmentReturn1to30TPP | convert:currentcurrency:'1.0-0'}}</td>
+            </tr>
+            <tr>
+              <td>{{'APC Investment Analysis.Home Value Appreciation' | translate}}</td>
+              <td>{{InvestmentReturn1to5AHVA | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{InvestmentReturn1to10AHVA | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{InvestmentReturn1to30AHVA | convert:currentcurrency:'1.0-0'}}</td>
+            </tr>
+            <tr>
+              <td>{{'APC Investment Analysis.Home Equity' | translate}}</td>
+              <td>{{HomeEquity[4] | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{HomeEquity[9] | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{HomeEquity[29] | convert:currentcurrency:'1.0-0'}}</td>
+            </tr>
+            <tr>
+              <td>{{'APC Investment Analysis.Property Value' | translate}}</td>
+              <td>{{SalesPrice[4] | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{SalesPrice[9] | convert:currentcurrency:'1.0-0'}}</td>
+              <td>{{SalesPrice[29] | convert:currentcurrency:'1.0-0'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <div class="row no-gutters assumtion">
+    <div class="col-12">
+      <table class="table m-0 calculation ">
+        <thead>
+          <tr>
+            <th>
+              {{'APC Investment Analysis.Assumptions' | translate}}
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="col-12 col-lg-6 lborder">
+      <table class="table">
+        <thead>
+          <tr>
+            <th colspan="2">{{'APC Investment Analysis.Property Information' | translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{'APC Investment Analysis.Building Value' | translate}}</td>
+            <td>{{chartdata.investment.BuildingValue | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Land Value' | translate}}</td>
+            <td>{{chartdata.investment.landValue | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Improvements' | translate}}</td>
+            <td>{{chartdata.investment.Improvements | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th colspan="2">{{'APC Investment Analysis.Taxes & Insurance' | translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{'APC Investment Analysis.Annual Real Estate Taxes' | translate}}</td>
+            <td>{{chartdata.investment.rtaxes | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Annual Property Insurance' | translate}}</td>
+            <td>{{chartdata.investment.propertyInsurance | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th colspan="2">{{'APC Investment Analysis.First Mortgage' | translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{'APC Investment Analysis.Loan Amount' | translate}}</td>
+            <td>{{dic25 | convert:currentcurrency:'1.0-0'}}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Interest Rate' | translate}}</td>
+            <td>{{chartdata.investment.FmInterestRate }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Term (Years)' | translate}}</td>
+            <td>{{chartdata.investment.FmTerm }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th colspan="2">{{'APC Investment Analysis.Second Mortgage' | translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{'APC Investment Analysis.Loan Amount' | translate}}</td>
+            <td>{{dic30 | convert:currentcurrency:'1.0-0'}}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Interest Rate' | translate}}</td>
+            <td>{{chartdata.investment.SmInterestRate }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Term (Years)' | translate}}</td>
+            <td>{{chartdata.investment.SmTerm  }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+    <div class="col-12 col-lg-6 rborder">
+      <table class="table">
+        <thead>
+          <tr>
+            <th colspan="2">{{'APC Investment Analysis.Closing Costs' | translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{'APC Investment Analysis.Total Estimated' | translate}}</td>
+            <td>{{chartdata.investment.EstimatedClosingCosts | convert:currentcurrency:'1.0-0'}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th colspan="2">{{'APC Investment Analysis.Miscellaneous Rates' | translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{'APC Investment Analysis.Rate of Inflation' | translate}}</td>
+            <td>{{chartdata.investment.RateofInflation }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.House Value Appreciation' | translate}}</td>
+            <td>{{chartdata.investment.HouseValueAppreciation }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Cost of Sale' | translate}}</td>
+            <td>{{chartdata.investment.CostofSale }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Estimated Vacancy' | translate}}</td>
+            <td>{{chartdata.investment.EstimatedVacancy }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Federal Income Tax Rate' | translate}}</td>
+            <td>{{chartdata.investment.NominalFederalIncomeTaxRate }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.State Income Tax Rate' | translate}}</td>
+            <td>{{chartdata.investment.NominalStateIncomeTaxRate }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Local Income Tax Rate' | translate}}</td>
+            <td>{{chartdata.investment.NominalLocalIncomeTaxRate }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Straight Line Recapture Tax Rate' | translate}}</td>
+            <td>{{chartdata.investment.NominalStraightLineRecaptureTaxRate }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Federal Capital Gain Tax Rate' | translate}}</td>
+            <td>{{chartdata.investment.NominalFederalCapitalGainTaxRate }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.State Capital Gain Tax Rate' | translate}}</td>
+            <td>{{chartdata.investment.NominalStateCapitalGainTaxRate }}%</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Local Capital Gain Tax Rate' | translate}}</td>
+            <td>{{chartdata.investment.NominalLocalCapitalGainTaxRate }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12">
+      <table class="table m-0">
+        <thead>
+          <tr>
+            <th colspan="2">{{'APC Investment Analysis.Monthly Expenses' | translate}}</th>
+          </tr>
+        </thead>
+
+      </table>
+
+    </div>
+    <div class="col-12 col-lg-6 lborder">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>{{'APC Investment Analysis.HOA Dues' | translate}}</td>
+            <td>{{chartdata.investment.annual_hoa | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Regime Fees' | translate}}</td>
+            <td>{{chartdata.investment.RegimeFee | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Repairs & Maintenance' | translate}}</td>
+            <td>{{chartdata.investment.Repairs | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Electric & Gas' | translate}}</td>
+            <td>{{chartdata.investment.Electric | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Water & Sewer' | translate}}</td>
+            <td>{{chartdata.investment.Water | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Accounting' | translate}}</td>
+            <td>{{chartdata.investment.Accounting | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Licenses/Permits' | translate}}</td>
+            <td>{{chartdata.investment.Liscenses | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12 col-lg-6 rborder">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>{{'APC Investment Analysis.Advertising' | translate}}</td>
+            <td>{{chartdata.investment.Advertising | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Trash Collection' | translate}}</td>
+            <td>{{chartdata.investment.Trash | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Alarm Monitoring' | translate}}</td>
+            <td>{{chartdata.investment.monitoring | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Yard Maintenance' | translate}}</td>
+            <td>{{chartdata.investment.maintenance | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Pest Control' | translate}}</td>
+            <td>{{chartdata.investment.Pest | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Property Management' | translate}}</td>
+            <td>{{chartdata.investment.Management | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Other' | translate}}</td>
+            <td>{{chartdata.investment.Other | convert:currentcurrency:'1.0-0' }}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

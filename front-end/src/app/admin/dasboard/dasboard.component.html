@@ -1,0 +1,441 @@
+<div class="Dashboard">
+  <mat-sidenav-container class="Dashboard_Sidenav" autosize>
+
+    <mat-sidenav #sidenav class="Dashboard_Sidenav_Example" [ngClass]="status ? 'slideOn' : 'slideOff'" mode="side"
+      opened="true">
+      <mat-toolbar class="example-toolbar">
+        <span class="example-fill-remaining-space"></span>
+      </mat-toolbar>
+      <app-left-sidebar></app-left-sidebar>
+    </mat-sidenav>
+    <button class="menubutton" type="button" (click)="toggle()">
+      <img [src]="menu" alt="menu">
+    </button>
+    <div class="DashboardTab">
+      <mat-card>
+        <app-admin-header (mlsEvent)="mlsEventHander($event)"></app-admin-header>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <div class="DashboardLayout">
+            <div class="TopLayout">
+              <div class="TopLayoutCol">
+                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-toggle="pill" href="#APC1" role="tab" aria-controls="pills-home"
+                      aria-selected="true">
+                      <div class="LayoutCollft">
+                        <h3>{{userslength}}</h3>
+                        <h4>TOTAL USERS</h4>
+                      </div>
+                      <div class="LayoutColrgt">
+                        <i class="material-icons">person</i>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <!-- <a class="nav-link" data-toggle="pill" href="#APC2" role="tab" aria-controls="pills-profile"
+                      aria-selected="false">
+                      <div class="LayoutCollft">
+                        <h3>0</h3>
+                        <h4>MLS GROUPS</h4>
+                      </div>
+                      <div class="LayoutColrgt">
+                        <i class="material-icons">people</i>
+                      </div>
+                    </a> -->
+                  </li>
+                  <li class="nav-item">
+                    <!-- <a class="nav-link" data-toggle="pill" href="#APC3" role="tab" aria-controls="pills-contact"
+                      aria-selected="false">
+                      <div class="LayoutCollft">
+                        <h3>0</h3>
+                        <h4>OFFICE ASSOCIATIONS</h4>
+                      </div>
+                      <div class="LayoutColrgt">
+                        <i class="material-icons">public</i>
+                      </div>
+                    </a> -->
+                  </li>
+                </ul>
+              </div>
+              <div class="Searchwrp">
+                <div class="Search-sm-8">
+
+                </div>
+                <div class="Search-sm-12">
+                  <div class="Searchdropdown">
+                    <!-- <select class="form-control action">
+                      <option disabled selected hidden>Action</option>
+                      <option value="delete">Delete</option>
+                    </select> -->
+                    <button type="button" (click)="deleteMlsMember()">Delete</button>
+                    <div class="has-search">
+                      <button class="form-control-feedback">
+                        <i class="material-icons">
+                          search
+                        </i>
+                      </button>
+                      <input type="text" [value]="searchText?searchText:''" (input)="searchUser($event.target.value)"
+                        class="form-control" placeholder="Search">
+                    </div>
+                  </div>
+                  <div class="addbutton">
+                    <!-- <button type="button" (click)="advancedSearch()">Advanced Search</button> -->
+                    <button type="button" (click)="bulkRemove()">Bulk Remove</button>
+                    <button type="button" (click)="bulkUpload()">Bulk Upload</button>
+                    <button type="button" (click)="addMlsMember()">Add</button>
+                  </div>
+                </div>
+                <!--Add MLS Modal-->
+                <div *ngIf="addMls" class="MLSWrraper">
+                  <div class="MLSWrraper_add">
+                    <a class="closemodal" (click)="closeMlsMember()" href="javascript:void(0)"><i
+                        class="pi pi-times-circle"></i></a>
+                    <h3>ADD MLS USER</h3>
+                    <form [formGroup]="addMlsUser" (ngSubmit)="addMlsUserSubmit()">
+                      <div class="form-group" *ngIf="showMsgSuccess">
+                        <div class="col-xs-12">
+                          <p class="alert alert-success">
+                            <strong>MLS User Added Successfully!</strong>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="form-group" *ngIf="showMsgError">
+                        <div class="col-xs-12">
+                          <p class="alert alert-danger">
+                            <strong>{{errormsg}}</strong>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="form-group adduser">
+                        <label>First Name</label>
+                        <input type="email" formControlName="firstname" class="form-control" placeholder="John">
+                      </div>
+                      <div class="form-group adduser">
+                        <label>Last Name</label>
+                        <input type="email" formControlName="lastname" class="form-control" placeholder="Smith">
+                      </div>
+                      <div class="form-group adduser">
+                        <label>Email Id <span class="rqfield">*</span></label>
+                        <input type="email" formControlName="email" class="form-control" placeholder="john@email.com"
+                          [ngClass]="{ 'is-invalid': submitted && addUserFetch.email.errors }">
+                        <div class="invalid-feedback" *ngIf="addUserFetch.email.errors">
+                          <div *ngIf="addUserFetch.email.errors.required">Email is required</div>
+                          <div *ngIf="addUserFetch.email.errors.email">Email must be a valid email address</div>
+                        </div>
+                      </div>
+                      <div class="form-group adduser">
+                        <label>Subscription Expiry</label>
+                        <p-calendar [minDate]="minimumDate" [yearNavigator]="true" [monthNavigator]="true"
+                          yearRange="2019:2050" dateFormat="yy-mm-dd" dataType="string" placeholder="YYYY-MM-DD"
+                          [showIcon]="true" formControlName="expiry">
+                        </p-calendar>
+                      </div>
+                      <div class="form-group  w-100 adduser">
+                        <label>Market Center</label>
+                        <input type="text" formControlName="market_center" class="form-control"
+                          placeholder="Market center name">
+                      </div>
+                      <div class="form-group adduser w-100 float-left">
+                        <div class="form-group payPlan mb-0">
+                          <label for="offline">Pay Handled Offline</label>
+                          <input type="radio" id="offline" value="Offline" formControlName="payer_type_online" />
+                          <div class="check"><div class="inside"></div></div>
+                        </div>
+                        <div class="form-group payPlan mb-0">
+                          <label for="online">Pay Online Individual Plan</label>
+                          <input type="radio" id="online" value="Individual" formControlName="payer_type_online" />
+                          <div class="check"><div class="inside"></div></div>
+                        </div>
+                        <div class="form-group payPlan mb-1">
+                          <label for="plan">Pay Online Group Plan</label>
+                          <input type="radio" id="plan" value="Group" formControlName="payer_type_online" />
+                          <div class="check"><div class="inside"></div></div>
+                        </div>
+                        <div class="MLSEmail">
+                          <!-- <label class="MLSWrraper_add_Checkbox ">
+                              <input type="checkbox" formControlName="payer_type_online" />
+                              <span class="checkmark"></span> Pay Online<p><small>(uncheck for offline payment)</small></p>
+                          </label> -->
+                          <label class="MLSWrraper_add_Checkbox ">
+                            <input type="checkbox" formControlName="wantsto" />
+                            <span class="checkmark"></span> Email credentials<p><small>(if password does not exists)</small></p>
+                          </label>
+                          <label class="MLSWrraper_add_Checkbox ">
+                              <input type="checkbox" formControlName="wantstonotify" />
+                              <span class="checkmark"></span> Notify about new MLS access
+                          </label>
+                        </div>
+                      </div>
+                      <div class="form-group m-0 p-2 float-left w-100">
+                        <button type="button" (click)="closeMlsMember()">Cancel</button>
+                        <button type="submit">Confirm</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <!--Add Bulk Upload Modal-->
+                <div *ngIf="upload" class="MLSWrraper">
+                  <div class="MLSWrraper_add">
+                    <a class="closemodal" (click)="closeMlsMember()" href="javascript:void(0)"><i
+                        class="pi pi-times-circle"></i></a>
+                    <h3>UPLOAD MULTIPLE USER LIST</h3>
+                    <p-fileUpload name="myfile[]" #fileUpload accept=".csv" maxFileSize="1000000000" cancelLabel="Clear"
+                      customUpload="true" (uploadHandler)="myUploader($event,fileUpload,saveUserNameCheckBox.checked,notifynewmls.checked)">
+                    </p-fileUpload>
+                    <!-- <label><input type="checkbox" #saveUserNameCheckBox /> Email credentials to the user.</label> -->
+                    <label class="MLSWrraper_add_Checkbox">
+                      <input type="checkbox" #saveUserNameCheckBox>
+                      <span class="checkmark"></span> Email credentials<p><small>(if password does not exists)</small></p>
+                    </label>
+                    <label class="MLSWrraper_add_Checkbox ">
+                        <input type="checkbox" #notifynewmls>
+                        <span class="checkmark"></span> Notify about new MLS access
+                    </label>
+                    <p *ngIf="countUpload">{{affectcount}} members added/updated successfully</p>
+                    <p class="error" *ngIf="error">Error uploading 'Invalid emails in file' {{error}}.</p>
+                    <p class="error"><b>Note:</b> **Upload .csv only</p>
+                    <p><a href="https://{{s3_bucket}}.s3.amazonaws.com/public/sample-upload.csv" target="_blank">Download
+                        Sample File</a></p>
+                  </div>
+                </div>
+                <!--Add Bulk Removes Modal-->
+                <div *ngIf="remove" class="MLSWrraper">
+                  <div class="MLSWrraper_add">
+                    <a class="closemodal" (click)="closeMlsMember()" href="javascript:void(0)"><i
+                        class="pi pi-times-circle"></i></a>
+                    <h3>DELETE MULTIPLE USER FROM LIST</h3>
+                    <p-fileUpload name="myfile[]" #fileUpload1 accept=".csv" cancelLabel="Clear"
+                      maxFileSize="1000000000" customUpload="true"
+                      (uploadHandler)="myUploaderRemove($event,fileUpload1)">
+                    </p-fileUpload>
+                    <p *ngIf="countRemove">{{affectcountr}} members deleted successfully</p>
+                    <p class="error" *ngIf="errorr">Error deleting 'Invalid emails in file' {{errorr}}.</p>
+                    <p class="error"><b>Note:</b> **Upload .csv only</p>
+                    <p><a href="https://{{s3_bucket}}.s3.amazonaws.com/public/sample-remove.csv" target="_blank">Download
+                        Sample File</a></p>
+                  </div>
+                </div>
+                <!--Advance search Modal-->
+                <div *ngIf="advanceSearch" class="MLSWrraper">
+                  <div class="MLSWrraper_add">
+                    <a class="closemodal" (click)="closeMlsMember()" href="javascript:void(0)"><i
+                        class="pi pi-times-circle"></i></a>
+                    <h3>ADVANCE SEARCH</h3>
+                    <form>
+                      <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" id="fname" name="fname" class="form-control" placeholder="Enter first name">
+                      </div>
+                      <div class="form-group">
+                        <label for="lname">Last Name</label>
+                        <input type="text" id="lname" name="lname" class="form-control" placeholder="Enter last name">
+                      </div>
+                      <div class="form-group">
+                        <label for="emailid">Email ID</label>
+                        <input type="email" id="emailid" name="emailid" class="form-control"
+                          placeholder="Enter email Id">
+                      </div>
+                      <div class="form-group">
+                        <label for="market">Market Group</label>
+                        <input type="text" id="market" name="market" class="form-control"
+                          placeholder="Enter market group">
+                      </div>
+                      <div class="form-group">
+                        <button type="submit">Search</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-content TableLayout" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="APC1" role="tabpanel">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">
+                            <label class="TableLayout_Checkbox">
+                              <input type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll()">
+                              <span class="checkmark"></span>
+                            </label>
+                          </th>
+                          <th scope="col" (click)="sortByF('firstname')">
+                            First Name
+                            <a *ngIf="sortBy != 'firstname'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'firstname' && ascdesc == 'asc'"><i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'firstname' && ascdesc == 'desc'"><i class="pi pi-caret-down"></i> </a>
+                          </th>
+                          <th scope="col" (click)="sortByF('lastname')">
+                            Last Name
+                            <a *ngIf="sortBy != 'lastname'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'lastname' && ascdesc == 'asc'"><i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'lastname' && ascdesc == 'desc'"><i class="pi pi-caret-down"></i> </a>
+                          </th>
+                          <th scope="col" (click)="sortByF('email')">
+                            Email
+                            <a *ngIf="sortBy != 'email'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'email' && ascdesc == 'asc'"><i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'email' && ascdesc == 'desc'"><i class="pi pi-caret-down"></i> </a>
+                          </th>
+                          <th scope="col" (click)="sortByF('market_center')">
+                            Market Center
+                            <a *ngIf="sortBy != 'market_center'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'market_center' && ascdesc == 'asc'"><i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'market_center' && ascdesc == 'desc'"><i class="pi pi-caret-down"></i>
+                            </a>
+                          </th>
+                          <!-- <th scope="col" (click)="sortByF('expiry')">
+                            Subscription Expiry
+                            <a *ngIf="sortBy != 'expiry'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'expiry' && ascdesc == 'asc'"> <i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'expiry' && ascdesc == 'desc'"> <i class="pi pi-caret-down"></i> </a>
+                          </th> -->
+
+                          <th scope="col" (click)="sortByF('payer_type_online')">
+                            Payment Type
+                            <a *ngIf="sortBy != 'payer_type_online'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'payer_type_online' && ascdesc == 'asc'"> <i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'payer_type_online' && ascdesc == 'desc'"> <i class="pi pi-caret-down"></i> </a>
+                          </th>
+                          <th scope="col" (click)="sortByF('created')">
+                            Date Created
+                            <a *ngIf="sortBy != 'created'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'created' && ascdesc == 'asc'"> <i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'created' && ascdesc == 'desc'"> <i class="pi pi-caret-down"></i> </a>
+                          </th>
+                          <th scope="col" (click)="sortByF('updated')">
+                            Date Updated
+                            <a *ngIf="sortBy != 'updated'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'updated' && ascdesc == 'asc'"> <i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'updated' && ascdesc == 'desc'"> <i class="pi pi-caret-down"></i> </a>
+                          </th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let user of users; let i=index">
+                          <td>
+                            <label class="TableLayout_Checkbox">
+                              <input type="checkbox" [(ngModel)]="user.selected" [value]="user._id">
+                              <span class="checkmark"></span>
+                            </label>
+                          </td>
+                          <td *ngIf="user.firstname">{{user.firstname}}</td>
+                          <td *ngIf="!user.firstname">-</td>
+                          <td *ngIf="user.lastname">{{user.lastname}}</td>
+                          <td *ngIf="!user.lastname">-</td>
+                          <td>{{user.email}}</td>
+                          <td *ngIf="user.market_center">{{user.market_center}}</td>
+                          <td *ngIf="!user.market_center">-</td>
+                          <!-- <td *ngIf="user.expiry">{{user.expiry | date}}</td> -->
+                          <!-- <td *ngIf="!user.expiry">-</td> -->
+                          <td *ngIf="user.payer_type_online">{{user.payer_type_online}}</td>
+                          <td *ngIf="!user.payer_type_online">-</td>
+                          <td>{{user.created | date}}</td>
+                          <td>{{user.updated | date}}</td>
+                          <td>
+
+                            <a href="javascript:void(0)" (click)="navigateToView(user._id)">
+                              <mat-icon aria-hidden="false">edit</mat-icon>
+                              <div class="tooltip">
+                                <h6>Edit member record</h6>
+                              </div>
+                            </a>
+                            <a href="javascript:void(0)" (click)="softdelete(user._id)">
+                              <i class="material-icons">delete_forever</i>
+                              <div class="tooltip">
+                                <h6>Delete member record</h6>
+                              </div>
+                            </a>
+                          </td>
+                        </tr>
+                        <tr *ngIf="users.length == 0">
+                          <td class="text-center" colspan="8">No Data Found.</td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="paginate" *ngIf="this.users.length>0">
+                    <nav aria-label="Page navigation example ">
+                      <ul>
+                        <li class="page-item" [ngClass]="{'disabled': page == 1}">
+                          <a class="page-link" href="javascript:void(0)" (click)="prevPage()" tabindex="-1"><i
+                              class="pi pi-angle-left"></i></a>
+                        </li>
+
+                        <li *ngFor="let item of totalpages;" class="page-item" [ngClass]="{'active': page == item}">
+                          <a class="page-link" href="javascript:void(0)" (click)="changePage(item)">
+                            {{item}}
+                          </a>
+                        </li>
+
+                        <li class="page-item" [ngClass]="{'disabled': totalnumpages == page}">
+                          <a class="page-link" href="javascript:void(0)" (click)="nextPage()"><i
+                              class="pi pi-angle-right"></i></a>
+                        </li>
+                      </ul>
+                      <select [value]="limit" (change)="onChangeLimit($event)">
+                        <option value="10">10</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                    </nav>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="APC2" role="tabpanel">
+                  <div class="Norecord">
+                    Comming Soon...
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="APC3" role="tabpanel">
+                  <div class="Norecord">
+                    Comming Soon...
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+  </mat-sidenav-container>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

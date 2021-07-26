@@ -1,0 +1,54 @@
+<div class="prospecting">
+  <div class="container">
+    <button md-raised-button matDialogClose class="btncancel">
+      <i class="pi pi-times-circle"></i>
+    </button>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="prospecting_list">
+          <!-- <h5>{{mls_name}}</h5> -->
+          <form [formGroup]="addChart">
+            <div class="showft" [hidden]="!showft">
+              <div class="form-group">
+                <label>Address/Title<span class="rqfield">*</span></label>
+                <input
+                  type="text"
+                  formControlName="chart_title"
+                  placeholder="{{ 'NewCharts.ChartTitle' | translate }}"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group">
+                <label>Square Footage<span class="rqfield">*</span></label>
+                <input
+                  type="text"
+                  [ngClass]="{
+                    'border-danger':
+                      f.sqr_ft.errors?.pattern ||
+                      f.sqr_ft.errors?.minlength ||
+                      f.sqr_ft.errors?.maxlength
+                  }"
+                  formControlName="sqr_ft"
+                  placeholder="{{
+                    'NewCharts.Enter 3-5 Digit Number' | translate
+                  }}"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="form-group text-right">
+              <button
+                matDialogClose
+                type="submit"
+                [disabled]="!addChart.valid"
+                (click)="next()"
+              >
+                Next
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

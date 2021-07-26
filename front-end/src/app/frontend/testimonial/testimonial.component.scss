@@ -1,0 +1,101 @@
+@import "../../../assets/scss/mixin";
+@import "../../../assets/scss/variable";
+
+
+.testimonial{
+    @include size(100%,auto);
+    display: block;
+    background-image: url(../../../assets/images/login-bg2.jpg);
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    @include relative(top 0 left 0);
+    margin: 0;
+    padding: 40px 0;
+    &:after {
+        content: '';
+        @include size(100%, 100%);
+        @include absolute(top 0 left 0);
+        background-color: rgba($color: $black, $alpha: 0.3);
+    } 
+    .container { position: relative; z-index: 9; } 
+    h1{
+        font-size: 36px;
+        line-height: 42px;
+        font-weight: 500;
+        color: $white;
+        text-align: center;
+        padding: 0 0 30px;
+        margin: 0;
+    }
+    h4{
+        font-size: 18px;
+        line-height: 22px;
+        font-weight: 600;
+        color: $black;
+        margin: 0;
+        padding: 0 0 10px;
+    }
+    p{
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 400;
+        color: rgba($color: $black, $alpha: 0.6);
+        margin: 0;
+        padding: 0;
+    }
+    &_wrraper{
+        @include size(100%,100%);
+        padding: 0 0 30px;
+    }
+    &_card {
+        background: $white;
+        @include box-shadow(0, 3px, 8px, rgba(0, 0, 0, 0.55));
+        @include relative(top 0 left 0);
+        margin-bottom: 30px;
+        height: 100%;
+        .bg-img {
+            @include absolute(top 0 left 0);
+            @include size(100%,auto);
+            z-index: 0;
+        }
+        &_section{
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            z-index: 1;
+            position: relative;
+            padding: 40px 20px 20px 20px;
+            .icon{
+                @include size(75px,75px);
+                //@include radius(75px);
+                @include box-shadow(0, 2px, 10px, rgba(0, 0, 0, 0.6));
+                margin-right: 15px;
+                border: 3px solid #fff;
+                display: inline-block;
+                overflow: hidden;
+                img{
+                    @include size(100%, 100%,);
+                }
+            }
+        }
+        &_comment{
+            padding: 10px 20px 0 30px;
+            color: rgba($color: $black, $alpha: 0.8);
+            font-size: 16px;
+            position: relative;
+            text-align: justify;
+            &:before{
+                content: '';
+                @include size(16px,16px);
+                background: url(../../../assets/images/quotation-marks.png) 0 0 no-repeat;
+                @include absolute(top 15px left 12px);
+            }
+        }
+    }
+
+}
+
+
+  

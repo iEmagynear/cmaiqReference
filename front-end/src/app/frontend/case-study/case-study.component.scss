@@ -1,0 +1,433 @@
+@import '../../../assets/scss/variable';
+@import '../../../assets/scss/mixin';
+
+.CaseStudy{
+    @include size(100%,auto);
+    margin: 40px 0;
+    h1{
+        font-size: 36px;
+        line-height: 42px;
+        font-weight: 500;
+        color: $white;
+        text-align: center;
+        padding: 0 0 5px;
+        margin: 0 0 15px;
+        border-bottom: 3px solid rgba($color: $white, $alpha: 0.8);
+    }
+    h2{font-size: 30px;
+        line-height: 36px;
+        font-weight: 400;
+        color: $black;
+        text-align: center;
+        padding: 0;
+        margin: 0;}
+    h3{
+        font-size: 24px;
+        line-height: 30px;
+        font-weight: 400;
+        color: $black;
+        text-align: left;
+        padding: 0;
+        margin: 0;
+    }
+    h4{
+        font-size: 21px;
+        line-height: 26px;
+        font-weight: 400;
+        color: $black;
+        margin: 0;
+        padding: 0;
+    }
+    h5{
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 400;
+        color: $black;
+        text-align: left;
+        padding: 0;
+        margin: 0;
+    }
+    h6{
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 500;
+        color: $black;
+        text-align: left;
+        padding: 0;
+        margin: 0;
+    }
+    p{
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 400;
+        color: rgba($color: $black, $alpha: 1.0);
+        margin: 0;
+        padding: 0;
+    }
+    @include breakpoint(sm){
+        h1{font-size: 30px;line-height: 36px;}
+        h2{font-size: 24px;line-height: 30px;}
+        h3{font-size: 21px; line-height: 25px;}
+        h4{font-size: 16px; line-height: 21px;}
+
+    }
+    .jumbotron{
+        padding: 20px 10px;
+        background-color: rgba($color: $primary, $alpha: 0.82);
+        h2{
+            color: $white;
+        }
+    }
+    &_soar{
+        @include size(100%,auto);
+        &_agent{
+            .fullimg{
+                @include size(100%,auto);
+                display: table;
+                box-sizing: border-box;
+                border: 5px solid $white;
+                @include box-shadow(0px, 3px, 5px, $black);
+                img{
+                    @include size(100%,auto);
+                }
+            }
+            h3{
+                padding: 15px 0 0;
+                font-weight: 500;
+            }
+            h5{
+                padding: 15px 0;
+            }
+            .marker{
+                @include size(100%,auto);
+                display: flex;
+                margin: 22px 0 0;
+                &_col{
+                    flex: 1;
+                    //@include size(33.33%,auto);
+                    //float: left;
+                    background-color: rgba($color: $primary, $alpha: 1.0);
+                    padding: 30px 15px;
+                    margin: 0 10px;
+                    box-sizing: border-box;
+                    &:first-child{
+                        margin-left: 0;
+                    }
+                    &:last-child{
+                        margin-right: 0;
+                    }
+                    &_circle{
+                        @include size(85px,85px);
+                        @include radius(85px);
+                        background-color: $white;
+                        @include box-shadow(0px, 3px, 5px,rgba($color: $black,$alpha:0.7));
+                        display: table;
+                        margin: 0 auto;
+                        .circleno{
+                            font-size: 26px;
+                            line-height: 28px;
+                            font-weight: 500;
+                            color: $secondry;
+                            text-align: center;
+                            display: table-cell;
+                            vertical-align: middle;
+                            padding-bottom: 3px;
+                            @include relative(top 0 left 0);
+                            .queno{
+                                @include absolute(top 0 left -13px);
+                                @include size(30px,30px);
+                                @include radius(30px);
+                                background-color: $secondry;
+                                font-size: 14px;
+                                line-height: 30px;
+                                text-align: center;
+                                color: $white;
+                            }
+                        }
+                    }
+                    h4{
+                        text-align: center;
+                        color: $white;
+                        padding: 20px 0 15px;
+                        font-size: 18px;
+                        line-height: 21px;
+                    }
+                    h6{
+                        color: $white;
+                        text-align: center;
+                        font-weight: 400;
+                        span{
+                            font-size: 18px;
+                            display: block;
+                            font-weight: 600;
+                        }
+                    }
+                    @include breakpoint(md){
+                        padding: 22px 15px;
+                    }
+                    @include breakpoint(md){
+                        h4{font-size: 16px;}
+                        h6 span{font-size: 24px; line-height: 30px;}
+                    }
+                }
+                @include breakpoint(xs){
+                    display: table;
+                    &_col{
+                        margin: 0 0 20px;
+                    }
+                }
+            }
+        }
+        &_apc{
+            @include size(100%,auto);
+            display: table;
+            border: 3px solid $secondry;
+            padding: 15px;
+            background-color: rgba($color: $black, $alpha: 0.05);
+            .analysis{
+                @include size(100%,100%);
+                text-align: center;
+                padding: 20px 20px 30px;
+                margin: 0 0 20px;
+                background-color: $white;
+                @include box-shadow(0px, 2px, 4px, rgba($color: $primary, $alpha: 1.0));
+                // &:hover{
+                //     @include box-shadow(0px, 3px, 6px, rgba($color: $black, $alpha: 1.0));
+                // }
+                img{
+                    @include size(150px,auto);
+                }
+                h4{
+                    padding: 10px 0 20px;
+                    margin: 0;
+                    color: $black;
+                }
+                p{
+                    text-align: center;
+                    padding: 0px 20px;
+                    margin: 0;
+                }
+                @include breakpoint(md){
+                    padding: 20px 10px 20px;
+                    h4{
+                        padding: 10px 0;
+                    }
+                    p{
+                        padding: 0 10px;
+                    }
+                }
+                @include breakpoint(sm){
+                    img{
+                        @include size(120px,auto);
+                    }
+                }
+            }
+        }
+    }
+    &_price{
+        padding: 30px 0;
+        .pricing_tool{
+            @include size(50%,auto);
+            float: right;
+            padding: 0 0 30px 30px;
+            .graph{
+                @include size(100%,100%);
+                padding: 10px;
+                @include box-shadow(0px,2px,5px,$black);
+                margin: 0 0 20px;
+                img{
+                    @include size(100%,auto);
+                }
+            }
+            h2{
+                color: $secondry;
+            }
+            @include breakpoint(xs){
+                @include size(100%,auto);
+                padding: 20px 0;
+            }
+        }
+        h3{
+            padding: 15px 0 0;
+            font-weight: 500;
+        }
+        h5{
+            padding: 15px 0;
+            font-weight: 600;
+        }
+        p{
+            padding: 15px 0;
+        }
+        @include breakpoint(xs){
+            padding-bottom: 0;
+        }
+    }
+    &_suggestion{
+        display: flex;
+        margin: 70px 0 0;
+        &_col{
+            flex: 1;
+            margin: 0 10px;
+            background-color: rgba($color: $primary, $alpha: 1.0);
+            padding: 45px 15px 15px;
+            @include relative(top 0 left 0);
+            @include box-shadow(0px, -6px, 5px, rgba($color:$black,$alpha:0.25));
+            &:first-child{
+                margin-left: 0;
+            }
+            &:last-child{
+                margin-right: 0;
+            }
+            h3{
+                text-align: center;
+                color: $white;
+                padding: 10px 0 10px;
+            }
+            .provide{
+                @include size(120px,120px);
+                @include radius(120px);
+                @include absolute(top 0 left 50%);
+                @include translate(-50%, -50%);
+                background-color: rgba($color: $primary, $alpha: 1.0);
+                @include box-shadow(0px, -6px, 5px, rgba($color:$black,$alpha:0.25));
+                h4{
+                    text-align: center;
+                    color: $white;
+                    font-size: 32px;
+                    line-height: 100px;
+                    font-weight: 700;
+                }
+            }
+        }
+        @include breakpoint(xs){
+            display: block;
+            margin: 0;
+            &_col{
+                margin: 90px 0 0;
+            }
+        }
+    }
+    &_producer{
+        @include size(100%,auto);
+        margin: 30px 0;
+        padding: 30px 20px;
+        // background-color: rgba($color: $black, $alpha: 0.2);
+        border: 5px solid $secondry;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box;
+        display: table;
+        h2{
+            padding-bottom: 20px;
+            color: $secondry;
+            text-align: left;
+        }
+        p{
+            font-size: 18px;
+            line-height: 24px;
+            padding: 0 0 20px;
+        }
+        .trenton{
+            border: 3px solid $white;
+            @include box-shadow(0px,3px,10px,$black);
+            img{
+                @include size(100%,auto);
+            }
+        }
+    }
+    &_analytic{
+        @include size(100%,auto);
+        display: table;
+        padding: 0;
+        text-align: center;
+        h6{
+            padding-top: 20px;
+        }
+        .search{
+            img{
+                @include size(100%,auto);
+            }
+        }
+        .data{
+            @include size(100%,auto);
+            display: table;
+            border: 5px solid rgba($color: $primary, $alpha: 1.0);
+            background-color: rgba($color: $primary, $alpha: 0.10);
+            padding: 27px 30px 40px;
+            h2{
+                padding: 0;
+                font-size: 82px;
+                font-weight: 700;
+                line-height: 82px;
+                color: $secondry;
+                border-bottom: 2px solid $secondry;
+                display: inline-block;
+            }
+            h3{
+                padding: 0;
+                font-weight: 700;
+                color: $secondry;
+                text-align: center;
+            }
+            h4{
+                padding: 50px 10px 30px;
+                font-size: 24px;
+                line-height: 28px;
+                color: $secondry;
+                text-align: center;
+            }
+            h5{
+                padding: 20px 0 0;
+                font-size: 21px;
+                line-height: 25px;
+                font-weight: 700;
+                color: $secondry;
+                text-align: center;
+                a{
+                    color: $secondry;
+                    &:hover{
+                        color: $black;
+                    }
+                }
+            }
+            p{
+                padding: 20px 0 0;
+                color: $secondry;
+                text-align: center;
+            }
+            @include breakpoint(md){
+                padding: 10px 20px 20px;
+                h4{
+                    padding: 20px 10px 10px;
+                }
+                h5,p{
+                    padding: 10px 0 0;
+                }
+            }
+            @include breakpoint(sm){
+                padding: 10px 10px 15px;
+                h2{
+                    font-size: 42px;
+                    line-height: 42px;
+                }
+                h3,h5{
+                    font-size: 18px;
+                    line-height: 21px;
+                }
+                h4{
+                    font-size: 18px;
+                    line-height: 22px;
+                    padding: 12px 0 12px;
+                }
+                h5,p{
+                    padding: 5px 0 0;
+                }
+
+            }
+            @include breakpoint(xs){
+                margin-top: 20px;
+            }
+        }
+    }
+}

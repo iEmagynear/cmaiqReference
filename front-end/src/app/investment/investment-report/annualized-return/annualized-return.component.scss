@@ -1,0 +1,101 @@
+@import "../../../../assets/scss/mixin";
+@import "../../../../assets/scss/variable";
+
+.CashFlow{
+    @include size(100%,auto);
+    padding: 10px;
+    display: flex;
+    h4{
+        text-align: center;
+        color: rgba($color: $black, $alpha: 0.7);
+        margin: 10px 0 20px;
+    }
+    &_col-2{
+        @include size(70px,auto);
+        float: left;
+        .arrow{
+            justify-content: center;
+                align-items: center;  
+                display: flex;
+                height: 100%;
+            &_wrp{
+                display: block;
+                text-align: center;
+                p{
+                    font-size: 12px;
+                    line-height: 18px;
+                    font-weight: 500;
+                    color: #808080;
+                    margin: 0;
+                }
+                img{
+                    width: 32px;
+                }
+            }
+           
+        }
+    }
+    &_col-8{
+        @include size(calc(100% - 140px),auto);
+        float: left;
+    }
+    .Legends{
+        width: 100%;
+        float: left;
+        text-align: center;
+        padding-left: 83px;
+        &_units{
+            width: 15px;
+            height: 15px;
+            border-radius: 2px;
+            display: inline-block;
+            position: relative;
+            margin: 10px 6px 0;
+            &_tooltip{
+                position: absolute;
+                bottom: 24px;
+                left: -100%;
+                width: 210px;
+                display: none;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: rgba($color: $black, $alpha: 0.7);
+                h5{
+                    font-size: 14px;
+                    line-height: 22px;
+                    font-weight: 500;
+                    color: $white;
+                    margin: 0;
+                    padding: 0;
+                    text-align: left;
+                }
+                &:after{
+                    content: '';
+                    border-top: 10px solid rgba($color: $black, $alpha: 0.7);
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    position: absolute;
+                    bottom: -10px;
+                    left: 10px;
+                }
+            }
+            &.yellow{
+                background-color: #fae232;
+            }
+            &.green{
+                background-color: #61d836;
+            }
+            &.blue{
+                background-color: #16e7cf;
+            }
+            &.lblue{
+                background-color: #00a2ff;
+            }
+            &:hover{
+                .Legends_units_tooltip{
+                    display: block;
+                }
+            }
+        }
+    }
+}

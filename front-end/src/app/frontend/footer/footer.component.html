@@ -1,0 +1,32 @@
+<footer>
+  <div class="container-fluid d-lg-flex justify-content-between px-lg-3">
+    <div class="quicklinks order-lg-2 pr-lg-3">    
+      <ul>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/testimonial']" routerLinkActive="active"
+            href="javascript:void(0)">{{ 'Charts.Home.Client Testimonials' | translate }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/case-studies']" routerLinkActive="active" href="javascript:void(0)">{{ 'Charts.Home.Case Studies' | translate }}
+            </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/contact']" routerLinkActive="active" href="javascript:void(0)">{{ 'Charts.Home.Contact Us' | translate }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/eula']" routerLinkActive="active" href="javascript:void(0)">EULA</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/toa']" routerLinkActive="active" href="javascript:void(0)">TOA</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/privacy']" routerLinkActive="active" href="javascript:void(0)">Privacy</a>
+        </li>
+      </ul>
+    </div>
+    <div class="copyright order-lg-1 pl-lg-3 text-center text-lg-left">
+      <div class="d-inline-block mr-3"><img src="assets/images/apc_logo_white.png" alt="cmaIQ logo"></div>
+      <p class="d-inline-block" [innerHTML]="'Charts.Home.Copyright 2017-2019 APC Data Analytics. All Rights Reserved' | translate"></p>
+    </div>
+  </div>
+</footer>

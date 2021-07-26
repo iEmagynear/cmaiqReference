@@ -1,0 +1,78 @@
+<app-header></app-header>
+<div class="Wrraper clr" [ngStyle]="{'height': innerHeight}">
+  <div class="themeBG">
+  <div class="container">
+    <div class="mycharts">
+      <h3>{{ 'MyCharts.label' | translate }}</h3>
+      <div class="MultiDelete">
+        <!-- <button type="button" (click)="deleteChartlist()">{{ 'MyCharts.Delete' | translate }}</button> -->
+        <button type="button" (click)="deleteChartlist()"><i class="material-icons">delete_forever</i> <span>Delete</span></button>        
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>
+                  <label class="mycharts_Checkbox">
+                    <input type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll()">
+                    <span class="checkmark"></span>
+                  </label>
+              </th>
+              <th>{{ 'MyCharts.Address/Title' | translate }}</th>
+              <!-- <th>{{ 'MyCharts.Category' | translate }}</th> -->
+              <th>{{ 'NewCharts.Listing Type' | translate }}</th>
+              <th>{{ 'MyCharts.DateCreated' | translate }}
+                <!-- <a href="javascript:void(0)"><i class="pi pi-caret-up"></i> </a>
+                <a href="javascript:void(0)"><i class="pi pi-caret-down"></i> </a> -->
+              </th>
+              <th>{{ 'MyCharts.Client' | translate }}</th>
+              <!-- <th>Address/Title</th> -->
+              <th>{{ 'MyCharts.City' | translate }}</th>
+              <th>{{ 'MyCharts.State' | translate }}</th>
+              <th>{{ 'MyCharts.SquareFootage' | translate }}</th>
+              <th>{{ 'MyCharts.Delete' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let chart of charts; let i=index">
+              <td>
+                  <label class="mycharts_Checkbox">
+                    <input type="checkbox" [(ngModel)]="chart.selected" [value]="chart._id">
+                    <span class="checkmark"></span>
+                  </label>
+              </td>
+
+              <td><a [routerLink]="(( chart.type.label == 'investment' )?'/investment-report/':'/chart/')+chart._id">{{(chart.targetProperty.address)?chart.targetProperty.address:chart.chart_title}}</a></td>
+              <td>{{ (( chart.type.label == 'investment' )?"MyCharts.Investment":((chart.relatedProperty.listing_type == 'Residential' || chart.relatedProperty.listing_type == '' || chart.relatedProperty.listing_type == 'null' || chart.relatedProperty.listing_type == null )?"NewCharts.Residential":"NewCharts.Rental")) | translate }}</td>
+             <!--  <td>{{chart.relatedProperty.listing_type}}</td> -->
+              <td>{{chart.created | date:'medium'}}</td>
+              <td>{{chart.client.first?chart.client.first:'-'}} {{chart.client.last}}</td>
+              <td>{{chart.targetProperty.city?chart.targetProperty.city:'-'}}</td>
+              <td>{{chart.targetProperty.state?chart.targetProperty.state:'-'}}</td>
+              <td>{{chart.targetProperty.squareFootage}}</td>
+              <td>
+                <button type="button" (click)="deleteChart(chart._id)">
+                  <i class="material-icons">delete_forever</i>
+                  <div class="tooltip">
+                    <h6>{{ 'MyCharts.DeleteChart' | translate }}</h6>
+                  </div>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="charts.length == 0" ><td class="text-center" colspan="9">{{ 'MyCharts.No Data Found' | translate }}.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

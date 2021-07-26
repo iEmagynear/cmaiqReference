@@ -1,0 +1,102 @@
+<div class="Dashboard">
+  <mat-sidenav-container class="Dashboard_Sidenav" autosize>
+
+    <mat-sidenav #sidenav class="Dashboard_Sidenav_Example" [ngClass]="status ? 'slideOn' : 'slideOff'" mode="side"
+      opened="true">
+      <mat-toolbar class="example-toolbar">
+        <mat-icon class="navtoggle" (click)="toggle()">menu</mat-icon>
+        <span class="example-fill-remaining-space"></span>
+      </mat-toolbar>
+      <app-left-sidebar></app-left-sidebar>
+    </mat-sidenav>
+
+    <div class="DashboardTab">
+      <mat-card>
+        <div class="HeaderWpr">
+          <div class="Headerlft">
+            <a class="backbtn" href="javascript:void(0)" [routerLink]="['/admin']"><i
+                class="pi pi-arrow-circle-left"></i></a>
+          </div>
+        </div>
+      </mat-card>
+      <mat-card>
+        <form [formGroup]="editMember" (ngSubmit)="editMlsMemberSubmit()">
+          <!-- <div class="form-group adduser">
+              <label>Name:</label>
+              <input type="text" class="form-control" autocomplete="off" formControlName="firstname">
+            </div> -->
+
+          <div class="DashboardTab_update">
+            <h3>Edit MLS</h3>
+            <div class="form-group" *ngIf="showMsgSuccess">
+              <div class="col-xs-12">
+                <p class="alert alert-success">
+                  <strong>MLS User Updated Successfully!</strong>
+                </p>
+              </div>
+            </div>
+            <div class="form-group" *ngIf="showMsgError">
+              <div class="col-xs-12">
+                <p class="alert alert-danger">
+                  <strong>{{errormsg}}</strong>
+                </p>
+              </div>
+            </div>
+            <div class="form-group adduser">
+              <label>First Name:</label>
+              <input type="text" class="form-control" autocomplete="off" formControlName="firstname">
+            </div>
+            <div class="form-group adduser">
+              <label>Last Name:</label>
+              <input type="text" class="form-control" autocomplete="off" formControlName="lastname">
+            </div>
+            <div class="form-group adduser">
+              <label>Email:<span class="rqfield">*</span></label>
+              <input readonly type="text" class="form-control" autocomplete="off" formControlName="email">
+            </div>
+
+            <div class="form-group adduser">
+              <label>Role:<span class="rqfield">*</span></label>
+
+              <label class="adduser_Checkbox">
+                <input type="checkbox" (change)="checkValue($event)" formControlName="mls_admin">
+                <span class="checkmark"></span>MLS Admin
+              </label>
+              <div class="Listmeber" *ngIf="showmulti">
+                <angular2-multiselect [data]="mlsData" formControlName="mlsList2" [settings]="settings"
+                  (onSelect)="onItemSelect2($event)" (onDeSelect)="OnItemDeSelect2($event)">
+                </angular2-multiselect>
+              </div>
+              <div class="invalid-feedback" style="display: block;" *ngIf="showMlsFlag">
+                Please Select MLS
+              </div>
+            </div>
+            <div class="form-group adduser">
+              <label class="adduser_Checkbox">
+                <input type="checkbox" formControlName="super_admin" (change)="memberList($event)">
+                <span class="checkmark"></span>Super Admin
+              </label>
+            </div>
+            <div class="invalid-feedback" style="display: block;" *ngIf="showRoleFlag">
+              Please Select Role.
+            </div>
+            <div class="form-group text-right">
+              <button type="submit">Update</button>
+            </div>
+
+          </div>
+        </form>
+      </mat-card>
+    </div>
+
+  </mat-sidenav-container>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

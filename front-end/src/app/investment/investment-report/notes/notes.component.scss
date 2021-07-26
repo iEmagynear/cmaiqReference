@@ -1,0 +1,37 @@
+@import "../../../../assets/scss/mixin";
+@import "../../../../assets/scss/variable";
+
+.notes {
+    @include size(100%,auto);
+    float: left;
+
+    .table {
+      tr {
+        td {
+          vertical-align: middle;
+          padding: 15px;
+          &:first-child{
+            width: 300px;
+          }
+          @include breakpoint(xs) {
+            font-size: 14px;
+            &:first-child{
+              width: 140px;
+            }
+          }
+
+          p {
+            margin-top: 20px;
+
+          }
+        }
+      }
+    }
+
+    h5,
+    h6,
+    p {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }

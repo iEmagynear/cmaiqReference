@@ -1,0 +1,138 @@
+<app-header (childMessage)="showMessageFromChild($event)"></app-header>
+<div class="Wrraper clr" [ngStyle]="{'height': innerHeight}">
+  <div class="Signup">
+    <div class="Signup_wrraper">
+      <h1>{{ 'Sign Out.Sign Up' | translate }}</h1>
+      <form *ngIf='!samlFlag' [formGroup]="userSignup" (ngSubmit)="signUpUser()">
+        <div class="form-group" *ngIf="showMsgError">
+          <div class="col-xs-12">
+            <p class="alert alert-danger">
+              <strong>{{errormsg}}</strong>
+            </p>
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="pi pi-home"></i></span>
+              <div class="tooltip">
+                <h6>{{ 'Sign Out.Select Your MLS' | translate }} <span class="req">*</span></h6>
+              </div>            
+            </div>
+            <div class="ddInput">
+              <label class="lbl">{{ 'Sign Out.Select Your MLS' | translate }}</label>
+              <angular2-multiselect [ngClass]="{ 'is-invalid': submitted && userFetch.mlsese.errors }" #dropdownElem 
+                [data]="mlsData" formControlName="mlsese" 
+                [(ngModel)]="selectedItems" 
+                [settings]="settings" 
+                (onSelect)="onItemSelect($event)" 
+                (onDeSelect)="OnItemDeSelect($event)">
+              </angular2-multiselect>
+            </div>            
+          </div>
+          <!-- <label>{{ 'Sign Out.Select Your MLS' | translate }}:<span class="rqfield">*</span></label> -->
+          <div *ngIf="submitted && userFetch.mlsese.errors" class="invalid-feedback">
+            <div *ngIf="userFetch.mlsese.errors.required">MLS is required</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="pi pi-envelope"></i></span>
+              <div class="tooltip">
+                <h6>{{ 'Sign Out.Enter Your Email' | translate }} <span class="req">*</span></h6>
+              </div>            
+            </div>
+            <input type="email" class="form-control" formControlName="yourEmail" [ngClass]="{ 'is-invalid': submitted && userFetch.yourEmail.errors }" placeholder="{{ 'Sign Out.Enter Your Email' | translate }}">
+          </div>
+          <div *ngIf="submitted && userFetch.yourEmail.errors" class="invalid-feedback">
+            <div *ngIf="userFetch.yourEmail.errors.required">Email is required</div>
+            <div *ngIf="userFetch.yourEmail.errors.email">Email must be a valid email address</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="pi pi-lock"></i></span>   
+              <div class="tooltip">
+                <h6>{{ 'Sign Out.Create a Password' | translate }} <span class="req">*</span></h6>
+              </div>         
+            </div>
+            <input type="password" class="form-control" placeholder="{{ 'Sign Out.Create a Password' | translate }}" formControlName="password" [ngClass]="{ 'is-invalid': submitted && userFetch.password.errors }">
+          </div>
+          <div *ngIf="submitted && userFetch.password.errors" class="invalid-feedback">
+            <div *ngIf="userFetch.password.errors.required">Password is required</div>
+            <div *ngIf="userFetch.password.errors.minlength">Password must be at least 6 characters</div>
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="pi pi-user"></i></span> 
+              <div class="tooltip">
+                <h6>{{ 'My Account.First Name' | translate }} <span class="req">*</span></h6>
+              </div>           
+            </div>
+            <input type="text" class="form-control" placeholder="{{ 'My Account.First Name' | translate }}" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && userFetch.firstName.errors }">
+          </div>
+          <div *ngIf="submitted && userFetch.firstName.errors" class="invalid-feedback">
+            <div *ngIf="userFetch.firstName.errors.required">First Name is required</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="pi pi-user"></i></span> 
+              <div class="tooltip">
+                <h6>{{ 'My Account.Last Name' | translate }} <span class="req">*</span></h6>
+              </div>           
+            </div>
+            <input type="text" class="form-control" placeholder="{{ 'My Account.Last Name' | translate }}" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && userFetch.lastName.errors }">
+          </div>
+          <div *ngIf="submitted && userFetch.lastName.errors" class="invalid-feedback">
+            <div *ngIf="userFetch.lastName.errors.required">Last Name is required</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="pi pi-tablet"></i></span>  
+              <div class="tooltip">
+                <h6>{{ 'My Account.Company Name' | translate }} <span class="req">*</span></h6>
+              </div>           
+            </div>
+            <input type="text" class="form-control" placeholder="{{ 'My Account.Company Name' | translate }}" formControlName="companyName" [ngClass]="{ 'is-invalid': submitted && userFetch.companyName.errors }">
+          </div>
+          <div *ngIf="submitted && userFetch.companyName.errors" class="invalid-feedback">
+            <div *ngIf="userFetch.companyName.errors.required">Company Name is required</div>
+          </div>
+        </div>
+ 
+        <div class="mb-3">
+          <button [disabled]="disableSubmit" type="submit">{{ 'Sign Out.Create Account' | translate }}</button>
+        </div>
+
+        <p class="text-center mb-0">{{ 'Sign Out.HaveAccount' | translate }} <a class="clrSec" [routerLink]="['/login']" href="javascript:void(0)">{{ 'Sign Out.Sign In' | translate }}</a></p>
+
+      </form>
+      <p *ngIf='samlFlag'>
+        You have been logged out due to inactivity. Please login in via Clareity or Paragon to continue.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

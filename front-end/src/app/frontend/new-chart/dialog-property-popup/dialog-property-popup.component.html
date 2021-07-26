@@ -1,0 +1,295 @@
+<div class="Wrraper" [ngStyle]="{'height': innerHeight}">
+  <div class="NewClient">
+    <div class="container">
+      <h3>{{ 'Property.AddProperty.AddNewProperty' | translate }}</h3>
+      <button md-raised-button matDialogClose class="btncancel"><i class="pi pi-times-circle"></i></button>
+      <div class="NewClient_add">
+        <form [formGroup]="addProperty" (ngSubmit)="addPropertySub()">
+
+          <div class="row">
+            <div class="col-12 col-lg-7">
+              <div class="form-group mb-3" *ngIf="showMsgSuccess">
+                <div class="col-xs-12">
+                  <p class="alert alert-success">
+                    <strong>{{successmsg}}</strong>
+                  </p>
+                </div>
+              </div>
+              <div class="form-group mb-3" *ngIf="showMsgError">
+                <div class="col-xs-12">
+                  <p class="alert alert-danger">
+                    <strong>{{errormsg}}</strong>
+                  </p>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="pi pi-home"></i></span>
+                    <div class="tooltip">
+                      <h6>{{ 'Property.AddProperty.Address' | translate }} <span class="req">*</span></h6>
+                    </div>
+                  </div>
+                  <input type="text" class="form-control" formControlName="address"
+                    placeholder="{{ 'Property.AddProperty.Address' | translate }}">
+                </div>
+                <div *ngIf="submitted && addProperty.controls.address.errors" class="invalid-feedback1">
+                  <div *ngIf="addProperty.controls.address.errors.required">Address is required.</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="pi pi-map-marker"></i></span>
+                        <div class="tooltip">
+                          <h6>{{ 'Property.AddProperty.City' | translate }} <span class="req">*</span></h6>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" formControlName="city"
+                        placeholder="{{ 'Property.AddProperty.City' | translate }}">
+                    </div>
+                    <div *ngIf="submitted && addProperty.controls.city.errors" class="invalid-feedback1">
+                      <div *ngIf="addProperty.controls.city.errors.required">City is required.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="pi pi-map-marker"></i></span>
+                        <div class="tooltip">
+                          <h6>{{ 'Property.AddProperty.State' | translate }} <span class="req">*</span></h6>
+                        </div>
+                      </div>
+                      <select class="form-control" formControlName="state">
+                        <option value=''>--{{ 'Property.AddProperty.State' | translate }}--</option>
+                        <option *ngFor="let state of states" [value]="state._id">{{state.name}}</option>
+                      </select>
+                    </div>
+                    <div *ngIf="submitted && addProperty.controls.state.errors" class="invalid-feedback1">
+                      <div *ngIf="addProperty.controls.state.errors.required">State is required.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="pi pi-map-marker"></i></span>
+                        <div class="tooltip">
+                          <h6>{{ 'Property.AddProperty.Zip' | translate }} <span class="req">*</span></h6>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" formControlName="zip"
+                        placeholder="{{ 'Property.AddProperty.Zip' | translate }}">
+                    </div>
+                    <div *ngIf="submitted && addProperty.controls.zip.errors" class="invalid-feedback1">
+                      <div *ngIf="addProperty.controls.zip.errors.required">Zip is required.</div>
+                      <div
+                        *ngIf="addProperty.controls.zip.errors.minlength || addProperty.controls.zip.errors.maxlength || addProperty.controls.zip.errors.pattern">
+                        Zip should be numeric and 5 digit long.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="pi pi-home"></i></span>
+                        <div class="tooltip">
+                          <h6>{{ 'Property.AddProperty.SquareFootage' | translate }} <span class="req">*</span></h6>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" formControlName="square_footage"
+                        placeholder="{{ 'Property.AddProperty.SquareFootage' | translate }}">
+                    </div>
+                    <div *ngIf="submitted && addProperty.controls.square_footage.errors" class="invalid-feedback1">
+                      <div *ngIf="addProperty.controls.square_footage.errors.required">Square Footage is required.</div>
+                      <div
+                        *ngIf="addProperty.controls.square_footage.errors.minlength || addProperty.controls.square_footage.errors.maxlength || addProperty.controls.square_footage.errors.pattern">
+                        Square Footage should be numeric and between 3 to 5 digit long.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="mb-3">
+                <label for="client"><a class="addclient"
+                    (click)="openDialog()">{{ 'Client.AddClient.label' | translate }}</a></label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="height:38px;"><i class="pi pi-user"></i></span>
+                    <div class="tooltip">
+                      <h6>{{groupName}}</h6>
+                    </div>
+                  </div>
+                  <div class="ddInput">
+                    <input type="hidden" formControlName="client" class="form-control">
+                    <ul class="Client_type">
+                      <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                          {{groupName}}
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li *ngFor="let client of clients" (click)="selectClient(client)">
+                            <a href="javascript:void(0)">{{client.firstname}} {{client.lastname}} <span>{{client.email}},
+                                {{client.phone}}</span></a>
+                          </li>
+                        </ul>
+                      </li>
+                      <a class="clearSelect" (click)="clearClient()"><i class="pi pi-times-circle"></i></a>
+                    </ul>
+                  </div>
+                </div>
+                <div *ngIf="submitted && addProperty.controls.client.errors" class="invalid-feedback1">
+                  <div *ngIf="addProperty.controls.client.errors.required">Client is required.</div>
+                </div>
+              </div> -->
+
+              <div class="mb-3">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="pi pi-home"></i></span>
+                    <div class="tooltip">
+                      <h6>{{ 'Property.AddProperty.property_type' | translate }} <span class="req">*</span></h6>
+                    </div>
+                  </div>
+                  <!-- <input type="text" class="form-control" formControlName="property_type"
+                    placeholder="{{ 'Property.AddProperty.property_type' | translate }}"> -->
+
+                  <select class="form-control" formControlName="property_type">
+                    <option value=''>--{{ 'Property.AddProperty.property_type' | translate }}--</option>
+                    <option value="Single Family Detached">{{ 'Property.AddProperty.Single Family Detached' | translate }}</option>
+                    <option value="Single Family Attached">{{ 'Property.AddProperty.Single Family Attached' | translate }}</option>
+                  </select>
+                </div>
+                <div *ngIf="submitted && addProperty.controls.property_type.errors" class="invalid-feedback1">
+                  <div *ngIf="addProperty.controls.property_type.errors.required">Property Type is required.</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="pi pi-home"></i></span>
+                        <div class="tooltip">
+                          <h6>{{ 'Property.AddProperty.bedroom' | translate }} <span class="req">*</span></h6>
+                        </div>
+                      </div>
+                      <input type="number" step="1" min="1" class="form-control" formControlName="bedroom"
+                        placeholder="{{ 'Property.AddProperty.bedroom' | translate }}">
+                    </div>
+                    <div *ngIf="submitted && addProperty.controls.bedroom.errors" class="invalid-feedback1">
+                      <div *ngIf="addProperty.controls.bedroom.errors.required">Bedrooms are required.</div>
+                      <div
+                        *ngIf="addProperty.controls.bedroom.errors.minlength || addProperty.controls.bedroom.errors.maxlength || addProperty.controls.bedroom.errors.pattern">
+                        Bedrooms should be numeric.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="pi pi-home"></i></span>
+                        <div class="tooltip">
+                          <h6>{{ 'Property.AddProperty.bathroom' | translate }} <span class="req">*</span></h6>
+                        </div>
+                      </div>
+                      <input type="number" step="1" min="1" class="form-control" formControlName="bathroom"
+                        placeholder="{{ 'Property.AddProperty.bathroom' | translate }}">
+                    </div>
+                    <div *ngIf="submitted && addProperty.controls.bathroom.errors" class="invalid-feedback1">
+                      <div *ngIf="addProperty.controls.bathroom.errors.required">Bathrooms are required.</div>
+                      <div
+                        *ngIf="addProperty.controls.bathroom.errors.minlength || addProperty.controls.bathroom.errors.maxlength || addProperty.controls.bathroom.errors.pattern">
+                        Bathrooms should be numeric.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="pi pi-home"></i></span>
+                    <div class="tooltip">
+                      <h6>{{ 'Property.AddProperty.mls_number' | translate }}</h6>
+                    </div>
+                  </div>
+                  <input type="text" class="form-control" (input)=mlsNumberImage($event) formControlName="mls_number"
+                    placeholder="{{ 'Property.AddProperty.mls_number' | translate }}">
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-5">
+              <div class="form-group mb-3 clearfix">
+                <label class="clearfix">{{ 'Property.AddProperty.PropertyImage' | translate }}</label>
+                <input type="hidden" formControlName="property_image" class="form-control">
+                <div class="Property_image" data-toggle="modal" data-target="#myModal1">
+                  <img *ngIf="croppedImage" src="{{croppedImage}}" />
+                  <div *ngIf="!croppedImage" class="caption">
+                    <h6>{{ 'Property.AddProperty.AddaPhotoHere' | translate }}</h6>
+                    <p><i class="pi pi-plus"></i></p>
+                  </div>
+                  <div *ngIf="croppedImage" class="changeImgCapt">
+                    <span><i class="pi pi-pencil mr-2"></i>{{ 'Property.AddProperty.ChangePropertyPic' | translate }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group text-right">
+            <div class="row no-mr">
+              <button type="submit">{{ 'Property.AddProperty.Submit' | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="myModal1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Upload Photo</h5>
+        <button type="button" class="close" data-dismiss="modal"><i class="pi pi-times-circle"></i></button>
+      </div>
+      <div class="modal-body">
+        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4/2"
+          format="jpeg" imageQuality="80" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+          (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+      </div>
+      <div class="footer text-right">
+        <div class="file-upload text-left">
+          <label for="upload1" class="file-upload__label"><i class="pi pi-upload"></i>Choose a Photo</label>
+          <input id="upload1" #inputFile (change)="fileChangeEvent($event)" class="file-upload__input" type="file"
+            name="file-upload">
+        </div>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+      </div>
+
+    </div>
+  </div>
+</div>

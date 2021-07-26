@@ -1,0 +1,56 @@
+<div class="CashFlow">
+  <div class="CashFlow_col-2">
+    <div class="arrow">
+      <div class="arrow_wrp">
+        <button *ngIf="Fmterm != 5" (click)="createNewLowCashflow()" type="btn btn-default">
+          <img src="assets/images/left-arrow.png" alt="arrow">
+          <p>{{(Fmterm == 30)?10:5}} {{'APC Investment Analysis.year window' | translate}}</p>
+          <img src="assets/images/left-arrow.png" alt="arrow">
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="CashFlow_col-8">
+    <h4>{{'APC Investment Analysis.Annual Investment Analysis' | translate}}</h4>
+    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+      [legend]="barChartLegend" [chartType]="barChartType" [colors]="barChartColors">
+    </canvas>
+    <div class="Legends">
+      <div class="Legends_units">
+        <span class="yellow"></span><h5>Cash Flow</h5>
+      </div>
+      <div class="Legends_units">
+        <span class="green"></span><h5>Principal Paydown</h5>
+      </div>
+
+      <div class="Legends_units">
+        <span class="blue"></span><h5>Annual Home Value Appreciation</h5>
+      </div>
+      <div class="Legends_units">
+        <span class="lblue"></span><h5>Tax Benefit/Liability</h5>
+       
+      </div>
+    </div>
+  </div>
+  <div class="CashFlow_col-2">
+    <div class="arrow">
+      <div class="arrow_wrp">
+        <button *ngIf="Fmterm >= 5 && Fmterm < 30" (click)="createNewHighCashflow()" type="btn btn-default">
+          <img src="assets/images/right-arrow.png" alt="arrow">
+          <p>{{(Fmterm == 5)?10:30}} {{'APC Investment Analysis.year window' | translate}}</p>
+          <img src="assets/images/right-arrow.png" alt="arrow">
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

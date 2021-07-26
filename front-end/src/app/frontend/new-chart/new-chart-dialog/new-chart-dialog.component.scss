@@ -1,0 +1,907 @@
+@import "../../../../assets/scss/variable";
+@import "../../../../assets/scss/mixin";
+
+.prospecting{
+  @include size(100%,auto);
+  float: left;
+  padding: 40px 0 0;
+  background-color: $lightGreen;
+  &_list{
+      @include size(100%,auto);
+      float: left;
+      padding: 0 15px;
+      background-color: $deepGray;
+      .form-group{
+          width: 100%;
+          float: left;
+          select{
+              option:disabled{
+                  color: rgba($color: $black, $alpha: 0.7);
+              }
+          }
+      }
+      h5{
+          font-size: 16px;
+          line-height: 22px;
+          font-weight: 500;
+          color: $black;
+          text-align: center;
+          padding: 0 0 15px;
+          margin: 0;
+      }
+      h6{
+          margin: 0;
+          padding: 5px 0;
+      }
+      p{
+          font-size: 13px;
+          line-height: 18px;
+          font-weight: 400;
+          color: rgba($color: $black, $alpha: 0.8);
+          text-align: left;
+          padding: 5px 0 0;
+          margin: 0;
+      }
+      .selectPropertyerror{
+          font-size: 13px;
+          line-height: 18px;
+          font-weight: 400;
+          color: rgba($color: red, $alpha: 1.0);
+          text-align: left;
+          padding: 5px 0 0;
+          margin: 0;
+      }
+      .addclient{
+          display: inline-block;
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 400;
+          background-color: $lightGreen;
+          color: $white;
+          border: 0;
+          cursor: pointer;
+      }
+      label{
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 600;
+          display: block;
+
+      }
+      .showsqr{
+          color: rgba($color: $black, $alpha: 0.7);
+          padding: 0;
+          text-align: center;
+      }
+      .showft{
+          border: 1px solid rgba($color: $black, $alpha: 0.25);
+          padding: 5px;
+          margin-bottom: 15px;
+          @include size(100%,auto);
+          float: left;
+          @include radius(3px);
+          background-color: rgba($color: $white, $alpha: 0.7);
+      }
+      input[type=text]{
+          font-size: 15px;
+          line-height: 20px;
+          font-weight: 400;
+          color: $black;
+          @include placeholder(rgba($color: $black,$alpha: 0.7));
+      }
+      .sub_zip{
+          padding: 0;
+          margin: 0 0 5px;
+          max-height: 100px;
+          overflow-y: auto;
+          list-style: none;
+          li{
+              display: inline-block;
+              font-size: 14px;
+              @include relative(top 0 left 0);
+              padding: 5px 15px;
+              background-color: rgba($color: $lightGreen, $alpha: 0.7);
+              @include radius(15px);
+              margin: 4px;
+              color: $white;
+              &:nth-child(odd){
+                  background-color: rgba($color: $lightGreen, $alpha: 0.85);
+              }
+              a{
+                  color: red;
+                  vertical-align: sub;
+                  margin-left: 10px;
+                  @include absolute(top -6px right -6px);
+              }
+          }
+      }
+      .addnew{
+          @include size(calc(100% - 75px), auto);
+          float: left;
+          @include radius(3px 0 0 3px);
+      }
+      .addbtn{
+          @include size(75px,auto);
+          background-color: $lightGreen;
+          color: $white;
+          @include radius(0 3px 3px 0);
+          padding: 7px 0px;
+          border: 0;
+          display: inline-block;
+          cursor: pointer;
+          text-align: center;
+          &:hover{
+              background-color: rgba($color: $green, $alpha: 1.0);
+          }
+          &:disabled{
+              background-color: rgba($color: $darkGreen, $alpha: 0.7);
+              cursor: default;
+          }
+      }
+      .property_type{
+          @include size(100%,38px);
+          margin: 0;
+          padding: 0;
+          padding: 0;
+          font-size: 1rem;
+          font-weight: 400;
+          line-height: 1.5;
+          color: #495057;
+          background-color: #fff;
+          background-clip: padding-box;
+          border: 1px solid #ced4da;
+          border-radius: .25rem;
+          list-style: none;
+          .dropdown{
+              @include size(100%, auto);
+              float: left;
+
+              .dropdown-toggle{
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  color: $black;
+                  display: block;
+                  padding: .375rem .75rem;
+                  margin: 0;
+                  text-decoration: none;
+                  @include relative(top 0 left 0);
+                  &:after{
+                      @include absolute(top 17px right 5px);
+                  }
+              }
+              .thumbnail{
+                  @include size(24px,24px);
+                  float: left;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  background-size: cover;
+                  margin-right: 5px;
+              }
+          }
+          .dropdown-menu{
+              padding: 10px;
+              width: 100%;
+              max-height: 200px;
+              overflow-y: auto;
+              li{
+                  font-size: 14px;
+                  line-height: 18px;
+                  font-weight: 400;
+                  display: table;
+                  padding: 5px 0;
+                  width: 100%;
+                  border-bottom: 1px solid $secondry;
+                  a{
+                      color: $black;
+                      text-decoration: none;
+                      display: block;
+                  }
+                  &:last-child{
+                      border-bottom: 0;
+                  }
+              }
+          }
+          .clearSelect{
+              @include absolute(top 8px right 16px);
+              color: $red;
+              font-size: 18px;
+              cursor: pointer;
+          }
+      }
+      .range{
+          @include size(calc(50% - 15px),auto);
+          float: left;
+          .input-group-addon {
+              font-size: 16px;
+              background-color: $lightGreen;
+              padding: 0 5px;
+              color: $white;
+              line-height: 36px;
+              @include radius(3px 0 0 3px);
+          }
+      }
+      .joint{
+          width: 30px;
+          text-align: center;
+          font-size: 14px;
+          line-height: 36px;
+          color: $black;
+          float: left;;
+      }
+      button[type="submit"]{
+          background-color: $lightGreen;
+          color: $white;
+          @include radius(25px);
+          padding: 7px 25px;
+          border: 0;
+          @include relative(top 0 left 0);
+          @include box-shadow(0px,2px,3px, rgba($color: $black,$alpha: 1.0));
+          cursor: pointer;
+          &:hover{
+              background-color: rgba($color: $green, $alpha: 1.0);
+              .tooltip{
+                  display: block;
+              }
+          }
+          &:disabled{
+              background-color: rgba($color: $darkGreen, $alpha: 0.7);
+              cursor: default;
+          }
+
+      }
+      .AddRemove{
+          @include size(100%,auto);
+          float: left;
+          position: relative;
+          .ChartLoader{
+              @include absolute(top 7px right 80px);
+              .LoaderCircle {
+                  z-index: 100000;
+                  border: 3px solid transparent;
+                  border-top: 3px solid #0043aa;
+                  border-bottom: 3px solid #0043aa;
+                  border-radius: 50%;
+                  width: 24px;
+                  height: 24px;
+                  -webkit-animation: clockwiseSpin 2s infinite linear;
+                  animation: clockwiseSpin 2s infinite linear;
+                  .icon{
+                      border-radius: 50%;
+                      width: 18px;
+                      height: 18px;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      -webkit-animation: antiClockwiseSpin 2s infinite linear;
+                      animation: antiClockwiseSpin 2s infinite linear;
+                      .pi{
+                          font-size: 14px;
+                          color: $secondry;
+                      }
+                  }
+              }
+          }
+      }
+
+  }
+  &_chart{
+      @include size(100%,auto);
+      float: left;
+      padding-top: 1em;
+      h1{
+          font-size: 36px;
+          line-height: 42px;
+          font-weight: 400;
+          color: $secondry;
+          text-align: center;
+          margin: 0;
+          padding: 0 0 20px;
+      }
+      ul{
+          list-style: none;
+          text-align: center;
+          li{
+              font-size: 18px;
+              line-height: 22px;
+              font-weight: 600;
+              color: $black;
+              display: inline-block;
+              padding: 0 10px;
+              span{
+                  @include size(20px,20px);
+                  display: inline-block;
+                  background-color: green;
+                  vertical-align: bottom;
+                  @include radius(20px);
+                  box-sizing: border-box;
+                  border: 3px solid rgba($color: $black, $alpha: 0.3);
+
+              }
+              &:nth-child(2) span{background-color: yellow}
+              &:nth-child(3) span{background-color: red}
+          }
+
+      }
+      &_map{
+          @include size(100%,490px);
+          float: left;
+          background-color: $white;
+          margin: 20px 0;
+          padding: 20px;
+      }
+      &_btn{
+          @include size(100%,auto);
+          display: table;
+          text-align: center;
+          button[type="submit"]{
+              background-color: $lightGreen;
+              color: $white;
+              @include radius(25px);
+              padding: 7px 25px;
+              border: 0;
+              margin: 0 5px;
+              @include box-shadow(0px,2px,3px, rgba($color: $black,$alpha: 1.0));
+              @include relative(top 0 left 0);
+              cursor: pointer;
+              &:hover{
+                  background-color: rgba($color: $green, $alpha: 1.0);
+                  .tooltip{
+                      display: block;
+                  }
+              }
+              &:disabled{
+                  background-color: rgba($color: $darkGreen, $alpha: 0.7);
+                  cursor: default;
+              }
+              /* &:nth-child(2){
+                  background-color: rgba($color: $primary, $alpha: 1.0);
+                  &:hover{
+                      background-color: $secondry;
+                  }
+                  &:disabled{
+                      background-color: rgba($color: $secondry, $alpha: 0.7);
+                      cursor: default;
+                  }
+              } */
+              @include breakpoint(sm){
+                      padding: 7px 10px;
+                      margin: 0 3px;
+              }
+              @include breakpoint(xs){
+                  display: block;
+                  width: 100%;
+                  margin: 0 0 10px;
+              }
+
+          }
+      }
+      @include breakpoint(xs){
+          margin-top: 20px;
+          h1{
+              font-size: 24px;
+              line-height: 30px;
+          }
+          ul{
+              li{
+                  display: block;
+                  text-align: left;
+                  margin: 0 0 10px;
+              }
+          }
+      }
+  }
+  .container { background-color: rgba($color: $primary, $alpha: 0.1); @include radius(6px); }
+}
+agm-map { height: 450px;
+width: 100%;
+}
+.new-client{
+  @include size(100%,auto);
+  float: left;
+  padding: 40px 0 0;
+  background-color: $lightGreen;
+  &_list{
+      @include size(100%,auto);
+      float: left;
+      padding: 0 15px;
+      background-color: $deepGray;
+      .form-group{
+          width: 100%;
+          float: left;
+          select{
+              option:disabled{
+                  color: rgba($color: $black, $alpha: 0.7);
+              }
+          }
+      }
+      h5{
+          font-size: 16px;
+          line-height: 22px;
+          font-weight: 500;
+          color: $black;
+          text-align: center;
+          padding: 0 0 15px;
+          margin: 0;
+      }
+      h6{
+          margin: 0;
+          padding: 5px 0;
+      }
+      p{
+          font-size: 13px;
+          line-height: 18px;
+          font-weight: 400;
+          color: rgba($color: $black, $alpha: 0.8);
+          text-align: left;
+          padding: 5px 0 0;
+          margin: 0;
+      }
+      .selectPropertyerror{
+          font-size: 13px;
+          line-height: 18px;
+          font-weight: 400;
+          color: rgba($color: red, $alpha: 1.0);
+          text-align: left;
+          padding: 5px 0 0;
+          margin: 0;
+      }
+      .addclient{
+          display: inline-block;
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 400;
+          background-color: $lightGreen;
+          color: $white;
+          border: 0;
+          cursor: pointer;
+      }
+      label{
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 600;
+          display: block;
+
+      }
+      .showsqr{
+          color: rgba($color: $black, $alpha: 0.7);
+          padding: 0;
+          text-align: center;
+      }
+      .showft{
+          border: 1px solid rgba($color: $black, $alpha: 0.25);
+          padding: 5px;
+          margin-bottom: 15px;
+          @include size(100%,auto);
+          float: left;
+          @include radius(3px);
+          background-color: rgba($color: $white, $alpha: 0.7);
+      }
+      input[type=text]{
+          font-size: 15px;
+          line-height: 20px;
+          font-weight: 400;
+          color: $black;
+          @include placeholder(rgba($color: $black,$alpha: 0.7));
+      }
+      .sub_zip{
+          padding: 0;
+          margin: 0 0 5px;
+          max-height: 100px;
+          overflow-y: auto;
+          list-style: none;
+          li{
+              display: inline-block;
+              font-size: 14px;
+              @include relative(top 0 left 0);
+              padding: 5px 15px;
+              background-color: rgba($color: $lightGreen, $alpha: 0.7);
+              @include radius(15px);
+              margin: 4px;
+              color: $white;
+              &:nth-child(odd){
+                  background-color: rgba($color: $lightGreen, $alpha: 0.85);
+              }
+              a{
+                  color: red;
+                  vertical-align: sub;
+                  margin-left: 10px;
+                  @include absolute(top -6px right -6px);
+              }
+          }
+      }
+      .addnew{
+          @include size(calc(100% - 75px), auto);
+          float: left;
+          @include radius(3px 0 0 3px);
+      }
+      .addbtn{
+          @include size(75px,auto);
+          background-color: $primary;
+          color: $white;
+          @include radius(0 3px 3px 0);
+          padding: 7px 0px;
+          border: 0;
+          display: inline-block;
+          cursor: pointer;
+          text-align: center;
+          &:hover{
+              background-color: rgba($color: $silver, $alpha: 1.0);
+          }
+          &:disabled{
+              background-color: rgba($color: $primary, $alpha: 0.7);
+              cursor: default;
+          }
+      }
+      .property_type{
+          @include size(100%,38px);
+          margin: 0;
+          padding: 0;
+          padding: 0;
+          font-size: 1rem;
+          font-weight: 400;
+          line-height: 1.5;
+          color: #495057;
+          background-color: #fff;
+          background-clip: padding-box;
+          border: 1px solid #ced4da;
+          border-radius: .25rem;
+          list-style: none;
+          .dropdown{
+              @include size(100%, auto);
+              float: left;
+
+              .dropdown-toggle{
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  color: $black;
+                  display: block;
+                  padding: .375rem .75rem;
+                  margin: 0;
+                  text-decoration: none;
+                  @include relative(top 0 left 0);
+                  &:after{
+                      @include absolute(top 17px right 5px);
+                  }
+              }
+              .thumbnail{
+                  @include size(24px,24px);
+                  float: left;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  background-size: cover;
+                  margin-right: 5px;
+              }
+          }
+          .dropdown-menu{
+              padding: 10px;
+              width: 100%;
+              max-height: 200px;
+              overflow-y: auto;
+              li{
+                  font-size: 14px;
+                  line-height: 18px;
+                  font-weight: 400;
+                  display: table;
+                  padding: 5px 0;
+                  width: 100%;
+                  border-bottom: 1px solid $secondry;
+                  a{
+                      color: $black;
+                      text-decoration: none;
+                      display: block;
+                  }
+                  &:last-child{
+                      border-bottom: 0;
+                  }
+              }
+          }
+          .clearSelect{
+              @include absolute(top 8px right 16px);
+              color: $red;
+              font-size: 18px;
+              cursor: pointer;
+          }
+      }
+      .Client_type{
+          @include size(100%,38px);
+          margin: 0;
+          padding: 0;
+          padding: 0;
+          font-size: 1rem;
+          font-weight: 400;
+          line-height: 1.5;
+          color: #495057;
+          background-color: #fff;
+          border: 1px solid #ced4da;
+          background-clip: padding-box;
+          @include radius(0 .25rem .25rem 0);
+          list-style: none;
+          @include relative(top 0 left 0);
+          .clearSelect{
+              @include absolute(top 8px right 16px);
+              color: $red;
+              font-size: 18px;
+              cursor: pointer;
+          }
+          .dropdown{
+              @include size(100%, auto);
+              float: left;
+
+              .dropdown-toggle{
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  color: $black;
+                  width: 100%;
+                  display: inline-block;
+                  padding: .375rem .75rem;
+                  margin: 0;
+                  text-decoration: none;
+                  @include relative(top 0 left 0);
+                  &:after{
+                      @include absolute(top 17px right 5px);
+                  }
+                  i{
+                      font-style: normal;
+                      padding: 0 10px;
+                  }
+                  @media (max-width: 479px){
+                      width: 250px;
+                  }
+              }
+              .thumbnail{
+                  @include size(24px,24px);
+                  float: left;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  background-size: cover;
+                  margin-right: 5px;
+              }
+          }
+          .dropdown-menu{
+              padding: 10px;
+              @include size(100%,auto);
+              max-height: 300px;
+              overflow-y: auto;
+              li{
+                  font-size: 16px;
+                  line-height: 18px;
+                  font-weight: 400;
+                  display: table;
+                  padding: 5px;
+                  width: 100%;
+                  border-bottom: 1px solid $secondry;
+                  background-color: rgba($color: $black, $alpha: 0.15);
+                  a{
+                      color: $black;
+                      text-decoration: none;
+                      display: block;
+                      cursor: pointer;
+                  }
+                  span{
+                      display: block;
+                      padding: 5px 0;
+                  }
+                  &:nth-child(even){
+                      background-color: rgba($color: $black, $alpha: 0.07);
+                  }
+              }
+          }
+      }
+      .range{
+          @include size(calc(50% - 15px),auto);
+          float: left;
+          .input-group-addon {
+              font-size: 16px;
+              background-color: $lightGreen;
+              padding: 0 5px;
+              color: $white;
+              line-height: 36px;
+              @include radius(3px 0 0 3px);
+          }
+      }
+      .joint{
+          width: 30px;
+          text-align: center;
+          font-size: 14px;
+          line-height: 36px;
+          color: $black;
+          float: left;;
+      }
+      button[type="submit"]{
+          background-color: $primary;
+          color: $white;
+          @include radius(25px);
+          padding: 7px 25px;
+          border: 0;
+          @include relative(top 0 left 0);
+          @include box-shadow(0px,2px,3px, rgba($color: $black,$alpha: 1.0));
+          cursor: pointer;
+          &:hover{
+              background-color: rgba($color: $silver, $alpha: 1.0);
+              .tooltip{
+                  display: block;
+              }
+          }
+          &:disabled{
+              background-color: rgba($color: $primary, $alpha: 0.7);
+              cursor: default;
+          }
+
+      }
+      .AddRemove{
+          @include size(100%,auto);
+          float: left;
+          position: relative;
+          .ChartLoader{
+              @include absolute(top 7px right 80px);
+              .LoaderCircle {
+                  z-index: 100000;
+                  border: 3px solid transparent;
+                  border-top: 3px solid #0043aa;
+                  border-bottom: 3px solid #0043aa;
+                  border-radius: 50%;
+                  width: 24px;
+                  height: 24px;
+                  -webkit-animation: clockwiseSpin 2s infinite linear;
+                  animation: clockwiseSpin 2s infinite linear;
+                  .icon{
+                      border-radius: 50%;
+                      width: 18px;
+                      height: 18px;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      -webkit-animation: antiClockwiseSpin 2s infinite linear;
+                      animation: antiClockwiseSpin 2s infinite linear;
+                      .pi{
+                          font-size: 14px;
+                          color: $secondry;
+                      }
+                  }
+              }
+          }
+      }
+
+  }
+  &_chart{
+      @include size(100%,auto);
+      float: left;
+      padding-top: 1em;
+      h1{
+          font-size: 36px;
+          line-height: 42px;
+          font-weight: 400;
+          color: $secondry;
+          text-align: center;
+          margin: 0;
+          padding: 0 0 20px;
+      }
+      ul{
+          list-style: none;
+          text-align: center;
+          li{
+              font-size: 18px;
+              line-height: 22px;
+              font-weight: 600;
+              color: $black;
+              display: inline-block;
+              padding: 0 10px;
+              span{
+                  @include size(20px,20px);
+                  display: inline-block;
+                  background-color: green;
+                  vertical-align: bottom;
+                  @include radius(20px);
+                  box-sizing: border-box;
+                  border: 3px solid rgba($color: $black, $alpha: 0.3);
+
+              }
+              &:nth-child(2) span{background-color: yellow}
+              &:nth-child(3) span{background-color: red}
+          }
+
+      }
+      &_map{
+          @include size(100%,490px);
+          float: left;
+          background-color: $white;
+          margin: 20px 0;
+          padding: 20px;
+      }
+      &_btn{
+          @include size(100%,auto);
+          display: table;
+          text-align: center;
+          button[type="submit"]{
+              background-color: $lightGreen;
+              color: $white;
+              @include radius(25px);
+              padding: 7px 25px;
+              border: 0;
+              margin: 0 5px;
+              @include box-shadow(0px,2px,3px, rgba($color: $black,$alpha: 1.0));
+              @include relative(top 0 left 0);
+              cursor: pointer;
+              &:hover{
+                  background-color: rgba($color: $green, $alpha: 1.0);
+                  .tooltip{
+                      display: block;
+                  }
+              }
+              &:disabled{
+                  background-color: rgba($color: $darkGreen, $alpha: 0.7);
+                  cursor: default;
+              }
+              /* &:nth-child(2){
+                  background-color: rgba($color: $primary, $alpha: 1.0);
+                  &:hover{
+                      background-color: $secondry;
+                  }
+                  &:disabled{
+                      background-color: rgba($color: $secondry, $alpha: 0.7);
+                      cursor: default;
+                  }
+              } */
+              @include breakpoint(sm){
+                      padding: 7px 10px;
+                      margin: 0 3px;
+              }
+              @include breakpoint(xs){
+                  display: block;
+                  width: 100%;
+                  margin: 0 0 10px;
+              }
+
+          }
+      }
+      @include breakpoint(xs){
+          margin-top: 20px;
+          h1{
+              font-size: 24px;
+              line-height: 30px;
+          }
+          ul{
+              li{
+                  display: block;
+                  text-align: left;
+                  margin: 0 0 10px;
+              }
+          }
+      }
+  }
+  .container { background-color: rgba($color: $primary, $alpha: 0.1); @include radius(6px); }
+}
+agm-map { height: 450px;
+width: 100%;
+}
+.tooltip{
+  @include size(230px,auto);
+  @include absolute(bottom 50px left 50%);
+  background-color: rgba($color: $lightGreen, $alpha: 1.0);
+  padding: 10px 15px;
+  display: none;
+  opacity: 1;
+  @include radius(3px);
+  @include translate(-50%, 0);
+  &:after{
+      content: '';
+      @include absolute(bottom -5px left 50%);
+      border-right: 10px solid $primary;
+      border-top: 10px solid transparent;
+      -webkit-transform: translate(-50%,0) rotate(45deg);
+      -moz-transform: translate(-50%,0) rotate(45deg);
+      -ms-transform: translate(-50%,0) rotate(45deg);
+      -o-transform: translate(-50%,0) rotate(45deg);
+      transform: translate(-50%,0) rotate(45deg);
+  }
+  h6{
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      color: $white;
+      text-align: center;
+  }
+}

@@ -1,0 +1,61 @@
+<div class="Dashboard">
+  <mat-sidenav-container class="Dashboard_Sidenav" autosize>
+
+    <mat-sidenav #sidenav class="Dashboard_Sidenav_Example" [ngClass]="status ? 'slideOn' : 'slideOff'" mode="side"
+      opened="true">
+      <mat-toolbar class="example-toolbar">
+        <mat-icon class="navtoggle" (click)="toggle()">menu</mat-icon>
+        <span class="example-fill-remaining-space"></span>
+      </mat-toolbar>
+      <app-left-sidebar></app-left-sidebar>
+    </mat-sidenav> 
+    <div class="DashboardTab">
+      <mat-card>
+        <app-admin-header></app-admin-header>
+      </mat-card>
+      <mat-card>
+        <form [formGroup]="editNewsForm" (ngSubmit)="editNewsFormSubmit()">
+          <div class="DashboardTab_update">
+            <h3>Edit News</h3>
+            <div class="form-group" *ngIf="showMsgSuccess">
+              <div class="col-xs-12">
+                <p class="alert alert-success">
+                  <strong>News Updated Successfully!</strong>
+                </p>
+              </div>
+            </div>
+            <div class="form-group" *ngIf="showMsgError">
+              <div class="col-xs-12">
+                <p class="alert alert-danger">
+                  <strong>{{errormsg}}</strong>
+                </p>
+              </div>
+            </div>
+            <div class="form-group adduser">
+              <label>Title:</label>
+              <input type="text" class="form-control" autocomplete="off" formControlName="title">
+            </div>
+            <div class="form-group adduser">
+              <label>content:</label>
+              <ckeditor [editor]="Editor" formControlName="content" ></ckeditor>
+
+            </div>
+            
+            <div class="form-group text-right">
+              <button type="submit">Update</button>
+            </div>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </mat-sidenav-container>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

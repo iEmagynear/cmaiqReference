@@ -1,0 +1,189 @@
+<app-header (childMessage)="showMessageFromChild($event)"></app-header>
+<div class="Wrraper">
+  <div class="comparable">
+    <div class="container">
+      <div class="paymentWrapper">
+
+        <div [hidden]="!showUpdate" class="page-header">
+          <h1>{{ 'Sign Out.Update Card Details for' | translate }} {{mlsName}}:</h1>
+        </div>
+
+        <div [hidden]="!showUpdate">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-9">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label class="control-label" for="cardholder-name">{{ 'Sign Out.Card Number' | translate }}:</label>
+                      <input [ngClass]="{'border-danger': ( submit && f.creditCard.errors)}" class="form-control" formControlName="creditCard" placeholder="Card Number" type="tel" autocomplete="cc-number" ccNumber>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="form-group">
+                      <label class="control-label" for="cardholder-phone">{{ 'Sign Out.Expiry' | translate }}:</label>
+                      <input [ngClass]="{'border-danger': (submit && f.expirationDate.errors)}" class="form-control" formControlName="expirationDate" placeholder="MM / YYYY" [textMask]="{mask: expmask}" type="text" autocomplete="cc-exp">
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="form-group">
+                      <label class="control-label" for="card-element">CVC:</label>
+                      <input [ngClass]="{'border-danger': (submit && (f.cvc.errors?.pattern || f.cvc.errors?.minlength || f.cvc.errors?.maxlength))}" class="form-control" formControlName="cvc" placeholder="CVC" minlength="3" maxlength="4" type="tel"
+                        autocomplete="off" ccCvc>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="oldCardInfo mb20" *ngIf="carddetails">
+              <label>Saved Card(s):</label>
+              <ul>
+                <li>
+                  <span>XXXX XXXX XXXX {{carddetails.last4}}</span>
+                  <span>{{carddetails.exp_month}} / {{carddetails.exp_year}}</span>
+                </li>
+              </ul>
+            </div>
+            <p *ngIf="carderror!=''" style="color: #c34">{{carderror}}</p>
+            <button type="button" class="btn btn-danger mb-2 mr-2" (click)="revertBack()">{{ 'Sign Out.back' | translate }}</button>
+            <button type="submit" class="btn btn-primary mb-2 mr-2">{{ 'Sign Out.Submit' | translate }}</button>
+          </form>
+        </div>
+
+        <div [hidden]="showUpdate">
+
+          <div *ngIf="planName !== 'cmaIQ Office Subscription' && subscription" class="row">
+            <div class="col-sm-12 mb20">
+              <div class="page-header">
+                <h1>{{ 'Sign Out.Your Current Subscription for' | translate }} {{mlsName}}:</h1>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="well stat">
+                    <div class="stat-value">{{ planName }}</div>
+                    <div class="stat-label">{{ 'My Account.Plan' | translate }}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="well stat">
+                    <div class="stat-value">{{ (subscription.created) | date:'MMM d, yyyy' }}</div>
+                    <div class="stat-label">{{ 'Sign Out.Created On' | translate }}</div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="well stat">
+                    <div class="stat-value">{{ planname }}</div>
+                    <div class="stat-label">{{ 'Sign Out.Price' | translate }}</div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="well stat">
+                    <div class="stat-value">{{ (subscription.subscription_end_date * 1000) | date:'MMM d, yyyy' }}</div>
+                    <div class="stat-label">{{ 'Sign Out.Next Renewal' | translate }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="page-header">
+                <h1>{{ 'Sign Out.Payment Options' | translate }}</h1>
+              </div>
+              <div class="stat-spacer"></div>
+              <i class="fa fa-credit-card super-awesome"></i>
+              <div>
+                <div class="page-header"></div>
+                <button *ngIf="planName != 'cmaIQ Office Subscription'" class="btn btn-danger mb-2 mr-2" (click)="changePaymentDetails()">{{ 'Sign Out.Update Payment Details' | translate }}</button>
+                <button class="btn btn-success mb-2 mr-2" [routerLink]="['/new-chart']">{{ 'Sign Out.Continue With Same Subscription' | translate }}</button>
+                <button class="btn btn-danger mb-2 mr-2" (click)="openConfirmCancelModal()">{{ 'Sign Out.Cancel Current Subscription' | translate }}</button>
+              </div>
+              <div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="planName == 'cmaIQ Office Subscription'" class="row">
+            <div class="col-sm-12 mb20">
+              <div class="page-header">
+                <h1>{{ 'Sign Out.Your Current Subscription is' | translate }} {{planname}}:</h1>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="page-header">
+                <h1>{{ 'Sign Out.Payment Options' | translate }}</h1>
+              </div>
+              <div class="stat-spacer"></div>
+              <i class="fa fa-credit-card super-awesome"></i>
+              <div>
+                <div class="page-header"></div>
+                <button class="btn btn-success mb-2 mr-2" [routerLink]="['/new-chart']">{{ 'Sign Out.Continue With Same Subscription' | translate }}</button>
+                <button class="btn btn-danger mb-2 mr-2" (click)="openConfirmCancelModalOffline()">{{ 'Sign Out.Cancel Current Subscription' | translate }}</button>
+              </div>
+              <div>
+              </div>
+            </div>
+          </div>
+
+          <div [hidden]="planName != 'No Plan Active'" class="row">
+            <div class="col-sm-6 pb-3 pb-sm-0">
+              <form (ngSubmit)="paymanetFormSub()" [formGroup]="stripeTest" class="clearfix">
+                <legend *ngIf="selectedPlan" style="padding-top:20px;" [innerHTML]="'Sign Out.Confirm Payment Method' | translate: { plantext:plantext,mlsName:mlsName}">
+                </legend>
+                <legend *ngIf="!selectedPlan" style="padding-top:20px;" [innerHTML]="'Sign Out.Please Select a Plan for' | translate: {mlsName:mlsName}"></legend>
+                <label class="control-label">{{ 'Sign Out.Select Payment Type' | translate }}:</label>
+                <!-- ngRepeat: plan in plans -->
+                <div *ngFor="let plan of plans">
+                  <input type="radio" [value]="plan.id" (click)="changePlan(plan)" formControlName="planname" style="margin: 1em">
+                  ${{plan.amount/100}} / {{plan.interval}}
+                  <span *ngIf="plan.trial_period_days" [innerHTML]="'Sign Out.days trial for new user' | translate: {trial_period_days:plan.trial_period_days}"></span>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label" for="cardholder-name">{{ 'Sign Out.Full Name' | translate }}:</label>
+                  <input class="form-control" formControlName="name" placeholder="John Smith">
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="cardholder-phone">{{ 'Sign Out.Phone' | translate }}:</label>
+                  <input class="form-control" formControlName="phone" placeholder="(123) 456-7890" type="tel">
+                </div>
+
+                <!-- card input to be mounted by stripe -->
+                <div class="form-group">
+                  <label class="control-label" for="card-element">
+                    {{ 'Sign Out.Credit/Debit Card' | translate }}:
+                  </label>
+                  <div id="card-element" class="form-control">
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <p style="color: #c34" *ngIf="!cardVals">
+                    {{cardValserror}}
+                  </p>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2 mr-2" [disabled]="!stripeTest.valid || !cardVals">{{ 'Sign Out.Submit Payment' | translate }}</button>
+              </form>
+            </div>
+
+            <div class="col-sm-6 d-xs-none">
+              <legend class="text-center">{{ 'Sign Out.Payment Options' | translate }}</legend>
+              <div class="cardImg"><img src="assets/images/credit-card.svg" alt="Card" /></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

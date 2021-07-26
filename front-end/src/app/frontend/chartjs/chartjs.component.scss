@@ -1,0 +1,1039 @@
+@import "../../../assets/scss/mixin";
+@import "../../../assets/scss/variable";
+
+.Wrraper{
+    display: block;
+}
+.generateChart{
+    @include size(100%,auto);
+    display: block;
+    float: left;
+    margin: 30px 0;
+    h2{
+        font-size: 30px;
+        line-height: 36px;
+        font-weight: 400;
+        color: $secondry;
+        text-align: center;
+        margin: 0px;
+        padding: 10px 0 20px;
+    }
+    h3{
+        font-size: 24px;
+        line-height: 30px;
+        font-weight: 500;
+        color: $secondry;
+        text-align: center;
+        margin: 0px;
+        padding: 10px 0 20px;
+    }
+    h4{
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 500;
+        color: $black;
+        text-align: left;
+        margin: 10px 0;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba($color: $black, $alpha: 0.2);
+    }
+    h5{
+        font-size: 20px;
+        line-height: 21px;
+        font-weight: 500;
+        color: rgba($color: $black, $alpha: 0.9);
+        text-align: left;
+        margin: 0;
+        padding: 10px 0 20px;
+    }
+    h6{
+        font-size: 17px;
+        line-height: 24px;
+        font-weight: 400;
+        color: rgba($color: $black, $alpha: 0.9);
+        text-align: left;
+        margin: 0;
+        padding: 0 0 5px;
+    }
+    p{
+        font-weight: 400;
+        color: rgba($color: $black, $alpha: 0.9);
+        text-align: left;
+        margin: 0;
+        padding: 0 0 15px;
+    }
+    @include breakpoint(sm){
+        h1{
+            font-size: 30px;
+            line-height: 36px;
+        }
+        h3{
+            font-size: 21px;
+            line-height: 25px;
+        }
+        h4{
+            font-size: 18px;
+        }
+    }
+    @include breakpoint(xs){
+        h1{
+            font-size: 18px;
+            line-height: 22px;
+        }
+        h3{
+            font-size: 16px;
+            line-height: 20px;
+            padding: 0 0 10px;
+        }
+        h4{
+            font-size: 15px;
+        }
+        h5{
+            font-size: 15px;
+            line-height: 20px;
+        }
+        p{
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+    }
+    &_bar{
+        @include size(100%,auto);
+        display: block;
+        float: left;
+        padding: 30px 0 20px;
+        text-align: right;
+        .btn-primary {
+            background-color: $secondry;
+            border-color: $secondry;
+            margin: 0 3px;
+            .pi {
+                vertical-align: sub;
+                font-size: 1.35em;
+            }
+        }
+        @media (min-width: 320px) and (max-width: 479px) and (orientation: portrait){
+            text-align: left;
+            padding: 0 0 10px;
+            .btn{
+                font-size: 14px;
+            }
+        }
+    }
+    &_main{
+       @extend .generateChart;
+        margin: 0;
+        &_tab{
+            @extend .generateChart;
+            margin-top: 0;
+        }
+        .propertystatus{
+            @extend .generateChart;
+            ul{
+                padding: 0;
+                margin: 0;
+                text-align: center;
+                li{
+                    display: inline-block;
+                    margin: 0 15px;
+                    span{
+                        @include size(18px,18px);
+                        display: inline-block;
+                        box-sizing: border-box;
+                        border: 2px solid #a2a0a0;
+                        @include radius(18px);
+                        margin-right: 10px;
+                        vertical-align: text-top;
+                        &.active{
+                            background-color: green;
+                        }
+                        &.pending{
+                            background-color: #ff0;
+                        }
+                        &.closed{
+                            background-color: red;
+                        }
+                    }
+                    img{
+                        vertical-align: initial;
+                    }
+                }
+            }
+            @include breakpoint(xs){
+                margin-top: 0;
+                ul{
+                    li{
+                        display: block;
+                        text-align: left;
+                        font-size: 14px;
+                        margin: 5px 10px;
+                    }
+                }
+            }
+        }
+        .tab-content{
+            @include size(100%,auto);
+            float: left;
+            padding: 15px;
+            // @include box-shadow(0px,0px,3px,rgba($color: $black, $alpha: 0.7));
+            @include radius(5px);
+        }
+        &_tab{
+            .nav-tabs{
+                border: 0;
+            }
+            .nav{
+                justify-content: center;
+                .nav-link{
+                    padding: 7px 25px;
+                    background-color: $secondry;
+                    color: $white;
+                    border-color: $white;
+                    &:hover{
+                        background-color: $primary;
+                    }
+                    &.active{
+                        background-color: $primary;
+                        pointer-events: none;
+                    }
+                    @media (min-width: 480px) and (max-width: 767px) and (orientation: landscape){
+                        font-size: 14px;
+                        padding: 7px 20px;
+                    }
+
+                }
+                @media (min-width: 320px) and (max-width: 479px) and (orientation: portrait){
+                      display: block;
+                      .nav-link{
+                          @include radius(.25rem);
+                      }
+                }
+            }
+        }
+        &_chart{
+            @extend .generateChart;
+            margin: 0;
+            float: left;
+            display: block;
+            .ChartDesign{
+                @extend .generateChart;
+                &_chart{
+                    @include relative(bottom 0 left 0);
+                }
+            }
+            .estimated{
+                @include size(100%, auto);
+                float: left;
+                &_mlsDetail{
+                    @include size(100%, auto);
+                    float: left;
+                    padding: 0;
+                    &_property{
+                        @include size(100%, auto);
+                        float: left;
+                        img{
+                            @include size(100%,auto);
+                        }
+                    }
+                    &_profile{
+                        @include size(100%, auto);
+                        float: left;
+                        margin: 20px 0;
+                        .table{
+                            th{
+                                white-space: nowrap !important;
+                            }
+                        }
+                    }
+                }
+                &_value{
+                    @include size(100%, auto);
+                    float: left;
+                    &_title{
+                        @include size(100%, auto);
+                        float: left;
+                        border: 3px solid $primary;
+                        padding: 10px 0;
+                        @include relative(top 0 right 0);
+                        h3{
+                            padding: 10px 50px;
+                        }
+                        .info{
+                            @include absolute(top 50% right 10px);
+                            @include translate(0,-50%);
+                            z-index: 9;
+                        }
+                        @include breakpoint(sm){
+                            h3{
+                                padding: 10px;
+                                font-size: 18px;
+                                line-height: 21px;
+                            }
+                        }
+                        @include breakpoint(xs){
+                            h3{
+                                padding: 10px;
+                                font-size: 16px;
+                                line-height: 20px;
+                            }
+                        }
+                    }
+                    &_rates{
+                        @extend .generateChart;
+                        display: block;
+                        float: left;
+                        margin-bottom: 0;
+                        .table{
+                            tr{
+                                td{
+                                    .overlay{
+                                        right: initial;
+                                        left: 40px;
+                                        &:after{
+                                            right: initial;
+                                            left: -9px;
+                                            @include rotate(135);
+                                        }
+                                    }
+                                    &:first-child{
+                                        width: 30%;
+                                        min-width: 130px;
+                                    }
+                                    @media (min-width: 320px) and (max-width: 479px) and (orientation: portrait){
+                                        &:first-child{
+                                            width: 30%;
+                                            min-width: 135px;
+                                        }
+                                        .overlay{
+                                            width: 145px;
+                                        }
+                                    }
+                                }
+                                th,td{
+                                    line-height: 28px;
+                                    white-space: normal;
+                                    word-break: break-all;
+                                    @media (min-width: 320px) and (max-width: 479px) and (orientation: portrait){
+                                        padding: 0.50rem;
+                                    }
+
+                                }
+                            }
+                        }
+                        .table-bordered{
+                            thead{
+                                th{
+                                    border-bottom: 0;
+                                }
+                            }
+                        }
+                        ul{
+                            padding: 0;
+                            margin: 0;
+                            li{
+                                display: inline-block;
+                                margin-right: 20px;
+                                vertical-align: top;
+                                a{
+                                    display: table;
+                                }
+                                .no-rating{
+                                    background-position: 0 -75px;
+                                    background-repeat: no-repeat;
+                                    background-size: cover;
+                                    background-image: url(../../../assets/images/star.png);
+                                    @include size(26px,26px);
+                                    float: left;
+                                    &.rating{
+                                        background-position: 0 0;
+                                        &:hover{
+                                            background-position: 0 -76px;
+                                        }
+                                    }
+                                    &:hover{
+                                        background-position: 0 -37px;
+                                    }
+                                    &.active{
+                                        background-position: 0 0;
+                                        pointer-events: none;
+                                    }
+                                }
+                                @media (min-width: 320px) and (max-width: 479px) and (orientation: portrait){
+                                    margin-right: 1px;
+                                }
+                            }
+                        }
+                        .btn-primary{
+                            background-color: $secondry;
+                            border: 0;
+                            &:focus{
+                                outline: 0;
+                                box-shadow: none;
+                            }
+                            &:hover{
+                                background-color: rgba($color: $secondry, $alpha: 0.7);
+                            }
+                        }
+                    }
+                }
+                .table{
+                    tr{
+                        td{
+                            font-size: 14px;
+                            line-height: 20px;
+                            white-space: normal;
+                            word-break: break-word;
+                            min-width: 120px;
+                            @include breakpoint(xs){
+                                min-width: inherit;
+                                width: 100%;
+                                display: block;
+                            }
+                            .table{
+                                tr{
+                                    td{
+                                        width: inherit;
+                                        display: table-cell;
+                                    }
+                                }
+                            }
+                        }
+                        th{
+                            font-size: 12px;
+                        }
+                        th,td{
+                            vertical-align: top;
+                            padding: 10px 5px;
+                            white-space: normal;
+                            word-break: break-all;
+                        }
+                    }
+                }
+            }
+        }
+        &_analytics{
+            @extend .generateChart;
+            margin: 0;
+            .table{
+                tr{
+                    th,td{
+                        text-align: center;
+                        white-space: normal;
+                        word-break: break-word;
+                        @media (min-width: 320px) and (max-width: 812px){
+                            font-size: 13px;
+                        }
+                        @include breakpoint(sm){
+                            white-space: nowrap;
+                            word-break: normal;
+                        }
+                    }
+                    th{
+                        font-weight: 500;
+                        border-bottom: 0;
+                    }
+                    &:first-child{
+                        th{
+                            background-color: $primary;
+                            color: $white;
+                        }
+                    }
+                }
+            }
+            .info{
+                .overlay{
+                    text-align: left;
+                }
+            }
+            .table-analytic{
+                @extend .generateChart;
+
+                .pi-arrow-down{
+                    color: #f00;
+                    vertical-align: text-top;
+                }
+                .pi-arrow-up{
+                    color: green;
+                    vertical-align: text-top;
+                }
+                @include breakpoint(xs){
+                    overflow-x: auto;
+                    .table{
+                        tr{
+                            .info{
+                                .overlay{
+                                    width: 200px;
+                                    @include translate(0,0);
+                                    top: -40px;
+                                    &:after{
+                                        top: 55px;
+                                    }
+                                }
+                            }
+                            &:last-child{
+                                .info{
+                                    .overlay{
+                                        width: 200px;
+                                        @include translate(0,0);
+                                        top: initial;
+                                        bottom: -20px;
+                                        &:after{
+                                            bottom: 20px;
+                                            top: initial;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+            .table-sale{
+                @extend .generateChart;
+                margin: 0;
+                overflow-x: auto;
+                .table{
+                    tr{
+                        td{
+                            padding: 0;
+                            border: 0;
+                            white-space: nowrap;
+                            word-break: normal;
+                            &:nth-child(2){
+                                .table{
+                                    tr{
+                                        td{
+                                            padding: 0.75rem;
+                                            border: 1px solid #dee2e6;
+                                        }
+                                    }
+                                }
+                            }
+
+                            // @include breakpoint(sm){
+                            //     width: 100%;
+                            //     display: table;
+                            //     &:nth-child(2){
+                            //         .table{
+                            //             tr{
+                            //                 td{
+                            //                     width: inherit;
+                            //                     display: table-cell;
+                            //                 }
+                            //             }
+                            //         }
+                            //     }
+                            // }
+                        }
+                        @media (min-width: 992px) {
+                            th,td{
+                                width: 33.33%;
+                                min-width: 100px;
+                            }
+                        }
+                        &.rowColor{
+                            td{
+                                background-color: rgba($color: $primary, $alpha: 0.8);
+                                color: $white;
+                            }
+                        }
+                    }
+
+                }
+                &_chart{
+                    @include size(100%,auto);
+                    float: left;
+                    padding: 10px;
+                }
+            }
+            .table-report{
+                @extend .generateChart;
+                margin-bottom: 0;
+                overflow-x: auto;
+            }
+        }
+        &_tablist{
+            .nav-tabs{
+                .nav-link{
+                    &:nth-child(1){
+                        background-color: rgba($color: green, $alpha: 0.6);
+                        &.active{
+                            background-color: green;
+                        }
+                    }
+                    &:nth-child(2){
+                        background-color: rgba($color: #c5c528, $alpha: 0.6);
+                        &.active{
+                            background-color: #c5c528;
+                        }
+                    }
+                    &:nth-child(3){
+                        background-color: rgba($color: red, $alpha: 0.6);
+                        &.active{
+                            background-color: red;
+                        }
+                    }
+                }
+            }
+            .tab-content{
+                // @include box-shadow(0,0,0,$white);
+                padding: 0;
+            }
+            .table{
+                margin: 0;
+                tr{
+                    th{
+                        font-size: 14px;
+                        font-weight: 600;
+                        line-height: 30px;
+                        white-space: normal;
+                        .info{
+                            .overlay{
+                                @include translate(0,0);
+                                top: -8px;
+                                white-space: normal;
+                                word-break: break-word;
+                                &:after{
+                                    top: 14px;
+                                    background-color: #f1f1f1;
+                                }
+                            }
+                        }
+                        &:nth-child(9){
+                            min-width: 115px;
+                        }
+                    }
+                    td{
+
+                        button{
+                            font-size: 18px;
+                            color: rgba($color: $secondry, $alpha: 1.0);
+                            border: 0;
+                            background-color: transparent;
+                            padding: 0;
+                            margin-right: 15px;
+                            cursor: pointer;
+                        }
+                    }
+
+                }
+                .photo{
+                    @include size(80px,80px);
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    @include relative(top 0 left 0);
+                    img{
+                        @include size(80px,80px);
+                        display: block;
+                    }
+                    .photooverlay{
+                        @include absolute(top 0 left 0);
+                        @include size(100%,100%);
+                        background-color: rgba($color: $black, $alpha: 0.7);
+                        font-size: 14px;
+                        line-height: 15px;
+                        text-align: center;
+                        color: $white;
+                        padding: 15px 0;
+                        cursor: pointer;
+                        display: none;
+                    }
+                    &:hover{
+                        .photooverlay{
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+        &_notes{
+            @include size(100%,auto);
+            float: left;
+            .table{
+                tr{
+                    &:first-child{
+                        td{
+                            &:last-child{
+                                padding: 0px;
+                                table{
+                                    width: 100%;
+                                    tr{
+                                        td{
+                                            padding: .75rem;
+                                            border: 1px solid #dee2e6;
+                                            border-bottom: 0;
+                                            &:first-child{
+                                                border-left: 0;
+                                                border-top: 0;
+                                                border-right: 0;
+                                                border-bottom: 1px solid #dee2e6;
+                                            }
+                                        }
+                                        &:last-child{
+                                            td:first-child{
+                                                border-bottom: 0;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    td{
+                        vertical-align: middle;
+                        padding: 5px;
+                        @include breakpoint(xs){
+                            font-size: 14px;
+                        }
+                        p{
+                            margin-top: 20px;
+                            .pi-arrow-down{
+                                color: red;
+                                vertical-align: text-top;
+                            }
+                            .pi-arrow-up{
+                                color: green;
+                                vertical-align: text-top;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &_report{
+            box-sizing: border-box;
+            .ReportAnalytics{
+                @include size(100%,auto);
+                float: left;
+                // border: 1px solid rgba($color: $black, $alpha: 0.2);
+                padding: 3px;
+                @include radius(5px);
+                .jumbotron{
+                    background-color: rgba($color: $primary, $alpha: 0.8);
+                    h1{
+                        color: $white;
+                        text-align: center;
+                    }
+                    h3{
+                        text-align: center;
+                        color: $white;
+                    }
+                }
+                h2{
+                    text-align: center;
+                    color: $secondry;
+                }
+                .estimated_mlsDetail{
+                    padding: 0 10px;
+                    &_property{
+                        img{
+                            @include size(100%,100%);
+                        }
+                    }
+                }
+            }
+            @include breakpoint(sm){
+                .jumbotron{
+                    padding: 2rem 1rem
+                }
+            }
+            @include breakpoint(xs){
+                .jumbotron{
+                    padding: 1rem 1rem
+                }
+            }
+        }
+    }
+    .reportchart{
+        @extend .ReportAnalytics;
+        margin: 20px 0 0;
+        padding: 20px 0 0;
+       &>h3{
+            background-color: rgba($color: $primary, $alpha: 0.8);
+            color: $white;
+            padding: 20px 0;
+        }
+        p{
+            font-weight: 400;
+            text-align: justify;
+            padding: 20px;
+            border-top: 1px solid rgba($color: $black, $alpha: 0.2);
+            clear: both;
+            margin-top: 10px;
+        }
+        h6{
+            text-align: right;
+            font-size: 14px;
+            padding: 10px 0;
+        }
+        .active,.pending,.closed{
+            background-color: green;
+            color: $white;
+            padding: 15px 0;
+            margin: 20px 0 0;
+        }
+        .pending{
+            background-color: #e0e00e;
+        }
+        .closed{
+            background-color: red;
+        }
+        .propertystatus{
+            @extend .generateChart;
+            ul{
+                li{
+                    display: inline-block;
+                    margin: 0 15px;
+                    span{
+                       padding: 0;
+                       margin-top: 0;
+                    }
+                    img{
+                        vertical-align: initial;
+                    }
+                }
+            }
+
+        }
+        .maplegends{
+            @extend .generateChart;
+            ul{
+                list-style: none;
+                text-align: center;
+                margin: 0;
+                padding: 10px 0;
+                li{
+                    display: inline-block;
+                    margin: 0 10px;
+                }
+            }
+        }
+        &_Chart{
+            padding: 0px;
+            .table{
+                tr{
+                    td{
+                        max-width: 300px;
+                        &:first-child,&:last-child{
+                            max-width: 150px;
+                        }
+                        @include breakpoint(xs){
+                            max-width: inherit;
+                            width: 100%;
+                            display: table;
+                            &:first-child,&:last-child{
+                                max-width: inherit;
+                                width: 100%;
+                                display: table;
+                            }
+                        }
+                        .table{
+                            tr{
+                                td{
+                                    max-width: inherit;
+                                    width: auto;
+                                    display: table-cell;
+                                    &:first-child,&:last-child{
+                                        max-width: inherit;
+                                        width: auto;
+                                        display: table-cell;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            @include breakpoint(xs){
+                .estimated_mlsDetail{
+                    padding: 0!important;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+    .aboutAPC{
+        @extend .ReportAnalytics;
+        margin: 20px 0 0;
+        padding: 20px 0 0;
+       h3{
+            background-color: rgba($color: $primary, $alpha: 0.8);
+            color: $white;
+            padding: 20px 0;
+        }
+
+        &.logo{
+            text-align: center;
+            padding: 20px 0;
+            img{
+                margin: 0 10px;
+            }
+        }
+    }
+    .AnalyticSearch{
+        @extend .ReportAnalytics;
+        border: 0!important;
+        padding: 0!important;
+        .table{
+            tr{
+                td{
+                    white-space: normal;
+                    word-break: break-word;
+                    text-align: left;
+                }
+            }
+        }
+    }
+}
+.info{
+    @include relative(top 0 right 0);
+    float: right;
+    a{
+        @include relative(top 0 right 0);
+        color: rgba($color: $secondry, $alpha: 0.7);
+        display: inline-block;
+        &:hover{
+            color: rgba($color: $secondry, $alpha: 1.0);
+            .overlay{
+                display: block;
+            }
+        }
+        .overlay{
+            @include size(300px,auto);
+            @include absolute(top 0 right 40px);
+            @include box-shadow(0px,0px, 3px, rgba($color: $black,$alpha:0.78));
+            @include translate(0,-50%);
+            z-index: 99;
+            background-color: $white;
+            display: none;
+            @include radius(5px);
+            white-space: normal;
+            word-break: break-word;
+            &:after{
+                content: '';
+                @include absolute(top 50% right -9px);
+                @include size(20px,20px);
+                background-color: $white;
+                box-shadow:(1px 1px 1px 0px rgba($color: $black,$alpha:0.5));
+                @include rotate(-45);
+            }
+            h6{
+                background-color: #f1f1f1;
+                padding: 10px;
+                font-family: Arial, Helvetica, sans-serif;
+                text-align: left;
+            }
+            p{
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 14px;
+                line-height: 22px;
+                color: $black;
+                padding: 10px 10px 10px 15px;
+                margin: 0;
+                font-weight: 400;
+            }
+            @media (min-width: 320px) and (max-width: 479px) and (orientation: portrait){
+                width: 230px;
+            }
+        }
+    }
+    .pi{
+        font-size: 28px;
+        vertical-align: bottom;
+
+    }
+    &.ChartInfo{
+        @include absolute(bottom 48px right 48px);
+        top: inherit;
+        a{
+            .overlay{
+                width: 500px;
+                @include translate(0,0);
+                top: initial;
+                bottom: -60px;
+                &:after{
+                    top: initial;
+                    bottom: 63px;
+                }
+                @include breakpoint(xs){
+                    @include translate(0,-50%);
+                    top: 50%;
+                    bottom: initial;
+                    &:after{
+                        top: 49%;
+                        bottom: initial;
+                    }
+                }
+                @media (min-width: 320px) and (max-width: 479px){
+                    width: 230px;
+                }
+                @media (min-width: 480px) and (max-width: 767px){
+                    width: 380px;
+                }
+            }
+        }
+        @include breakpoint(xs){
+            right: 5px;
+            bottom: 70px;
+        }
+    }
+}
+agm-map {
+  height: 450px;
+  width: 100%;
+}
+.modal-footer{
+    .chart-dot{
+        @include size(18px,18px);
+        display: inline-block;
+        box-sizing: border-box;
+        border: 2px solid #a2a0a0;
+        @include radius(18px);
+        margin-right: 10px;
+        vertical-align: text-top;
+        &.active{
+            background-color: green;
+        }
+        &.pending{
+            background-color: #ff0;
+        }
+        &.closed{
+            background-color: red;
+        }
+    }
+}
+.ReportClosed{
+    .table{
+        tr{
+            th,td{
+                white-space: normal;
+                word-break: break-all;
+            }
+        }
+    }
+}
+@include breakpoint(xs){
+    .table{
+        tr{
+            th,td{
+                font-size: 12px;
+                line-height: 16px;
+            }
+        }
+    }
+}
+.beachMLS{
+    width: 100%;
+    float: left;
+    padding: 10px;
+    p{
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 400;
+      color: $black;
+      text-align: left;
+    }
+  }

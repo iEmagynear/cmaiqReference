@@ -1,0 +1,53 @@
+<app-header (childMessage)="showMessageFromChild($event)"></app-header>
+<div class="Wrraper" [ngStyle]="{ height: innerHeight }">
+  <div class="container">
+    <h3>{{ "MLS Setting.Request for MLS Access" | translate }}</h3>
+    <div class="setting">
+      <div class="form-group" *ngIf="showMsgSuccess">
+        <div class="col-xs-12">
+          <p class="alert alert-success">
+            <strong
+              >Thank you for selecting your MLS. A cmaIQ MLS administrator is
+              required to check your access to that MLS. Once approved, you will
+              see an email in your inbox. You can then log back in and use
+              cmaIQ.</strong
+            >
+          </p>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="showMsgError">
+        <div class="col-xs-12">
+          <p class="alert alert-danger">
+            <strong>{{ errormsg }}</strong>
+          </p>
+        </div>
+      </div>
+      <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+        <angular2-multiselect
+          #dropdownElem
+          [data]="mlsData"
+          formControlName="mlsese"
+          [(ngModel)]="selectedItems"
+          [settings]="settings"
+          (onSelect)="onItemSelect($event)"
+          (onDeSelect)="OnItemDeSelect($event)"
+        >
+        </angular2-multiselect>
+        <div class="form-group text-right mb-0">
+          <button [disabled]="!userForm.valid" type="submit">
+            {{ "MLS Setting.Send Request" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

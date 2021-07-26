@@ -1,0 +1,80 @@
+<app-header></app-header>
+<div class="Wrraper" [ngStyle]="{'min-height': innerHeight}">
+  <div class="themeBG">
+  <div class="viewclient">    
+    <div class="container">
+      <h3>{{ 'Client.ViewClientList.label' | translate }}</h3>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="thead-light text-center">
+            <tr>
+              <th>{{ 'Client.ViewClientList.FirstName' | translate }}</th>
+              <th>{{ 'Client.ViewClientList.LastName' | translate }}</th>
+              <th>{{ 'Client.ViewClientList.Phone' | translate }}</th>
+              <th>{{ 'Client.ViewClientList.Email' | translate }}</th>
+              <th>{{ 'Client.ViewClientList.Action' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr *ngFor="let client of clients">
+              <td>{{client.firstname}}</td>
+              <td>{{client.lastname}}</td>
+              <td>{{(client.phone)?client.phone:'-'}}</td>
+              <td>{{(client.email)?client.email:'-'}}</td>
+              <td>
+                <a href="javascript:void(0)" [routerLink]="['/new-chart/edit-client', client._id]">
+                  <mat-icon aria-hidden="false">edit</mat-icon>
+                  <div class="tooltip">
+                    <h6>{{ 'Client.ViewClientList.Editclientrecord' | translate }}</h6>
+                  </div>
+                </a>
+                <a href="javascript:void(0)" (click)="deleteClient(client._id)">
+                  <i class="material-icons">delete_forever</i>
+                  <div class="tooltip">
+                      <h6>{{ 'Client.ViewClientList.Deleteclientrecord' | translate }}</h6>
+                    </div>
+                </a>
+              </td>
+            </tr>
+            <tr *ngIf="clients.length == 0" ><td class="text-center" colspan="5">{{ 'Client.ViewClientList.No Data Found' | translate }}.</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="paginate" *ngIf="this.clients.length>0">
+        <nav aria-label="Page navigation example ">
+            <ul>
+              <li class="page-item" [ngClass]="{'disabled': page == 1}">
+                <a class="page-link" href="javascript:void(0)" (click)="prevPage()" tabindex="-1"><i class="pi pi-angle-left"></i></a>
+              </li>
+
+              <li *ngFor="let item of totalpages;" class="page-item" [ngClass]="{'active': page == item}">
+                <a class="page-link" href="javascript:void(0)" (click)="changePage(item)">
+                  {{item}}
+                </a>
+              </li>
+
+              <li class="page-item" [ngClass]="{'disabled': totalnumpages == page}">
+                <a class="page-link" href="javascript:void(0)" (click)="nextPage()"><i class="pi pi-angle-right"></i></a>
+              </li>
+            </ul>
+          <select [value]="limit" (change)="onChangeLimit($event)" >
+            <option value="10">10</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="loaderWrraper"  *ngIf="loader">
+    <div class="loader">
+      <div class="outCircle">
+        <div class="icon">
+          <i class="pi pi-home"></i>
+        </div>
+      </div>
+    </div>
+    </div>

@@ -1,0 +1,156 @@
+<div class="reports">
+  <div class="ReportAnalytics">
+    <div class="jumbotron ">
+      <h1 class="display-4 mb-0" [innerHTML]="'APC Investment Analysis.label' | translate"></h1>
+    </div>
+    <div class="row no-gutters justify-content-center ReportProfiletop noBG">
+      <div class="col-12 col-lg-10">
+        <div class="row align-items-center">
+          <div class="col-xs-12 col-sm-4">
+            <table *ngIf="chart" class="table table-bordered mb-3 mb-sm-0">
+              <tbody>
+                <tr>
+                  <td>{{chart.client.first?chart.client.first:'-'}}
+                    {{chart.client.last?chart.client.last:'-'}}</td>
+                </tr>
+                <tr>
+                  <td>{{(chart.targetProperty.address)?chart.targetProperty.address:"-"}}</td>
+                </tr>
+                <tr>
+                  <td>{{(chart.targetProperty.state)?chart.targetProperty.state:"-"}}
+                    {{(chart.targetProperty.zip)?chart.targetProperty.zip:"-"}}</td>
+                </tr>
+                <tr>
+                  <td>Investment</td>
+                </tr>
+                <tr>
+                  <td>{{ 'NewCharts.'+(chart.targetProperty.seasonality | date: 'MMMM') | translate }}{{ chart.targetProperty.seasonality | date: ' d, yyyy'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-xs-12 col-sm-8">
+            <div class="estimated_mlsDetail" *ngIf="chart">
+              <div class="estimated_mlsDetail_property">
+                <img src="{{ chart.targetProperty.image || 'assets/images/house-icon-large.png' }}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>            
+    
+    <!--chart report-->
+    <div class="reportchart pagebreak">
+      <h3>Charts</h3>
+      <div class="generateChart_main_chart">
+        <div class="ChartDesign pagebreak">
+          <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+            <app-annual-inestment-analysis [currentcurrencyInt]="currentcurrency" [plotRespResiDential]="plotRespResiDential" [plotRespRental]="plotRespRental"
+              [chartdata]="chartdata"></app-annual-inestment-analysis>
+          </div>
+
+        </div>
+
+        <div class="ChartDesign pagebreak">
+          <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+            <app-annualized-return [plotRespResiDential]="plotRespResiDential" [plotRespRental]="plotRespRental"
+              [chartdata]="chartdata"></app-annualized-return>
+          </div>
+
+        </div>
+
+        <div class="ChartDesign pagebreak">
+          <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+            <app-cash-flow [currentcurrencyInt]="currentcurrency" [plotRespResiDential]="plotRespResiDential" [plotRespRental]="plotRespRental"
+              [chartdata]="chartdata"></app-cash-flow>
+          </div>
+        </div>
+
+        <div class="ChartDesign pagebreak">
+          <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+            <app-tax-benefit [currentcurrencyInt]="currentcurrency" [plotRespResiDential]="plotRespResiDential" [plotRespRental]="plotRespRental"
+              [chartdata]="chartdata"></app-tax-benefit>
+          </div>
+        </div>
+
+        <div class="ChartDesign pagebreak">
+          <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+            <app-principal-paydown [currentcurrencyInt]="currentcurrency" [plotRespResiDential]="plotRespResiDential" [plotRespRental]="plotRespRental"
+              [chartdata]="chartdata"></app-principal-paydown>
+          </div>
+        </div>
+
+        <div class="ChartDesign pagebreak">
+          <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+            <app-home-value [currentcurrencyInt]="currentcurrency" [plotRespResiDential]="plotRespResiDential" [plotRespRental]="plotRespRental"
+              [chartdata]="chartdata"></app-home-value>
+          </div>
+        </div>
+
+        <div class="ChartDesign pagebreak">
+          <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+            <app-home-equity [currentcurrencyInt]="currentcurrency" [plotRespResiDential]="plotRespResiDential" [plotRespRental]="plotRespRental"
+              [chartdata]="chartdata"></app-home-equity>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!--Analytics report-->
+    <div class="reportchart pagebreak">
+      <h3>Analytics</h3>
+      <div *ngIf="chartdata && plotRespResiDential && plotRespRental" class="analytics">
+        <app-analytics [currentcurrencyInt]="currentcurrency" [plotRespResiDential]="plotRespResiDential" [plotRespRental]="plotRespRental"
+        [chartdata]="chartdata"></app-analytics>
+      </div>
+    </div>
+
+   
+    <!--About apc text report-->
+    <div class="reportchart aboutAPC pagebreak">
+    </div>
+
+    
+    <div class="row ReportProfiletop align-items-center">
+      <div class="col-xs-12 col-sm-3">
+        <div class="estimated_mlsDetail ProfileImg mr-2" *ngIf="chart">
+          <div class="estimated_mlsDetail_property ">
+            <img src="{{ chart.agent.logo  || 'assets/images/logoDefault.png'}}">
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <table *ngIf="chart" class="table table-bordered mb-3 mb-sm-0">
+          <tbody>
+            <tr>
+              <td>{{chart.agent.fullName}}</td>
+            </tr>
+            <tr>
+              <td>{{chart.agent.company}}</td>
+            </tr>
+            <tr>
+              <td>{{chart.agent.email}}</td>
+            </tr>
+            <tr *ngIf="chart.agent.phone">
+              <td>{{chart.agent.phone}}</td>
+            </tr>
+            <tr *ngIf="chart.agent.website">
+              <td>{{chart.agent.website}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-xs-12 col-sm-3">
+        <div class="estimated_mlsDetail ProfileImg  ml-2" *ngIf="chart">
+          <div class="estimated_mlsDetail_property ">
+            <img src="{{ chart.agent.photo  || 'assets/images/profileDefault.png' }}">
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+</div>

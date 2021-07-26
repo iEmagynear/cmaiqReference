@@ -1,0 +1,54 @@
+@import '../../../assets/scss/variable';
+@import '../../../assets/scss/mixin';
+
+footer{    
+    background-color: $deepGray;
+    position: relative;
+    z-index: 9;
+    .copyright{ 
+        padding: 0.5em 0;
+        img { height: 16px; }
+        p{
+            color: rgba($color: $white, $alpha: 1);
+            padding: 10px 0;
+            margin: 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        h5{
+            font-size: 0.65em;
+            color: $white;
+            margin: 0;
+            padding: 11px 0;
+            display: none;
+        }
+    }
+    .quicklinks{
+        padding: 0.5em 0;
+        background-color: $deepGray;
+        ul{
+            list-style: none;
+            margin: 0; padding: 0;
+            text-align: center;
+            .nav-item{
+                display: inline-flex;
+                font-size: 14px;
+                .nav-link{
+                    color: $white;
+                }
+                &:first-child{
+                    .nav-link{
+                        padding-left: 0;
+                    }
+                }
+            }
+            @include breakpoint(xs){
+                .nav-item{
+                    .nav-link{
+                        padding: 5px;
+                    }
+                }
+            }
+        }
+    }
+}

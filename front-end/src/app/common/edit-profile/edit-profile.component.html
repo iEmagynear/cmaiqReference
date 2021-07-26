@@ -1,0 +1,179 @@
+<div class="themeBG">
+<div class="container">
+  <h3>{{ 'My Account.Edit Profile' | translate }}</h3>
+  <div class="DashboardTab_profile">    
+    <div class="form-group" *ngIf="showMsgSuccess">
+      <div class="col-xs-12">
+        <p class="alert alert-success">
+          <strong>{{successmsg}}</strong>
+        </p>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="showMsgError">
+      <div class="col-xs-12">
+        <p class="alert alert-danger">
+          <strong>{{errormsg}}</strong>
+        </p>
+      </div>
+    </div>
+    <app-header *ngIf="!inadmin" (childMessage)="showMessageFromChild($event)"></app-header>
+    <form [formGroup]="editUSer" (ngSubmit)="editUSerSub()">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label>{{ 'My Account.First Name' | translate }}: <span class="rqfield">*</span></label>
+            <input type="text" class="form-control" autocomplete="off" formControlName="firstname">
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label>{{ 'My Account.Last Name' | translate }}: <span class="rqfield">*</span></label>
+            <input type="text" class="form-control" autocomplete="off" formControlName="lastname">
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label>{{ 'My Account.Email' | translate }}:</label>
+            <input readonly type="text" class="form-control" autocomplete="off" formControlName="email">
+          </div>
+        </div>
+
+        <div *ngIf="!samlFlag" class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label>{{ 'My Account.Change Password' | translate }}:</label>
+            <input type="password" class="form-control" autocomplete="new-password" formControlName="password">
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label>{{ 'My Account.Company Name' | translate }}: <span class="rqfield">*</span></label>
+            <input type="text" class="form-control" autocomplete="off" formControlName="companyname">
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label>{{ 'My Account.Website URL' | translate }}:</label>
+            <input type="text" class="form-control" autocomplete="off" formControlName="website">
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label>{{ 'My Account.Phone Number' | translate }}:</label>
+            <input type="text" class="form-control" autocomplete="off" maxlength="10" formControlName="phone">
+          </div>
+        </div>
+        <div *ngIf="!samlFlag" class="col-xs-12 col-sm-6">
+          <div class="form-group" *ngIf="inadmin && mls_array_admin.length>1">
+            <label>{{ 'My Account.Default MLS' | translate }}:</label>
+            <select class="form-control" formControlName="default_mls_admin">
+              <option *ngFor="let mls of mls_array_admin" value="{{mls.mls_id}}">{{mls.mls_name}}</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="!inadmin && mls_array.length>1">
+            <label>{{ 'My Account.Default MLS' | translate }}:</label>
+            <select class="form-control" formControlName="default_mls_frontend">
+              <option value="">--{{ 'Sign Out.Select Default MLS' | translate }}--</option>
+              <option *ngFor="let mls of mls_array" value="{{mls.mls_id}}">{{mls.mls_name}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6" *ngIf="nrSelect && !samlFlag">
+          <div class="form-group">
+            <label>{{ 'My Account.Payment Settings' | translate }}</label>
+            <p *ngIf="!expired"><b>{{ 'My Account.Plan' | translate }}:</b> {{planname}}</p>
+            <div *ngIf="!expired && endDate>0">{{ 'My Account.Expires' | translate }}:
+              {{ endDate | date : "MMM d, yyyy" }} <span *ngIf="planstatus == 'trialing'">( In Trial Mode )</span></div>
+            <div class="alert alert-danger" *ngIf="expired">{{ 'My Account.Plan expired' | translate }}</div>
+          </div>
+        </div>
+        <div *ngIf="!samlFlag" class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <a class="btn button" [routerLink]="['/payment']">{{ 'My Account.Update Plan' | translate }}</a>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group float-left">
+            <label class="clearfix">{{ 'My Account.Profile Image' | translate }}:</label>
+            <!-- <input type="hidden" formControlName="profile_image" />
+            
+            <input type="file" class="form-control" accept="image/*" name="image" id="file"
+              (change)="showPreviewImage($event)" style="display: none;">
+            <div class="Profile_image">
+              <img *ngIf="isImage" id="output" [src]="image || 'assets/images/profileDefault.png'" />
+              <label for="file" class="caption">
+                <h6><i class="pi pi-plus"></i> {{ 'My Account.Add a photo here' | translate }}</h6>
+              </label> 
+            </div>-->
+            <input type="hidden" formControlName="profile_image" class="form-control" />
+            <div class="Profile_image" data-toggle="modal" data-target="#exampleModal">
+              <img *ngIf="isImage" id="output" [src]="image || 'assets/images/profileDefault.png'" />
+              <div *ngIf="!image" class="caption">
+                <h6><i class="pi pi-plus"></i> {{ 'My Account.Add a photo here' | translate }}</h6>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group float-left">
+            <label class="clearfix">{{ 'My Account.Company Logo' | translate }}:</label>
+            <input type="hidden" formControlName="logo" />
+            <input type="file" class="form-control" accept="image/*" name="image" id="cmplogo"
+              (change)="showPreviewLogo($event)" style="display: none;">
+            <div class="Profile_image">
+              <img id="isLogo" [src]="logoImage || 'assets/images/logoDefault.png'" />
+              <label for="cmplogo" class="caption">
+                <h6><i class="pi pi-plus"></i> {{ 'My Account.Add a logo here' | translate }}</h6>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12">
+          <div class="form-group text-right mb-0">
+            <button type="submit" [disabled]="!editUSer.valid">{{ 'My Account.Update' | translate }}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Upload Photo</h5>
+        <button type="button" class="close" data-dismiss="modal"><i class="pi pi-times-circle"></i></button>
+      </div>
+      <div class="modal-body">
+        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 4"
+          format="jpeg" imageQuality="80" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+          (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+      </div>
+      <div class="footer text-right">
+        <div class="file-upload text-left">
+          <label for="upload" class="file-upload__label"><i class="pi pi-upload"></i>Choose a Photo</label>
+          <input id="upload" #inputFile (change)="showPreviewImage($event)" class="file-upload__input" type="file"
+            name="file-upload">
+        </div>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

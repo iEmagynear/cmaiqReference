@@ -1,0 +1,79 @@
+@import '../../../../assets/scss/variable';
+@import '../../../../assets/scss/mixin';
+
+.NewClient{
+    @include size(100%, auto);
+    min-height: 100vh;
+    float: left;
+    margin: 0;
+    display: block;
+    background-image: url(../../../../assets/images/login-bg2.jpg);
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    @include relative(top 0 left 0);
+    padding: 30px 0;
+
+    &:after {
+        content: '';
+        @include size(100%, 100%);
+        @include absolute(top 0 left 0);
+        background-color: rgba($color: $black, $alpha: 0.3);
+    }
+    h3{
+        font-size: 32px;
+        line-height: 1.4;
+        font-weight: 600;
+        text-align: center;
+        color: $white;
+        padding: 0 0 20px;
+        margin: 0;
+        @include breakpoint(sm){
+            font-size: 21px;
+            line-height: 25px;
+        }
+        @include breakpoint(xs){
+            font-size: 18px;
+            line-height: 24px;
+        }
+    }
+    .btncancel{
+        display: none;
+    }
+    &_add{
+        @include size(550px,auto);
+        margin: 0 auto;
+        padding: 15px;
+        background-color: rgba($color: $deepGray, $alpha: 0.8);
+        @include box-shadow(0px,0px,3px,rgba($color:$black,$alpha:0.8));
+        @include radius(5px);
+        label{
+            font-size: 15px;
+            line-height: 20px;
+            font-weight: 400;
+            color: $grey;
+        }
+        button{
+            background-color: $secondry;
+            color: $white;
+            padding: 12px 25px;
+            display: block;
+            width: 100%;
+            @include radius(25px);
+            @include box-shadow(0px,0px,3px,$black);
+            border: 0;
+            &:hover {
+                background-color: rgba($color: $grey, $alpha: 1.0);
+            }
+    
+            &:disabled {
+                background-color: rgba($color: $secondry, $alpha: 0.7);
+                cursor: default;
+            }
+        }
+        @include breakpoint(xs){
+            @include size(100%,auto);
+        }
+    }
+}

@@ -1,0 +1,167 @@
+@import '../../../assets/scss/variable';
+@import '../../../assets/scss/mixin';
+
+
+.DashboardTab{
+    @include size(100%, auto);
+    float: left;
+    .mat-card{
+        box-shadow: none;
+        width: 100%;
+        float: left;
+    }
+    &_update{
+        @include size(600px,auto);
+        background-color: rgba($color: $black, $alpha: 0.07);
+        padding: 20px;
+        margin: 0 auto;
+        @include radius(5px);
+        h3{
+            font-size: 24px;
+            line-height: 30px;
+            font-weight: 500;
+            color: $black;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        label{
+            font-size: 16px;
+            line-height: 20px;
+            font-weight: 500;
+            color: rgba($color: $black, $alpha: 1.0);
+        }
+        .form-control{
+            font-size: 15px;
+            line-height: 20px;
+            font-weight: 400;
+            height: 40px;
+            color: rgba($color: $black, $alpha: 1.0);
+            @include placeholder(rgba($color: $black, $alpha: 0.9));
+            &[readonly]{
+                background-color: $white;
+                pointer-events: none;
+                color: rgba($color: $black, $alpha: 0.5);
+            }
+        }
+        button[type="submit"]{
+            background-color: $secondry;
+            color: $white;
+            @include radius(25px);
+            padding: 10px 20px;
+            border: 0;
+            @include box-shadow(0px,2px,3px, rgba($color: $black,$alpha: 1.0));
+            cursor: pointer;
+            &:hover{
+                background-color: rgba($color: $silver, $alpha: 1.0);
+            }
+            &:disabled{
+                background-color: rgba($color: $secondry, $alpha: 0.7);
+                cursor: default;
+            }
+        }
+        .adduser{
+            @include size(100%,auto);
+            float: left;
+            &_Checkbox{
+                display: block;
+                position: relative;
+                padding: 0px;
+                margin: 0px;
+                cursor: pointer;
+                font-size: 15px;
+                font-weight: 400;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                //@include size(18px,18px);
+                margin: 20px 0 0px;
+                
+                input {
+                    height: 0;
+                    width: 0;
+                    opacity: 0;
+                    &:checked ~ .checkmark {
+                        background-color: $secondry;
+                        border-color: $secondry;
+                    }
+                    &:checked ~ .checkmark:after {
+                        display: block;
+                    }
+                }
+                .checkmark {
+                    @include size(18px,18px);
+                    @include radius(2px);
+                    float: left;
+                    border: 2px solid rgba($color: $secondry, $alpha: 0.3);
+                    margin-right: 5px;
+                    &:after {
+                        content: "";
+                        @include absolute(top 2px left 6px);
+                        display: none;
+                        @include size(6px,12px);
+                        border: solid $white;
+                        border-width: 0 2px 2px 0;
+                        -webkit-transform: rotate(45deg);
+                        -ms-transform: rotate(45deg);
+                        transform: rotate(45deg);
+                    }
+                }
+                &:hover input ~ .checkmark {
+                    border-color: rgba($color: $secondry, $alpha: 1.0);
+                }
+            }
+        }
+              
+        @include breakpoint(xs){
+            @include size(100%,auto);
+            h3{
+                font-size: 18px;
+                line-height: 24px;
+            }
+        }
+    }
+    .HeaderWpr{
+        @include size(calc(100% - 0px), auto);
+        padding: 0;
+        display: inline-block;
+        .Headerlft{
+            @include size(60%,auto);
+            display: inline-block;
+            h3{
+                font-size: 24px;
+                line-height: 28px;
+                font-weight: 500;
+                color: $black;
+                text-align: left;
+                display: inline-block;
+                span{
+                    text-transform: uppercase;
+                    padding: 0 10px 0 0;
+                    border-right: 2px solid rgba($color: $black, $alpha: 0.5);
+                    margin-right: 5px;
+                }
+            }
+            .backbtn{
+                font-size: 28px;
+                vertical-align: middle;
+                color: $secondry;
+                margin-right: 20px;
+                &:hover{
+                    color: $primary;
+                }
+            }
+        }
+       
+        @include breakpoint(xs){
+            .Headerlft{
+                @include size(100%,auto);
+                h3{
+                    font-size: 20px;
+                    line-height: 25px;
+                }
+            }
+            
+        }
+    }
+}

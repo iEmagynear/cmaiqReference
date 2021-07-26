@@ -1,0 +1,248 @@
+  <app-header class="app-header-cls" (childMessage)="showMessageFromChild($event)"></app-header>
+  <div class="Wrraper">
+    <div class="newsBar"><ngx-newsticker title="Latest News" *ngIf="eventList.length > 0" [events]="eventList" [showCounter]="false" [interval]="5000"></ngx-newsticker></div>
+    <div class="home">
+      <!-- <div class="home_banner">
+        <label class="home_banner_tag">{{ 'Charts.Home.BannerLabel' | translate }}</label>
+      </div> -->
+      <section class="newBanner">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 col-lg-7 offset-lg-5 text-center text-lg-left">
+              <div class="pr-lg-3 cont" animateOnScroll animationName="animate__animated animate__slideInRight animate__faster">
+                <h1>{{ 'Charts.Home.BannerLabel' | translate }}</h1>
+                <p>{{ 'Charts.Home.BannerDescTxt' | translate }}</p>
+                <p>
+                  <a class="btn banBtn" href="javascript:void(0);" [routerLink]="['/signup']" *ngIf="!loginFlag">{{ 'Sign Out.Sign Up' | translate }}</a>
+                  <a class="btn banBtn" target="_blank" href="https://www.youtube.com/watch?v=FE7HQiFh2aI&list=PLOwTMdPSNlHfl7AQMEcL971ywZZJKIBrb">{{ 'Charts.Home.BannerBtn2' | translate }}</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="banBtmFlot" animateOnScroll animationName="animate__animated animate__slideInUp"></div>
+      </section>
+
+      <section class="container py-3 py-sm-0">
+        <div class="featuredGrid row text-center">
+          <div class="col-12 col-sm-4 py-2 py-sm-5" [class.selected]="showThis == 'show1'" (mouseover)="showThis = 'show1';">
+            <span class="featIco pricing"></span>
+            <label animateOnScroll animationName="animate__animated animate__slideInUp">{{ 'Charts.Home.FeatLabel1' | translate }}</label>
+          </div>
+          <div class="col-12 col-sm-4 py-2 py-sm-5" [class.selected]="showThis == 'show2'" (mouseover)="showThis = 'show2';">
+            <span class="featIco property"></span>
+            <label animateOnScroll animationName="animate__animated animate__slideInUp">{{ 'Charts.Home.FeatLabel2' | translate }}</label>
+          </div>
+          <div class="col-12 col-sm-4 py-2 py-sm-5" [class.selected]="showThis == 'show3'" (mouseover)="showThis = 'show3';">
+            <span class="featIco investment"></span>
+            <label animateOnScroll animationName="animate__animated animate__slideInUp">{{ 'Charts.Home.FeatLabel3' | translate }}</label>
+          </div>
+        </div>
+      </section>
+      <section class="featDescSec">
+        <div class="container-fluid">
+          <div class="row no-gutters r1" *ngIf="showThis == 'show1'">
+            <div class="col-12 col-sm-6 imgB order-sm-2">
+              <img src="assets/images/home/cont-img01.jpg" alt="">
+            </div>
+            <div class="col-12 col-sm-6 p-3 p-md-5 order-sm-1">
+              <div class="pt-0" [innerHTML]="'Charts.Home.Welcome to the APC Real Estate Pricing Tooltext1' | translate: { className:'font-bold-only'}"></div>
+            </div>
+          </div>
+          <div class="row no-gutters r2" *ngIf="showThis == 'show2'">
+            <div class="col-12 col-sm-6 imgB">
+              <img src="assets/images/home/cont-img02.jpg" alt="">
+            </div>
+            <div class="col-12 col-sm-6 p-3 p-md-5">
+              <div class="pt-0">
+                <h4>{{ 'Charts.Home.PVA_Feat_label' | translate }}</h4>
+                <ul class="cList">
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.PVA_Feat_li1' | translate"></span></li>
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.PVA_Feat_li2' | translate"></span></li>
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.PVA_Feat_li3' | translate"></span></li>
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.PVA_Feat_li4' | translate"></span></li>
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.PVA_Feat_li5' | translate"></span></li>
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.PVA_Feat_li6' | translate"></span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row no-gutters r3" *ngIf="showThis == 'show3'">
+            <div class="col-12 col-sm-6 imgB">
+              <img src="assets/images/home/cont-img03.jpg" alt="">
+            </div>
+            <div class="col-12 col-sm-6 p-3 p-md-5">
+              <div class="pt-0">
+                <h4>{{ 'Charts.Home.IA_Feat_label' | translate }}</h4>
+                <ul class="cList">
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.IA_Feat_li1' | translate"></span></li>
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.IA_Feat_li2' | translate"></span></li>
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.IA_Feat_li3' | translate"></span></li>
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.IA_Feat_li4' | translate"></span></li>
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.IA_Feat_li5' | translate"></span></li>
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.IA_Feat_li6' | translate"></span></li>
+                  <li><i class="pi pi-angle-right"></i><span [innerHTML]="'Charts.Home.IA_Feat_li7' | translate"></span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>          
+      </section>
+      <section class="quickLinksSec py-5">
+        <div class="container text-center">
+          <img class="mb-3 d-inline-block" style="height:30px;" src="assets/images/apc_logo_white.png" alt="cmaIQ" animateOnScroll animationName="animate__animated animate__slideInDown animate__faster">
+          <h2 class="m-0" animateOnScroll animationName="animate__animated animate__slideInUp animate__faster">{{ 'Charts.Home.APC. DREAMED, DESIGNED, DEVELOPED AND DELIVERED BY AGENTS, FOR AGENTS.' | translate }}</h2>
+          <div class="pt-3" *ngIf="loginFlag">
+            <h6 [innerHTML]="'Charts.Home.Learn more about using the APC Residential Pricing, Investment & Analytics Tool' | translate: { className:'font-bold-only'}"></h6>
+            <div class="lnkB pt-4">
+              <a href="https://www.youtube.com/channel/UCx0f7mkgYbfGQVp6Saiyylw/" target="_blank" class="btn btn-default">Instructional Videos</a>
+              <a href="https://www.apcdata.net/webinars/" target="_blank" class="btn btn-default">Webinars</a>
+              <a href="https://intercom.help/theAPC/en/collections/2207381-frequently-asked-questions" target="_blank" class="btn btn-default">FAQ</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="pt-4 text-center">
+        <div animateOnScroll animationName="animate__animated animate__slideInUp"><img src="assets/images/home/cont-img-cmaIQ.jpg" alt=""></div>
+      </section>
+      <section class="testimonialSec py-5" animateOnScroll animationName="animate__animated animate__slideInUp">
+        <h2>{{ 'Charts.Home.Client Testimonials' | translate }}</h2>
+        <div class="container">
+          <!-- <carousel [interval]="myInterval" [showIndicators]="false" [singleSlideOffset]="false" [itemsPerSlide]="2">
+            <slide *ngFor="let testimonial of clientTestimonials">
+                <span class="testIco"></span>
+                <p>"{{testimonial.description | translate}}"</p>
+                <div class="lead_star">
+                  <i class="pi pi-star"></i>
+                  <i class="pi pi-star"></i>
+                  <i class="pi pi-star"></i>
+                  <i class="pi pi-star"></i>
+                  <i class="pi pi-star"></i>
+                </div>                  
+                <div class="home_testimonial_icon">
+                  <img src="{{testimonial.icon}}" alt="">
+                </div>
+                <h3>{{testimonial.clientName | translate}}</h3>
+                <h6>{{testimonial.clientDesignation | translate}}</h6>
+            </slide>
+          </carousel> -->
+
+          <owl-carousel-o [options]="customOptions">
+
+            <ng-container *ngFor="let testimonial of clientTestimonials">
+              <ng-template carouselSlide>
+                <div class="slideBox">
+                  <span class="testIco"></span>
+                  <div class="descTxt" [innerHTML]="testimonial.description | translate"></div>
+                  <div class="lead_star">
+                    <i class="pi pi-star"></i>
+                    <i class="pi pi-star"></i>
+                    <i class="pi pi-star"></i>
+                    <i class="pi pi-star"></i>
+                    <i class="pi pi-star"></i>
+                  </div>  
+                  <h3>{{testimonial.clientName | translate}}</h3>
+                  <h6>{{testimonial.clientDesignation | translate}}</h6>
+                </div>
+              </ng-template>
+            </ng-container>
+        
+          </owl-carousel-o>
+
+        </div>
+      </section>
+      <!-- <section class="homeStat py-5">
+        <div class="container">
+          <div class="row">           
+            <div class="col-xs-12 col-sm-4">
+              <div class="home_stisfy_customer" animateOnScroll animationName="animate__animated animate__slideInLeft animate__faster">
+                <div class="icon">
+                  <img src="assets/images/home/home-ico.png" alt="">
+                </div>
+                <h2>{{stisfiedCustomer}}</h2>
+                <h4>{{ 'Sign Out.Homes Priced with APC' | translate }}</h4>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+              <div class="home_stisfy_customer" animateOnScroll animationName="animate__animated animate__slideInUp animate__faster">
+                <div class="icon">
+                  <img src="assets/images/home/agents-ico.png" alt="">
+                </div>
+                <h2>{{mls}}</h2>
+                <h4>{{ 'Sign Out.Agents with Access to APC' | translate }}</h4>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+              <div class="home_stisfy_customer" animateOnScroll animationName="animate__animated animate__slideInRight animate__faster">
+                <div class="icon">
+                  <img src="assets/images/home/listing-ico.png" alt="">
+                </div>
+                <h2>{{salesRent}}</h2>
+                <h4>{{ 'Sign Out.Listings in APC Database' | translate }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> -->
+      <section class="getInTouch py-5">
+        <div class="cont" animateOnScroll animationName="animate__animated animate__slideInUp">
+          <h2>Get In Touch</h2>
+          <div class="gtFormBx">
+            <form [formGroup]="contactUs" (ngSubmit)="contactUsSubmit()">
+              <div class="form-group" *ngIf="showMsgSuccess">
+                <div class="col-xs-12">
+                  <p class="alert alert-success">
+                    <strong>We have received your message. Thank you!</strong>
+                  </p>
+                </div>
+              </div>
+              <div class="form-group" *ngIf="showMsgError">
+                <div class="col-xs-12">
+                  <p class="alert alert-danger">
+                    <strong>{{errormsg}}</strong>
+                  </p>
+                </div>
+            </div>
+              <dl>
+                <dt>{{ 'Charts.Home.GetTouchField1' | translate }} *</dt>
+                <dd>
+                  <input formControlName="name" type="text" class="txtFld" required>
+                </dd>
+                <dt>{{ 'Charts.Home.GetTouchField2' | translate }} *</dt>
+                <dd>
+                  <input formControlName="email" type="email" class="txtFld" required>
+                </dd>
+                <dt>{{ 'Charts.Home.GetTouchField3' | translate }} *</dt>
+                <dd>
+                  <angular2-multiselect formControlName="mymls" #dropdownElem 
+                    [data]="mlsData" 
+                    [(ngModel)]="selectedItems" 
+                    [settings]="settings" 
+                    (onSelect)="onItemSelect($event)" 
+                    (onDeSelect)="OnItemDeSelect($event)">
+                  </angular2-multiselect>
+                </dd>
+                <dt>{{ 'Charts.Home.GetTouchField4' | translate }} *</dt>
+                <dd>
+                  <textarea formControlName="message" rows="4" cols="10" class="txtFld" required></textarea>
+                </dd>
+              </dl>
+              <p class="text-center">
+                <button type="submit" [disabled]="!contactUs.valid" class="btn btn-primary">{{ 'Charts.Home.GetTouchBtn' | translate }}</button>
+              </p>
+            </form>              
+          </div>
+        </div>        
+      </section>
+    </div>
+  </div>
+  <div class="loaderWrraper" *ngIf="loader">
+    <div class="loader">
+      <div class="outCircle">
+        <div class="icon">
+          <i class="pi pi-home"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+

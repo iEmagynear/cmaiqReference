@@ -1,0 +1,1240 @@
+<app-header [redirect]="redirect" (childMessage)="showMessageFromChild($event)"
+  (curMessage)="showMessageFromCur($event)"></app-header>
+<div class="Wrraper">
+  <ng-template #content let-modal>
+    <div class="modal-content" *ngIf="currentHouse">
+      <div class="modal-header text-center">
+        <h4 class="modal-title" id="modal-basic-title">{{ currentHouse.address}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <i class="pi pi-times-circle"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ngb-carousel *ngIf="currentHouse.photos.length>=0">
+
+          <ng-template *ngFor="let photos of currentHouse.photos;let i=index;" ngbSlide>
+            <div class="picsum-img-wrapper">
+              <img [src]="photos" alt="Random first slide">
+            </div>
+          </ng-template>
+
+        </ngb-carousel>
+      </div>
+      <div class="modal-footer current-house-info">
+        <div id="addressInfo">
+          <p>
+            <span class="chart-dot"
+              [ngClass]="(currentHouse.status == 'CLOSED' || currentHouse.status == 'Closed' || currentHouse.status == 'Sold') ? 'closed' : (currentHouse.status == 'Active' || currentHouse.status == 'ACTIVE' || currentHouse.status == 'Active - Coming Soon') ? 'active' : 'pending'">&nbsp;</span>
+            {{ ((currentHouse.status == 'Closed')?((chart?.relatedProperty.listing_type == 'Rented')?'NewCharts.Rented':'NewCharts.Closed'):'Sign Out.'+currentHouse.status) | translate}}
+          </p>
+          <p>{{ currentHouse.address }}</p>
+          <p>MLS #: {{ currentHouse.mlsNumber }}</p>
+        </div>
+        <div id="vitalInfo">
+          <p>{{"Sign Out.Sq Ft" | translate}}: {{ currentHouse.squareFootage | number }}</p>
+          <p>{{"Sign Out.DOM" | translate}}: {{ currentHouse.days }}</p>
+          <p>{{'Charts.List.LPxDOM' | translate }}: {{ currentHouse.daysPx }}</p>
+        </div>
+        <div id="additionalInfo">
+          <p>{{"Sign Out.Beds" | translate}}: {{ currentHouse.bed }}</p>
+          <p>{{"Sign Out.Baths" | translate}}: {{ currentHouse.bath }}</p>
+          <p>{{"Sign Out.Year Built" | translate}}: {{ currentHouse.yearBuilt }}</p>
+        </div>
+        <div id="priceInfo">
+          <p *ngIf="currentHouse.listPrice">{{"Sign Out.List Price" | translate}}:
+            {{ currentHouse.listPrice | convert:currentcurrency:'1.0-2' }}
+          </p>
+          <p
+            *ngIf="(currentHouse.status != 'Active' && currentHouse.status != 'Pending' && currentHouse.status !== 'Under Contract' && currentHouse.status !== 'Active Contingent' && currentHouse.status !== 'Contingent' && currentHouse.status !== 'Active Option Contract')">
+            {{ ((chart.relatedProperty.listing_type == 'Rental')?"Charts.Chart.Rented Price":"Charts.Chart.Sales Price") | translate}}:
+            {{ currentHouse.closePrice | convert:currentcurrency:'1.0-2' }}
+          </p>
+          <p
+            *ngIf="(currentHouse.status != 'Active' && currentHouse.status != 'Pending' && currentHouse.status !== 'Under Contract' && currentHouse.status !== 'Active Contingent' && currentHouse.status !== 'Contingent' && currentHouse.status !== 'Active Option Contract')">
+            {{((chart.relatedProperty.listing_type == 'Rental')?"Charts.Chart.Rented Date":"Charts.Chart.Sales Date") | translate}}:
+            {{ currentHouse.saleDate | date:"MM/dd/yy" }}
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer text-right"
+        *ngIf="!isSeven || currentHouse.status === 'Active' || currentHouse.status === 'Pending'">
+        <button type="button" class="btn btn-danger"
+          (click)="deleteFromChart(currentHouse.mlsNumber)">{{"Sign Out.Delete" | translate}}</button>
+      </div>
+      <div class="modal-footer text-right"
+        *ngIf="isSeven && currentHouse.status != 'Active' && currentHouse.status != 'Pending'">
+        <i style="color:red;" class="pi pi-exclamation-triangle"></i>
+        <div class="overlay">
+          <h6>{{"Sign Out.Cannot Delete" | translate}}</h6>
+          <p *ngIf="rentalChartDisplay">{{"Sign Out.Cannot DeleteTextRent" | translate}}
+          </p>
+          <p *ngIf="!rentalChartDisplay">{{"Sign Out.Cannot DeleteText" | translate}}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="beachesFlag" class="row no-gutters">
+        <div class="col-12">
+          <div class="beachMLS">
+            <p>Licensed Data Source and Copyright 2020 Beaches MLS, Inc., Inc.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #email let-modal>
+    <div class="modal-content">
+
+      <div class="modal-header text-center">
+        <h4 class="modal-title" id="modal-basic-title">{{'Charts.Email Presentation' | translate}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <i class="pi pi-times-circle"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="emailUser" (ngSubmit)="emailUserSubmit()">
+          <div class="form-group" *ngIf="showMsgSuccess">
+            <div class="col-xs-12">
+              <p class="alert alert-success">
+                <strong>Your chart has been sent to your recipients!</strong>
+              </p>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="showMsgError">
+            <div class="col-xs-12">
+              <p class="alert alert-danger">
+                <strong>Error sending email. Double check that your client info is correct or try again in a few
+                  minutes</strong>
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>To:</label>
+            <input type="email" name="email" formControlName="email" class="form-control">
+          </div>
+          <div class="form-group">
+            <div>
+              <input type="checkbox" id="emailCopyCheck"
+                (click)="setEmailCopy()"><span>&nbsp;<b>*Send me a copy</b></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Subject:</label>
+            <input type="text" name="subject" formControlName="subject" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Message:</label>
+            <textarea name="message" formControlName="message" class="form-control"></textarea>
+          </div>
+          <div class="form-group">
+            <div class="modal-footer">
+              <input type="button" class="btn btn-default pull-left" (click)="clearEmail()" value="DISCARD">
+              <input type="submit" [disabled]="!emailUser.valid" class="btn btn-success" value="SEND">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+  <div class="home">
+    <div class="home_banner" *ngIf="chart">
+      <img src="{{ chart.targetProperty.image || 'assets/images/house-icon-large.png' }}">
+    </div>
+  </div>
+
+  <div class="m1 menu">
+    <div class="rightNav">
+      <h6>{{'Charts.Agent' | translate}}</h6>
+      <button *ngIf="chart" (click)="showAgent()" type="button" class="agentbtn">
+        <img src="{{ chart.agent.photo_50X50  || 'assets/images/profileDefault.png'}}">
+      </button>
+      <button type="button" (click)="toogleSideNav()" class="tooglebtn">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </button>
+    </div>
+    <div [hidden]="!toggleSidebar" id="menu-center">
+      <ul>
+        <li><a (click)="onClick('chart')" data-target="#chart"
+            href="javascript:void(0)">{{'Charts.Chart Presentation' | translate}}</a></li>
+        <li><a (click)="onClick('analytics')" data-target="#analytics"
+            href="javascript:void(0)">{{'Charts.Analytics Presentation' | translate}}</a></li>
+        <li><a (click)="onClick('map')" data-target="#map"
+            href="javascript:void(0)">{{'Charts.Map Presentation' | translate}}</a></li>
+        <li><a (click)="onClick('list')" data-target="#list"
+            href="javascript:void(0)">{{'Charts.List Presentation' | translate}}</a></li>
+        <li><a (click)="onClick('agent')" data-target="#agent"
+            href="javascript:void(0)">{{'Charts.Agent' | translate}}</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="HomeParalex">
+    <div class="reprthead">
+      <div class="container">
+        <div *ngIf="chart" class="row no-gutters animate__animated animate__zoomIn animate__delay-2s">
+          <div class="col-12">
+            <div class="paddress animate__animated ">
+              <!-- <h3>report</h3> -->
+              <h5>{{(chart.targetProperty.address)?chart.targetProperty.address:"-"}},
+                {{(chart.targetProperty.city)?chart.targetProperty.city:"-"}},
+                {{(chart.targetProperty.state)?chart.targetProperty.state:"-"}},
+                {{(chart.targetProperty.zip)?chart.targetProperty.zip:"-"}}</h5>
+            </div>
+          </div>
+          <div class="col-12 text-center">
+            <h4>{{'Charts.MARKET ANALYSIS' | translate}}</h4>
+            <h5>{{chart.targetProperty.seasonality | date:'fullDate'}}</h5>
+            <button type="button" (click)="emailButton()" class="btn btn-default btn-share"><img
+                src="assets/images/sharepresentation.png" width="20">
+              {{"Charts.Share Presentation" | translate}}</button>
+            <button type="button" (click)="printButton()" class="btn btn-default btn-share"><img
+                src="assets/images/print-icon.png" width="20"> {{ 'Charts.Print' | translate }}</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="profile">
+      <div class="row no-gutters">
+        <div class="col-12 col-md-12 col-lg-12 mx-auto">
+          <div class="row no-gutters">
+            <div class="col-6 profilebdr">
+              <div class="profile_mlsDetail" *ngIf="chart">
+
+                <div class="profile_mlsDetail_profile animate__animated animate__slideInLeft animate__delay-3s">
+                  <div class="profile_mlsDetail_property"
+                    [ngStyle]="{'background-image': 'url(' + (chart.agent.logo_250X250  || 'assets/images/profileDefault.png') + ')'}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 profilebdr">
+              <div class="profile_mlsDetail" *ngIf="chart">
+                <div class="profile_mlsDetail_profile animate__animated animate__slideInRight animate__delay-3s">
+
+                  <div class="profile_mlsDetail_list">
+                    <h3>{{'Charts.Agent Details' | translate}}</h3>
+                    <div class="agentLogo">
+                      <img src="{{chart.agent.photo_250X250  || 'assets/images/profileDefault.png'}}" alt="">
+                    </div>
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <th>{{chart.agent.fullName}}</th>
+                        </tr>
+                        <tr>
+                          <td>{{chart.agent.company}}</td>
+                        </tr>
+                        <tr>
+                          <td>{{chart.agent.email}}</td>
+                        </tr>
+                        <tr *ngIf="chart.agent.phone">
+                          <td>{{chart.agent.phone}}</td>
+                        </tr>
+                        <tr *ngIf="chart.agent.website">
+                          <td>{{chart.agent.website}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="wrapperInnter">
+      <div class="pagebreak"></div>
+      <div id="chart">
+        <div class="HomeParalex_chartcmp">
+          <div class="generateChart">
+            <h3>{{'Charts.Chart Presentation' | translate}}</h3>
+            <div *ngIf="chart" class="ChartDesign">
+              <div class="container">
+                <div class="row no-gutters">
+                  <div class="col-12">
+                    <div *ngIf="show" class="ChartDesign_chart animate__animated animate__backInUp animate__delay-4s"
+                      style="display: block;">
+                      <app-chartjs-presentation [plotResp]="plotResp" [redirect]="redirect" [showoutlier]="showoutlier"
+                        [datasets]="scatterChartData" [chart]="chart" [togglesActive]="togglesActive"
+                        [togglesPending]="togglesPending" (sendMessage)="showDataFromParent($event)">
+                      </app-chartjs-presentation>
+                      <div class="info ChartInfo">
+                        <a href="javascript:void(0)"><i class="pi pi-info-circle"></i>
+                          <div class="overlay">
+                            <h6>{{'charts.Chart Presentation' | translate}}</h6>
+                            <p *ngIf="chart.relatedProperty.listing_type == 'Residential'">
+                              {{ 'Charts.Chart.info' | translate }}</p>
+                            <p *ngIf="chart.relatedProperty.listing_type == 'Rental'">
+                              {{ 'Charts.Chart.infoRent' | translate }}</p>
+                          </div>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="row chartLegends pt-5 ml-5 mr-5 no-gutters animate__animated animate__backInLeft animate__delay-4s">
+                  <div class="col-12">
+                    <div class="propertystatus">
+                      <ul *ngIf="!propLegendCheck" class="text-center">
+                        <li [ngClass]="(toggles.active)?'active':''" (click)="toggleDataset('active')">
+                          {{ 'Charts.Active' | translate }}
+                          ({{activeCount}})
+                        </li>
+                        <li [ngClass]="(toggles.underContract)?'pending':''" (click)="toggleDataset('underContract')">
+                          {{ 'Charts.Pending' | translate }}
+                          ({{pendingCount}})
+                        </li>
+                        <li class="closed">
+                          {{ ((chart?.relatedProperty.listing_type == 'Rental')?'NewCharts.Rented':'NewCharts.Closed') | translate }}
+                          ({{closeCount}})</li><br />
+                        <li *ngIf="chart"><img src="assets/images/house-icon.png" alt="home" width="20">
+                        </li>
+                        <li class="chaddres">{{(chart.targetProperty.address)?chart.targetProperty.address:"-"}},
+                          {{(chart.targetProperty.city)?chart.targetProperty.city:"-"}},
+                          {{(chart.targetProperty.state)?chart.targetProperty.state:"-"}},
+                          {{(chart.targetProperty.zip)?chart.targetProperty.zip:"-"}}</li>
+                      </ul>
+                      <ul *ngIf="propLegendCheck" class="text-center">
+                        <li [ngClass]="(toggles.active)?'active':''" (click)="toggleDataset('active')">
+                          {{ 'Charts.Active' | translate }}
+                          ({{activeCount}})
+                        </li>
+                        <li [ngClass]="(toggles.underContract)?'pending':''" (click)="toggleDataset('underContract')">
+                          {{ 'Charts.Pending' | translate }}
+                          ({{pendingCount}})
+                        </li>
+                        <li class="closed">
+                          {{ ((chart?.relatedProperty.listing_type == 'Rental')?'NewCharts.Rented':'NewCharts.Closed') | translate }}
+                          ({{closeCount}})</li><br />
+                        <li class="charthome" *ngIf="chart"><img src="assets/images/house-icon.png" alt="home"
+                            width="20"> </li>
+                        <li class="chaddres">{{(chart.targetProperty.address)?chart.targetProperty.address:"-"}},
+                          {{(chart.targetProperty.city)?chart.targetProperty.city:"-"}},
+                          {{(chart.targetProperty.state)?chart.targetProperty.state:"-"}},
+                          {{(chart.targetProperty.zip)?chart.targetProperty.zip:"-"}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-12 mt-5" *ngIf="!samlFlag">
+                    <p *ngIf="!marketLegendCheck" class="monthLegend noprint text-center">
+                      {{ 'Charts.Market Conditions' | translate }}
+                      <span>{{ monthValueWhole }} {{ 'Charts.Months Of Inventory' | translate }} - {{ marketTypeText }}
+                        {{ 'Charts.Market' | translate }}</span>
+                    </p>
+                    <p *ngIf="marketLegendCheck" class="monthLegend">
+                      {{ 'Charts.Market Conditions' | translate }}
+                      <span>{{ monthValueWhole }} {{ 'Charts.Months Of Inventory' | translate }} - {{ marketTypeText }}
+                        {{ 'Charts.Market' | translate }}</span>
+                    </p>
+                  </div>
+
+
+                </div>
+
+              </div>
+            </div>
+            <div class="pagebreak"></div>
+            <div *ngIf="chart" class="ChartDesignEst">
+              <div class="container">
+                <div class="row" *ngIf="estimated_home_value">
+                  <div class="col-12">
+                    <div class="estimated_value_content">
+                      <p
+                        [innerHTML]="'Charts.Report.Market Analysistext Presentation p1' | translate: { sales: (chart?.relatedProperty.listing_type == 'Rental')?rental:sales, closed: (chart?.relatedProperty.listing_type == 'Rental')?rented:closed}">
+                      </p>
+                      <p
+                        [innerHTML]="'Charts.Report.Market Analysistext Presentation p2' | translate: { sales: (chart?.relatedProperty.listing_type == 'Rental')?rental:sales, closed: (chart?.relatedProperty.listing_type == 'Rental')?rented:closed}">
+                      </p>
+                      <p
+                        [innerHTML]="'Charts.Report.Market Analysistext Presentation p3' | translate: { sales: (chart?.relatedProperty.listing_type == 'Rental')?rental:sales, closed: (chart?.relatedProperty.listing_type == 'Rental')?rented:closed}">
+                      </p>
+                      <p
+                        [innerHTML]="'Charts.Report.Market Analysistext Presentation p4' | translate: { sales: (chart?.relatedProperty.listing_type == 'Rental')?rental:sales, closed: (chart?.relatedProperty.listing_type == 'Rental')?rented:closed}">
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="estimated_value">
+                      <div class="estimated_value_title">
+                        <h3 [innerHTML]="'Charts.APC Estimated Market Value' | translate"></h3>
+                        <h3><span>{{estimated_home_value.sales_price.lower_bound | convert:currentcurrency:'1.0-0'}} -
+                            {{estimated_home_value.sales_price.upper_bound | convert:currentcurrency:'1.0-0'}}</span>
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="analytics">
+        <div *ngIf="chart && !samlFlag" class="HomeParalex_analyticscmp">
+          <div class="pagebreak"></div>
+          <div class="subject-analytic">
+            <h3>{{'Charts.Analytics Overview' | translate}}</h3>
+            <div class="container">
+              <div *ngIf="estimated_home_value"
+                class="row no-gutters animate__animated animate__slideInDown animate__delay-6s">
+                <div class="col-4 mb-5 pb-2">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ 'Charts.Report.Seasonality Adjustment' | translate }}</h5>
+                      <h6 class="card-subtitle mb-2 ">
+                        {{estimated_home_value.seasonlity_value | minus | convert:currentcurrency:'1.0-0' }}</h6>
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Report.Seasonality Adjustmenttext' | translate: { close: (chart?.relatedProperty.listing_type == 'Rental')?rent:'close'}">
+                      </p>
+                      <div class="info">
+                        <a href="javascript:void(0)"><i class="pi pi-info-circle"></i>
+                          <div class="overlay">
+                            <h6>{{ 'Charts.Analytics.Seasonality Adjustment' | translate }}</h6>
+                            <p *ngIf="chart.relatedProperty.listing_type == 'Residential'">
+                              {{ 'Charts.Analytics.Seasonalitytext' | translate }}</p>
+                            <p *ngIf="chart.relatedProperty.listing_type == 'Rental'">
+                              {{ 'Charts.Analytics.SeasonalityRenttext' | translate }}</p>
+                          </div>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-4 mb-5 pb-2">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ 'Charts.Report.Market Conditions Adjustment' | translate }}</h5>
+                      <h6 *ngIf="!samlFlag" class="card-subtitle mb-2 ">
+                        {{estimated_home_value.market_condition_value | minus | convert:currentcurrency:'1.0-0'}}</h6>
+                      <p class="card-text">{{ 'Charts.Report.Market Conditions Adjustmenttext' | translate }}</p>
+                      <div class="info">
+                        <a href="javascript:void(0)"><i class="pi pi-info-circle"></i>
+                          <div class="overlay">
+                            <h6>{{ 'Charts.Analytics.Market Conditions Adjustment' | translate }}</h6>
+                            <p>{{ 'Charts.Analytics.MarketAdjustmenttext' | translate }}</p>
+                          </div>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-4 mb-5 pb-2">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ 'Charts.Report.Property Features Adjustment' | translate }}</h5>
+                      <h6 class="card-subtitle mb-2 ">
+                        {{estimated_home_value.property_adjustment_value | minus | convert:currentcurrency:'1.0-0'}}
+                      </h6>
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Report.Property Features Adjustmenttext' | translate: { closed: (chart?.relatedProperty.listing_type == 'Rental')?rented:closed}">
+                      </p>
+                      <div class="info">
+                        <a href="javascript:void(0)"><i class="pi pi-info-circle"></i>
+                          <div class="overlay">
+                            <h6>{{ 'Charts.Analytics.Property Adjustment' | translate }}</h6>
+                            <p>{{ 'Charts.Analytics.PropertyAdjustmenttext' | translate }}</p>
+                          </div>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-4 mb-5 pb-2">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title" [innerHTML]="'Charts.Report.APC Estimated Market Value' | translate"></h5>
+                      <h6 class="card-subtitle mb-2 ">
+                        {{estimated_home_value.sales_price.lower_bound | convert:currentcurrency:'1.0-0'}} -
+                        {{estimated_home_value.sales_price.upper_bound | convert:currentcurrency:'1.0-0'}}</h6>
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Report.APC Estimated Market Valuetext' | translate: { sales: (chart?.relatedProperty.listing_type == 'Rental')?rental:sales}">
+                      </p>
+                      <div class="info">
+                        <a href="javascript:void(0)"><i class="pi pi-info-circle"></i>
+                          <div class="overlay">
+                            <h6 [innerHTML]="'Charts.Analytics.APC Estimated Market Value' | translate"></h6>
+                            <p
+                              [innerHTML]="'Charts.Analytics.APCEstimatedMarkettext' | translate: { Sales: (chart.relatedProperty.listing_type == 'Rental')?rental:sales, Sale: (chart.relatedProperty.listing_type == 'Rental')?Rent:Sale, sold:(chart.relatedProperty.listing_type == 'Rental')?rented:sold}">
+                            </p>
+                          </div>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-4 mb-5 pb-2">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title" [innerHTML]="'Charts.Report.APC Suggested List Price' | translate"></h5>
+                      <h6 class="card-subtitle mb-2 ">
+                        {{estimated_home_value.list_price.lower_bound | convert:currentcurrency:'1.0-0'}} -
+                        {{estimated_home_value.list_price.upper_bound | convert:currentcurrency:'1.0-0'}}</h6>
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Report.APC Suggested List Pricetext' | translate: { sale: (chart?.relatedProperty.listing_type == 'Rental')?rental:sale}">
+                      </p>
+                      <div class="info">
+                        <a href="javascript:void(0)"><i class="pi pi-info-circle"></i>
+                          <div class="overlay">
+                            <h6 [innerHTML]="'Charts.Analytics.APC Suggested List Price' | translate"></h6>
+                            <p
+                              [innerHTML]="'Charts.Analytics.APCSuggestedListPricetext' | translate: { Sales: (chart.relatedProperty.listing_type == 'Rental')?rental:sales}">
+                            </p>
+                          </div>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-4 mb-5 pb-2">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title" [innerHTML]="'Charts.Report.APC Days on Market' | translate"></h5>
+                      <h6 class="card-subtitle mb-2 ">
+                        {{estimated_home_value.subject_property_days_on_market | number:'1.0-0'}}</h6>
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Report.APC Days on Markettext' | translate: { contract: (chart?.relatedProperty.listing_type == 'Rental')?lease:contract}">
+                      </p>
+                      <div class="info">
+                        <a href="javascript:void(0)"><i class="pi pi-info-circle"></i>
+                          <div class="overlay">
+                            <h6 [innerHTML]="'Charts.Analytics.APC Days on Market' | translate"></h6>
+                            <p *ngIf="chart.relatedProperty.listing_type == 'Residential'" [innerHTML]="'Charts.Analytics.APCDaysonMarkettext' | translate"></p>
+                            <p *ngIf="chart.relatedProperty.listing_type == 'Rental'">
+                              {{ 'Charts.Analytics.APCDaysonMarketRenttext' | translate }}</p>
+                          </div>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-4 mb-5 pb-2">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title"
+                        [innerHTML]="'Charts.Report.Sales Price to List Price' | translate: { Sales: (chart?.relatedProperty.listing_type == 'Rental')?rental:sales}">
+                      </h5>
+                      <h6 class="card-subtitle mb-2 ">
+                        {{estimated_home_value.sale_price_to_list_price | number:'1.0-2'}}%</h6>
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Report.Sales Price to List Pricetext' | translate: { closed: (chart?.relatedProperty.listing_type == 'Rental')?rented:closed, buyers: (chart?.relatedProperty.listing_type == 'Rental')?tenants:buyers, sellers: (chart?.relatedProperty.listing_type == 'Rental')?landlords:sellers}">
+                      </p>
+                      <div class="info">
+                        <a href="javascript:void(0)"><i class="pi pi-info-circle"></i>
+                          <div class="overlay">
+                            <h6
+                              [innerHTML]="'Charts.Analytics.Sales to List Price' | translate: { Sales: (chart.relatedProperty.listing_type == 'Rental')?rental:sales}">
+                            </h6>
+                            <p
+                              [innerHTML]="'Charts.Analytics.SalestoListPricetext' | translate: { Sales: (chart.relatedProperty.listing_type == 'Rental')?rental:sales, sales: (chart.relatedProperty.listing_type == 'Rental')?rental2:sales2, closed: (chart.relatedProperty.listing_type == 'Rental')?rented:closed}">
+                            </p>
+                          </div>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-4 mb-5 pb-2">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title"
+                        [innerHTML]="'Charts.Report.APC Estimated Sales $/SqFt' | translate: { Sales: (chart?.relatedProperty.listing_type == 'Rental')?rental:sales}">
+                      </h5>
+                      <h6 class="card-subtitle mb-2 ">
+                        {{(estimated_home_value.sales_price.estimate/estimated_home_value.area)| convert:currentcurrency:'1.0-2'}}
+                      </h6>
+                      <p class="card-text">{{ 'Charts.Report.APC Estimated Sales $/SqFttext' | translate }}</p>
+                      <div class="info">
+                        <a href="javascript:void(0)"><i class="pi pi-info-circle"></i>
+                          <div class="overlay">
+                            <h6
+                              [innerHTML]="'Charts.Analytics.APC Estimated Sales Price per SqFt' | translate: { Sales: (chart.relatedProperty.listing_type == 'Rental')?rental:sales}">
+                            </h6>
+                            <p
+                              [innerHTML]="'Charts.Analytics.APC Estimated Sales Price per SqFttext' | translate: { Sales: (chart.relatedProperty.listing_type == 'Rental')?rental:sales, sold: (chart.relatedProperty.listing_type == 'Rental')?rented:sold}">
+                            </p>
+                          </div>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-4 mb-5 pb-2">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title"
+                        [innerHTML]="'Charts.Report.APC Probability of Sale' | translate: { Sale: (chart?.relatedProperty.listing_type == 'Rental')?Rent:Sale}">
+                      </h5>
+                      <h6 class="card-subtitle mb-2 ">84.1%</h6>
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Report.APC Probability of Saletext' | translate: { rent: (chart?.relatedProperty.listing_type == 'Rental')?rent:'close'}">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="estimated_home_value" class="row no-gutters">
+                <div class="col-12">
+                  <h6>{{ 'Charts.Report.internaltext' | translate }}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="subject-analytic graph" *ngIf="plotResp">
+            <div class="table-sale" (mouseout)="hoverIndex=2">
+              <div class="container">
+                <div class="row no-gutters">
+                  <div class="col-6 pl-2 pr-2">
+                    <div class="row no-gutters mb-5">
+                      <div class="col-12">
+                        <h3 class="text-center" *ngIf="!rentalChartDisplay" [innerHTML]="'Charts.Analytics.APC Probability of Sale (POS)' | translate"></h3>
+                        <h3 class="text-center" *ngIf="rentalChartDisplay" [innerHTML]="'Charts.Analytics.APC Probability of Rent (POR)' | translate"></h3>
+                      </div>
+                      <div class="col-12">
+                        <div class="table-sale_chart">
+                          <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
+                            [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
+                            [chartType]="lineChartType" [plugins]="lineChartPlugins">
+                          </canvas>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row no-gutters mt-4">
+                      <div class="col-12">
+                        <h3 class="text-center" style="padding-left:0;padding-right:0px" [innerHTML]="'Charts.Analytics.APC Days on Market (DOM)' | translate"></h3>
+                      </div>
+                      <div class="col-12">
+                        <div class="table-sale_chart">
+                          <canvas baseChart [datasets]="lineChartData2" [labels]="lineChartLabels"
+                            [options]="lineChartOptions2" [colors]="lineChartColors" [legend]="lineChartLegend"
+                            [chartType]="lineChartType" [plugins]="lineChartPlugins">
+                          </canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6  pl-2 pr-2">
+                    <div class="tablePlist">
+                      <table class="table">
+                        <thead>
+                          <tr class="trbgcolor">
+                            <th>
+                              <h6 *ngIf="!rentalChartDisplay">{{ 'Charts.Analytics.POS' | translate }}</h6>
+                              <h6 *ngIf="rentalChartDisplay">{{ 'Charts.Analytics.POR' | translate }}</h6>
+                            </th>
+                            <th>
+                              <h6>{{ 'Charts.Analytics.List Price' | translate }}</h6>
+                            </th>
+                            <th>
+                              <h6>{{ 'Charts.Analytics.DOM' | translate }}</h6>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let row of plotResp.estimated_home_value.probability_of_sale_table; index as i"
+                            [ngClass]="{'rowColor': i==hoverIndex}">
+                            <td>
+                              <h6>{{row.probability_of_sale}}%</h6>
+                            </td>
+                            <td>
+                              <h6>{{row.list_price | convert:currentcurrency:'1.0-0'}}</h6>
+                            </td>
+                            <td>
+                              <h6>{{row.days_on_market | number:'1.0-0'}}</h6>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pagebreak"></div>
+          <div class="NotesCretiria">
+            <h3>{{'Charts.Analytics Details' | translate}}</h3>
+            <div class="container">
+              <h4>{{ 'Charts.Notes.Search Criteria (Date Range)' | translate }}
+                {{ 'NewCharts.'+(chart.relatedProperty.minClose | date: 'MMMM') | translate }}{{ chart.relatedProperty.minClose | date: ' d, yyyy' }}
+                -
+                {{ 'NewCharts.'+(chart.updated | date: 'MMMM') | translate }}{{ chart.updated | date: ' d, yyyy'}}</h4>
+              <div class="row no-gutters mb-3">
+                <div class="col-12 mb-5">
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <div class="card">
+                        <h5 class="card-title">{{ 'Charts.Notes.Best Fit Curve' | translate }}</h5>
+                        <h6 class="card-subtitle mb-2 ">{{ 'Charts.Notes.Subject Property' | translate }}
+                          {{ chart.targetProperty.squareFootage }} sq ft</h6>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Notes.Best Fit Curvetext' | translate: { className:'font-bold',Sales: (chart.relatedProperty.listing_type == 'Rental')?'rental':'sales', closing:(chart.relatedProperty.listing_type == 'Rental')?renting:closing}">
+                      </p>
+
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-12 mb-5">
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <div class="card">
+                        <h5 class="card-title">{{ 'Charts.Notes.Seasonality Adjustment' | translate }}</h5>
+                        <h6 class="card-subtitle mb-2 ">
+                          {{estimated_home_value.seasonlity_value | minus | convert:currentcurrency:'1.0-0'}}</h6>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="card-text" *ngIf="estimated_home_value.seasonlity_value<0"
+                        [innerHTML]="'Charts.Notes.Seasonality Adjustmenttextdeduction' | translate: { className:  'font-bold', price: estimated_home_value.seasonlity_value | minus | convert:currentcurrency:'1.0-0',date:estimated_home_value.projected_date_of_sale,sale: (chart.relatedProperty.listing_type == 'Rental')?rent:sale, closed:(chart.relatedProperty.listing_type == 'Rental')?rented:closed }">
+                      </p>
+                      <p class="card-text" *ngIf="estimated_home_value.seasonlity_value>=0"
+                        [innerHTML]="'Charts.Notes.Seasonality Adjustmenttextcredit' | translate: { className: 'font-bold', price: estimated_home_value.seasonlity_value | minus | convert:currentcurrency:'1.0-0',date:estimated_home_value.projected_date_of_sale,sale: (chart.relatedProperty.listing_type == 'Rental')?rent:sale, closed:(chart.relatedProperty.listing_type == 'Rental')?rented:closed }">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-5">
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <div class="card">
+                        <h5 *ngIf="!samlFlag" class="card-title">
+                          {{ 'Charts.Notes.Market Conditions Adjustment' | translate }}</h5>
+                        <h6 class="card-subtitle mb-2 ">
+                          {{estimated_home_value.market_condition_value | minus | convert:currentcurrency:'1.0-0'}}</h6>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="card-text" *ngIf="!monthBool && !samlFlag"
+                        [innerHTML]="'Charts.Notes.Market Conditions Adjustmenttextdeduction' | translate: { className:  'font-bold', price: estimated_home_value.market_condition_value | minus | convert:currentcurrency:'1.0-0',inventory:estimated_home_value.months_of_inventory | number:'1.0-0',case:monthText }">
+                      </p>
+                      <p class="card-text" *ngIf="monthBool && !samlFlag"
+                        [innerHTML]="'Charts.Notes.Market Conditions Adjustmenttextcredit' | translate: { className:  'font-bold', price: estimated_home_value.market_condition_value | minus | convert:currentcurrency:'1.0-0',inventory:estimated_home_value.months_of_inventory | number:'1.0-0',case:monthText }">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 mb-5">
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <div class="card">
+                        <h5 class="card-title">{{ 'Charts.Notes.Property Adjustment' | translate }}</h5>
+                        <h6 class="card-subtitle mb-2 ">
+                          {{estimated_home_value.property_adjustment_value | minus | convert:currentcurrency:'1.0-0'}}
+                        </h6>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="card-text" *ngIf="estimated_home_value.property_adjustment_value<0"
+                        [innerHTML]="'Charts.Notes.Property Adjustmenttextdeduction' | translate: { className:  'font-bold', closed:(chart.relatedProperty.listing_type == 'Rental')?rented:closed, price: estimated_home_value.property_adjustment_value | minus | convert:currentcurrency:'1.0-0' }">
+                      </p>
+                      <p class="card-text" *ngIf="estimated_home_value.property_adjustment_value>=0"
+                        [innerHTML]="'Charts.Notes.Property Adjustmenttextcredit' | translate: { className:  'font-bold', closed:(chart.relatedProperty.listing_type == 'Rental')?rented:closed, price: estimated_home_value.property_adjustment_value | minus | convert:currentcurrency:'1.0-0' }">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-5">
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <div class="card">
+                        <h5 class="card-title" [innerHTML]="'Charts.Notes.APC Estimated Market Value' | translate"></h5>
+                        <h6 class="card-subtitle mb-2 ">
+                          {{estimated_home_value.sales_price.lower_bound | convert:currentcurrency:'1.0-0'}} -
+                          {{estimated_home_value.sales_price.upper_bound | convert:currentcurrency:'1.0-0'}}</h6>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Notes.APC Estimated Market Valuetext' | translate: { className:'font-bold', closed:(chart.relatedProperty.listing_type == 'Rental')?rented:closed}">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-5">
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <div class="card">
+                        <h5 class="card-title"
+                          [innerHTML]="'Charts.Notes.APC Estimated Sales Price per Square Foot' | translate: { className:'font-bold',Sales: (chart.relatedProperty.listing_type == 'Rental')?rental:sales}">
+                        </h5>
+                        <h6 class="card-subtitle mb-2 ">
+                          {{(estimated_home_value.sales_price.estimate/estimated_home_value.area)| convert:currentcurrency:'1.0-2'}}
+                        </h6>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Notes.APC Estimated Sales Price per Square Foottext' | translate: { Sales: (chart.relatedProperty.listing_type == 'Rental')?rental:sales, closed:(chart.relatedProperty.listing_type == 'Rental')?rented:closed}">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-5">
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <div class="card">
+                        <h5 class="card-title"
+                          [innerHTML]="'Charts.Notes.Sales Price to List Price' | translate: { className:'font-bold',Sales: (chart.relatedProperty.listing_type == 'Rental')?rental:sales, closed:(chart.relatedProperty.listing_type == 'Rental')?'rented':closed}">
+                          {{estimated_home_value.sale_price_to_list_price | number:'1.0-2'}}%</h5>
+                        <h6 class="card-subtitle mb-2 ">
+                          {{estimated_home_value.sale_price_to_list_price | number:'1.0-2'}}%</h6>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Notes.Sales Price to List Pricetext' | translate: { className:'font-bold', closed:(chart.relatedProperty.listing_type == 'Rental')?rented:closed, buyers:(chart.relatedProperty.listing_type == 'Rental')?tenants:buyers, sellers:(chart.relatedProperty.listing_type == 'Rental')?landlords:sellers, Sales: (chart.relatedProperty.listing_type == 'Rental')?rental:sales,price: estimated_home_value.sale_price_to_list_price | number:'1.0-2'}">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-5">
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <div class="card">
+                        <h5 class="card-title" [innerHTML]="'Charts.Notes.APC Suggested List Price' | translate"></h5>
+                        <h6 class="card-subtitle mb-2 ">
+                          {{estimated_home_value.list_price.lower_bound | convert:currentcurrency:'1.0-0'}} -
+                          {{estimated_home_value.list_price.upper_bound | convert:currentcurrency:'1.0-0'}}</h6>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Notes.APC Suggested List Pricetext' | translate: { className:'font-bold',buyer:(chart.relatedProperty.listing_type == 'Rental')?tenant:buyer, seller:(chart.relatedProperty.listing_type == 'Rental')?landlord:seller,Sales: (chart.relatedProperty.listing_type == 'Rental')?rental:sales}">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-5">
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <div class="card">
+                        <h5 class="card-title"
+                          [innerHTML]="'Charts.Notes.APC Probability of Sale' | translate: { sale:(chart.relatedProperty.listing_type == 'Rental')?'Rent':'Sale'}">
+                        </h5>
+                        <h6 class="card-subtitle mb-2 ">84.1%</h6>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Notes.APC Probability of Saletext' | translate: { className:'font-bold',buyer:(chart.relatedProperty.listing_type == 'Rental')?tenant:buyer, seller:(chart.relatedProperty.listing_type == 'Rental')?landlord:seller,sell:(chart.relatedProperty.listing_type == 'Rental')?rent:'sell',price: '84.1%',sale:(chart.relatedProperty.listing_type == 'Rental')?rent:sale,Sale:(chart.relatedProperty.listing_type == 'Rental')?Rent:Sale}">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-5">
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <div class="card">
+                        <h5 class="card-title" [innerHTML]="'Charts.Notes.APC Days on Market' | translate"></h5>
+                        <h6 class="card-subtitle mb-2 ">
+                          {{estimated_home_value.subject_property_days_on_market | number:'1.0-0'}}</h6>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Notes.APC Days on Markettext' | translate: { className:'font-bold',price: estimated_home_value.subject_property_days_on_market | number:'1.0-0',seller:(chart.relatedProperty.listing_type == 'Rental')?landlord:seller,sale: (chart.relatedProperty.listing_type == 'Rental')?rent:sale}">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-5">
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <div class="card noshadow">
+                        <h5 class="card-title">{{ 'Charts.Notes.Price Adjustments no less than' | translate }}</h5>
+                        <h6 class="card-subtitle mb-2 ">
+                          {{estimated_home_value.sales_price.upper_bound - estimated_home_value.sales_price.lower_bound | convert:currentcurrency:'1.0-0'}}
+                        </h6>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="card-text"
+                        [innerHTML]="'Charts.Notes.Price Adjustments no less thantext' | translate: { className:'font-bold',price: estimated_home_value.sales_price.upper_bound - estimated_home_value.sales_price.lower_bound | convert:currentcurrency:'1.0-0',buyers:(chart.relatedProperty.listing_type == 'Rental')?tenants:buyers,sale: (chart.relatedProperty.listing_type == 'Rental')?rent:sale}">
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="pagebreak"></div>
+      <div id="map">
+        <div *ngIf="chart" class="HomeParalex_mapcmp">
+          <h3>{{'Charts.Map Presentation' | translate}}</h3>
+          <div class="container">
+            <div class="row no-gutters">
+              <div class="col-12">
+                <div class="map">
+                  <agm-map [streetViewControl]="false" [scrollwheel]="false" [zoomControl]="true"
+                    [mapTypeControl]="false" [fullscreenControl]="false" [scaleControl]="false"
+                    (mapReady)="onMapReady($event)" (mapClick)="mapClicked($event)" (zoomChange)=zoomChange($event)>
+                  </agm-map>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="list">
+        <div *ngIf="chart" class="HomeParalex_listcmp">
+          <div class="pagebreak"></div>
+          <h3>List</h3>
+          <div class="row no-gutters">
+            <div class="col-12">
+              <h4 class="activelst"><span>{{ 'Charts.Active' | translate }}
+                  ({{activeCount}})</span></h4>
+            </div>
+            <div class="col-12">
+              <div class="table-responsive">
+                <table class="table persist-area">
+                  <thead class="thead-light">
+                    <tr class="persist-header floatingHeader">
+                      <th></th>
+                      <th>{{ 'Charts.List.MLS' | translate }}</th>
+                      <th>{{ 'Charts.List.Address' | translate }}</th>
+                      <th>{{ 'Charts.List.Year Built' | translate }}</th>
+                      <th>{{ 'Charts.List.SqFt' | translate }}</th>
+                      <th>{{ 'Charts.List.Bed' | translate }}</th>
+                      <th>{{ 'Charts.List.Bath' | translate }}</th>
+                      <th>{{ 'Charts.List.DOM' | translate }}</th>
+                      <th>{{ 'Charts.List.LPxDOM' | translate }}</th>
+                      <th>{{ 'Charts.List.List Price' | translate }}</th>
+                      <th>{{ 'Charts.List.$/SqFt' | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let house of chart.activeHomes | sortBy:'days':false;let i=index;">
+                      <td class="related-image">
+                        <div class="photo" (click)="showImages(house.mlsNumber,house.status)">
+                          <h6 class="lsttype act">{{ 'Charts.Active' | translate }}</h6>
+                          <img src="{{ (house.photos[0] ? house.photos[0] : '') }}">
+                          <div class="photooverlay">{{ 'Charts.List.Click for More Photos' | translate }}</div>
+                        </div>
+                      </td>
+                      <td>{{ house.mlsNumber }}</td>
+                      <td>{{ house.address }}</td>
+                      <td>{{ house.yearBuilt }}</td>
+                      <td>{{ house.squareFootage | number }}</td>
+                      <td>{{ house.bed }}</td>
+                      <td>{{ house.bath }}</td>
+                      <td>{{ house.days }}</td>
+                      <td>{{ house.daysPx }}</td>
+                      <td>{{ house.listPrice | convert:currentcurrency:'1.0-0' }}</td>
+                      <td>{{ house.priceSqFt | convert:currentcurrency:'1.2-2' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="pagebreak"></div>
+          <div class="row no-gutters">
+            <div class="col-12">
+              <h4 class="pendinglst"><span>{{ 'Charts.Pending' | translate }}
+                  ({{pendingCount}})</span></h4>
+            </div>
+            <div class="col-12">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead class="thead-light">
+                    <tr>
+                      <th></th>
+                      <th>{{ 'Charts.Report.MLS' | translate }}</th>
+                      <th>{{ 'Charts.Report.Address' | translate }}</th>
+                      <th>{{ 'Charts.Report.Year Built' | translate }}</th>
+                      <th>{{ 'Charts.Report.SqFt' | translate }}</th>
+                      <th>{{ 'Charts.Report.Bed' | translate }}</th>
+                      <th>{{ 'Charts.Report.Bath' | translate }}</th>
+                      <th>{{ 'Charts.Report.DOM' | translate }}</th>
+                      <th>{{ 'Charts.Report.LPxDOM' | translate }}</th>
+                      <th>{{ 'Charts.List.List Price' | translate }}</th>
+                      <th>{{ 'Charts.Report.$/SqFt' | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let house of chart.pendingHomes | sortBy:'days':false;let i=index;">
+                      <td class="related-image">
+                        <div class="photo" (click)="showImages(house.mlsNumber,house.status)">
+                          <h6 class="lsttype pen">{{ 'Charts.Pending' | translate }}</h6>
+                          <img src="{{ (house.photos[0] ? house.photos[0] : '') }}">
+                          <div class="photooverlay">{{ 'Charts.List.Click for More Photos' | translate }}</div>
+                        </div>
+                      </td>
+                      <td>{{ house.mlsNumber }}</td>
+                      <td>{{ house.address }}</td>
+                      <td>{{ house.yearBuilt }}</td>
+                      <td>{{ house.squareFootage | number }}</td>
+                      <td>{{ house.bed }}</td>
+                      <td>{{ house.bath }}</td>
+                      <td>{{ house.days }}</td>
+                      <td>{{ house.daysPx }}</td>
+                      <td>{{ house.listPrice | convert:currentcurrency:'1.0-0' }}</td>
+                      <td>{{ house.priceSqFt | convert:currentcurrency:'1.2-2' }}</td>
+
+                    </tr>
+                    <tr *ngIf="chart.pendingHomes.length == 0">
+
+                      <td colspan="12" style="text-align: center;">{{ 'Charts.List.No Data Found' | translate }}.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="pagebreak"></div>
+          <div class="row no-gutters">
+            <div class="col-12">
+              <h4 class="closelst">
+                <span>{{ ((chart?.relatedProperty.listing_type == 'Rental')?'NewCharts.Rented':'NewCharts.Closed') | translate }}
+                  ({{closeCount}})</span></h4>
+            </div>
+            <div class="col-12">
+              <div class="table-responsive">
+                <table class="table persist-area">
+                  <thead class="thead-light">
+                    <tr class="persist-header floatingHeader">
+                      <th></th>
+                      <th>{{ 'Charts.List.MLS' | translate }}</th>
+                      <th>{{ 'Charts.List.Address' | translate }}</th>
+                      <th>{{ 'Charts.List.Year Built' | translate }}</th>
+                      <th>{{ 'Charts.List.SqFt' | translate }}</th>
+                      <th>{{ 'Charts.List.Bed' | translate }}</th>
+                      <th>{{ 'Charts.List.Bath' | translate }}</th>
+                      <th>{{ 'Charts.List.DOM' | translate }}</th>
+                      <th>{{ 'Charts.List.LPxDOM' | translate }}
+
+                      </th>
+                      <th>{{ 'Charts.List.List Price' | translate }}</th>
+                      <th>
+                        <span *ngIf="!rentalChartDisplay">{{ 'Charts.List.SOLD A' | translate }}
+                          {{ 'Charts.List.PRICE S' | translate }}</span>
+                        <span *ngIf="rentalChartDisplay">{{ 'Charts.List.RENTAL A' | translate }}
+                          {{ 'Charts.List.PRICE R' | translate }}</span>
+                      </th>
+                      <th><span *ngIf="!rentalChartDisplay">{{ 'Charts.List.SP%LP' | translate }}</span>
+                        <span *ngIf="rentalChartDisplay">{{ 'Charts.List.RP%LP' | translate }}</span>
+                      </th>
+                      <th>{{ 'Charts.List.$/SqFt' | translate }}</th>
+                      <th>
+                        <span *ngIf="!rentalChartDisplay">{{ 'Charts.List.SOLD B' | translate }}
+                          {{ 'Charts.List.DATE S' | translate }}</span>
+                        <span *ngIf="rentalChartDisplay">{{ 'Charts.List.RENTAL B' | translate }}
+                          {{ 'Charts.List.DATE R' | translate }}</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let house of chart.closedHomes| sortBy:'saleDate':true;let i=index;">
+                      <td class="related-image">
+                        <div class="photo" (click)="showImages(house.mlsNumber,house.status)">
+                          <h6 class="lsttype clo">
+                            {{ ((chart?.relatedProperty.listing_type == 'Rental')?'NewCharts.Rented':'NewCharts.Closed') | translate }}
+                          </h6>
+                          <img src="{{ (house.photos[0] ? house.photos[0] : '') }}">
+                          <div class="photooverlay">{{ 'Charts.List.Click for More Photos' | translate }}</div>
+                        </div>
+                      </td>
+                      <td>{{ house.mlsNumber }}</td>
+                      <td>{{ house.address }}</td>
+                      <td>{{ house.yearBuilt }}</td>
+                      <td>{{ house.squareFootage | number }}</td>
+                      <td>{{ house.bed }}</td>
+                      <td>{{ house.bath }}</td>
+                      <td>{{ house.days }}</td>
+                      <td>{{ house.daysPx }}</td>
+                      <td>{{ house.listPrice | convert:currentcurrency:'1.0-0' }}</td>
+                      <td>
+                        {{ (house.closePrice && house.closePrice!='-' && house.closePrice != 'NaN')?(house.closePrice | convert:currentcurrency:'1.0-0'):'' }}
+                      </td>
+                      <td>
+                        {{ (house.salesToList && house.salesToList != 'NaN' && house.salesToList != '-')?(house.salesToList | number:'1.0-2'):0 }}%
+                      </td>
+                      <td>{{ house.priceSqFt | convert:currentcurrency:'1.2-2' }}</td>
+                      <td>{{ house.saleDate | date:'MM/dd/yyyy' }}</td>
+
+                    </tr>
+                    <tr *ngIf="chart.closedHomes.length == 0">
+
+                      <td colspan="12" style="text-align: center;">{{ 'Charts.List.No Data Found' | translate }}.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="beachesFlag" class="row no-gutters">
+            <div class="col-12">
+              <div class="beachMLS">
+                <p>Licensed Data Source and Copyright 2020 Beaches MLS, Inc., Inc.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div id="agent">
+        <div class="presentationagent">
+          <div class="container">
+            <div *ngIf="chart" class="agentDetails">
+              <h3>{{'Charts.Agent Details' | translate}}</h3>
+              <div class="agent">
+                <img src="{{ chart.agent.photo_150X150  || 'assets/images/profileDefault.png'}}">
+              </div>
+              <div class="agentName">
+                <h5>{{chart.agent.fullName}}</h5>
+              </div>
+
+              <div class="agentContact">
+                <div class="agentCol">
+                  <div class="agentLogo"
+                    [ngStyle]="{'background-image': 'url(' + (chart.agent.logo_150X150  || 'assets/images/profileDefault.png') + ')'}">
+                  </div>
+                </div>
+                <div class="agentCol">
+                  <ul *ngIf="chart.agent.email.length>0">
+                    <li>
+                      <img src="assets/images/envelop.png" width="20" alt="">
+                    </li>
+                    <li>
+                      {{chart.agent.email}}
+                    </li>
+                  </ul>
+                  <ul *ngIf="chart.agent.phone.length>0">
+                    <li>
+                      <img src="assets/images/call.png" height="20" alt="">
+                    </li>
+                    <li>
+                      {{chart.agent.phone}}
+                    </li>
+                  </ul>
+                  <ul *ngIf="chart.agent.website.length>0">
+                    <li>
+                      <img src="assets/images/web.png" width="20" alt="">
+                    </li>
+                    <li>
+                      {{chart.agent.website}}
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accurate">
+        <div class="container">
+          <div class="accratereport">
+            <div class="row no-gutters">
+              <div class="col-12">
+                <div class="cmplogo">
+                  <!-- <img src="assets/images/presentation-logo1.png" alt="APC" width="60"> -->
+                  <img src="assets/images/apc_logo.png" alt="cmaIQ" width="100">
+                  <img src="assets/images/Data Rabbit API-sq.png" alt="Data api" width="60">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Agent  Information popup  -->
+  <div *ngIf="showHideAgent" class="agentWrapper">
+    <div *ngIf="chart" class="agentDetails">
+      <button type="button" class="close" (click)="hideAgent()">
+        <i class="pi pi-times-circle"></i>
+      </button>
+      <h3>AGENT DETAILS</h3>
+      <div class="agent">
+        <img src="{{ chart.agent.photo_150X150  || 'assets/images/profileDefault.png'}}">
+      </div>
+      <div class="agentName">
+        <h5>{{chart.agent.fullName}}</h5>
+      </div>
+
+      <div class="agentContact">
+        <div class="agentCol">
+          <div class="agentLogo"
+            [ngStyle]="{'background-image': 'url(' + (chart.agent.logo_150X150  || 'assets/images/profileDefault.png') + ')'}">
+          </div>
+        </div>
+        <div class="agentCol">
+          <ul *ngIf="chart.agent.email.length>0">
+            <li>
+              <img src="assets/images/envelop.png" width="20" alt="">
+            </li>
+            <li>
+              {{chart.agent.email}}
+            </li>
+          </ul>
+          <ul *ngIf="chart.agent.phone.length>0">
+            <li>
+              <img src="assets/images/call.png" height="20" alt="">
+            </li>
+            <li>
+              {{chart.agent.phone}}
+            </li>
+          </ul>
+          <ul *ngIf="chart.agent.website.length>0">
+            <li>
+              <img src="assets/images/web.png" width="20" alt="">
+            </li>
+            <li>
+              {{chart.agent.website}}
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

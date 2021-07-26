@@ -1,0 +1,905 @@
+<app-header></app-header>
+<div class="Wrraper">
+  <div class="container">
+    <h1 class="heading" [innerHTML]="'APC Investment Analysis.label' | translate"></h1>
+    <div class="row no-gutters">
+      <div class="col-12 col-md-12 col-lg-10 m-auto">
+        <div class="Analysis mb-4">
+          <form [formGroup]="confValues" (ngSubmit)="confValueSubmit()">
+            <div class="row no-gutters mb-4">
+              <div class="col-12 col-lg-2">
+                <h5>{{ 'APC Investment Analysis.STEP 1' | translate }}</h5>
+              </div>
+              <div class="col-12 col-lg-10 Analysis_Box">
+                <div class="row">
+                  <div class="col-12">
+                    <h2>{{ 'APC Investment Analysis.Property Value' | translate }}</h2>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-12 col-md-5 mb-3">
+                    <div class="row no-gutters">
+                      <label class="col-12"
+                        for="analyze">{{ 'APC Investment Analysis.Select Chart' | translate }}</label>
+                      <div class="col-12">
+                        <select (change)="onProChange($event.target.value)" formControlName="propertyValueResSelect"
+                          id="analyze" class="form-control select">
+                          <option value="">--{{ 'APC Investment Analysis.Select' | translate }}--</option>
+                          <ng-container *ngFor="let chart of charts">
+                            <!-- <option [value]="chart._id" *ngIf="(chart.investment?.loanvalue == '' || chart.investment?.loanvalue == 'null' || chart.investment?.loanvalue == null) && (chart.relatedProperty.listing_type == 'null' || chart.relatedProperty.listing_type == null || chart.relatedProperty.listing_type.trim() == '')">{{((chart.targetProperty.address)?chart.targetProperty.address:chart.chart_title)}}</option> -->
+                            <option [value]="chart._id" *ngIf="chart.relatedProperty.listing_type == 'Residential'">
+                              {{(chart.targetProperty.address)?chart.targetProperty.address:chart.chart_title}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                      <div class="col-12 mt-3 text-center"
+                        *ngIf="confValues.controls.propertyValueResSelect.value && averagePropertyValue > 0">
+                        <h6 class="m-0">
+                          {{ 'APC Investment Analysis.Chart Property Value' | translate }}:
+                          {{averagePropertyValue  | convert:'USD':'1.0-0'}}</h6>
+                        <!-- <button type="button" (click)="get_charts()" class="btn btn-default text-primary refresh pl-1"><i class="pi pi-refresh"></i></button> -->
+                      </div>
+                      <a *ngIf="!samlFlag" (click)="openDialog('Residential')" class="col-12 btn btn-default addclient mt-3"
+                        >{{ 'APC Investment Analysis.Create new chart for client' | translate }}</a>
+                        <a *ngIf="!samlFlag" (click)="openDialogProspecting('Residential')" class="col-12 btn btn-default addclient mt-3"
+                        >{{ 'APC Investment Analysis.Create new chart for Prospecting' | translate }}</a>
+                       <!--  (click)="openChart('Residential')" -->
+                        <!-- <a class="dropdown-item" (click)="openDialog('Residential')">For Client</a>
+                        <a class="dropdown-item" (click)="openDialogProspecting('Residential')">Prospecting</a> -->
+                      </div>
+                  </div>
+                  <div class="col-12 col-md-2 mb-3">
+                    <h4>{{ 'APC Investment Analysis.OR' | translate }}</h4>
+                  </div>
+                  <div class="col-12 col-md-5 mb-3">
+                    <label
+                      for="enterpropertyvalue">{{ 'APC Investment Analysis.Enter Property Value' | translate }}</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="enterpropertyvalue">$</span>
+                      </div>
+                      <input type="number" autocomplete="off" min="0" (input)="onProIChange($event.target.value)"
+                        formControlName="propertyValueRes" class="form-control" id="enterpropertyvalue"
+                        aria-describedby="enterpropertyvalue">
+                    </div>
+                    <input type="hidden" formControlName="checkpropertyfill" class="form-control">
+                    <input type="hidden" formControlName="checkrentalfill" class="form-control">
+                    <input type="hidden" formControlName="LoantoValue" class="form-control">
+                    <input type="hidden" formControlName="LoantoValueSm" class="form-control">
+                    <input type="hidden" formControlName="advanced" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row no-gutters mb-4">
+              <div class="col-12 col-lg-2">
+                <h5>{{ 'APC Investment Analysis.STEP 2' | translate }}</h5>
+              </div>
+              <div class="col-12 col-lg-10 Analysis_Box">
+                <div class="row">
+                  <div class="col-12">
+                    <h2>{{ 'APC Investment Analysis.Rental Value' | translate }}</h2>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-12 col-md-5 mb-3" *ngIf="hasRental">
+                    <div class="row no-gutters">
+                      <label class="col-12"
+                        for="analyze">{{ 'APC Investment Analysis.Select Chart' | translate }}</label>
+                      <div class="col-12">
+                        <select id="analyze" (change)="onRenChange($event.target.value)"
+                          formControlName="propertyValueRenSelect" class="form-control select">
+                          <option value="">--{{ 'APC Investment Analysis.Select' | translate }}--</option>
+                          <ng-container *ngFor="let chart of charts">
+                            <option [value]="chart._id" *ngIf="chart.relatedProperty.listing_type == 'Rental'">
+                              {{(chart.targetProperty.address)?chart.targetProperty.address:chart.chart_title}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                      <div class="col-12 mt-3 text-center"
+                        *ngIf="confValues.controls.propertyValueRenSelect.value && rentalPropertyValue > 0">
+                        <h6 class="m-0">{{ 'APC Investment Analysis.Chart Rental Value' | translate }}:
+                          {{rentalPropertyValue  | convert:'USD':'1.0-0'}}</h6>
+                      </div>
+                      <!-- <button type="button" (click)="get_charts()" class="btn btn-default text-primary refresh  pl-1"><i class="pi pi-refresh"></i></button> -->
+                      <!-- <a *ngIf="!samlFlag" class="col-12 btn btn-default addclient mt-3"
+                        (click)="openChart('Rental')">{{ 'APC Investment Analysis.Create new chart' | translate }}</a> -->
+
+                        <a *ngIf="!samlFlag" class="col-12 btn btn-default addclient mt-3"
+                        (click)="openDialog('Rental')">{{ 'APC Investment Analysis.Create new chart for client' | translate }}</a>
+                        <a *ngIf="!samlFlag" class="col-12 btn btn-default addclient mt-3"
+                        (click)="openDialogProspecting('Rental')">{{ 'APC Investment Analysis.Create new chart for Prospecting' | translate }}</a>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-2 mb-3" *ngIf="hasRental">
+                    <h4>{{ 'APC Investment Analysis.OR' | translate }}</h4>
+                  </div>
+                  <div [style.margin]="hasRental?'':'0 auto'" class="col-12 col-md-5 mb-3">
+                    <label
+                      for="enterpropertyvalue">{{ 'APC Investment Analysis.Enter Rental Value(month)' | translate }}</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="enterpropertyvalue">$</span>
+                      </div>
+                      <input type="number" autocomplete="off" min="0" (input)="onRenIChange($event.target.value)"
+                        formControlName="propertyValueRental" class="form-control" id="enterpropertyvalue"
+                        aria-describedby="enterpropertyvalue">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row no-gutters mb-4">
+              <div class="col-12 col-lg-2">
+                <h5>{{ 'APC Investment Analysis.STEP 3' | translate }}</h5>
+              </div>
+              <div class="col-12 col-lg-10 Analysis_Box">
+                <div class="row">
+                  <div class="col-12">
+                    <h2>{{ 'APC Investment Analysis.Data Input' | translate }}
+                      <span class="infoBtn float-right mr-2">
+                        <i class="pi pi-info-circle"></i>
+                        <div class="infoToolTip">
+                          <p>{{ 'APC Investment Analysis.Data Input tooltip' | translate}}</p>
+                        </div>
+                      </span>
+                      <button type="button" class="btn btn-primary mr-1 btn-color float-right"
+                        (click)="toggleAddvance()" [ngClass]="showHideAddvance ? 'active' : 'inactive'">
+                        <i class="pi pi-plus"></i><i class="pi pi-minus"></i>Advanced
+                      </button>
+                    </h2>
+                  </div>
+                </div>
+                <div class="form-group row">
+
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label
+                        for="property">{{ 'APC Investment Analysis.Annual Property Insurance' | translate }}</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="property">$</span>
+                        </div>
+                        <input type="number" autocomplete="off" min="0" formControlName="propertyInsurance"
+                          class="form-control" id="property" aria-describedby="property">
+                        <div class="input-group-append">
+                          <span class="input-group-text" id="property">/ year</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label for="rtaxes">{{ 'APC Investment Analysis.Annual Real Estate Taxes' | translate }}</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="rtaxes">$</span>
+                        </div>
+                        <input type="number" autocomplete="off" min="0" formControlName="rtaxes" class="form-control"
+                          id="rtaxes" aria-describedby="rtaxes">
+                        <div class="input-group-append">
+                          <span class="input-group-text" id="property">/ year</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <h3>{{ 'APC Investment Analysis.First Mortgage' | translate }}</h3>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label
+                        for="loanvalue">{{ 'APC Investment Analysis.Loan to Value % or Loan Amount' | translate }}</label>
+                      <div class="input-group">
+
+                        <div class="input-group-prepend">
+                          <a (click)="loanValue(2)" [ngClass]="{'active': lvalue==='lvalue2'}" href="javascript:void(0)"
+                            class="input-group-text" id="loanvalue">%</a>
+                        </div>
+                        <div class="input-group-prepend">
+                          <a (click)="loanValue(1)" [ngClass]="{'active': lvalue==='lvalue1'}" href="javascript:void(0)"
+                            class="input-group-text" id="loanvalue">$</a>
+                        </div>
+                        <input type="number" autocomplete="off" min="0" [max]='maxInput'
+                          (input)="calculateDownpaymentorEquity()" formControlName="loanvalue"
+                          class="form-control border-left-0" id="loanvalue" aria-describedby="loanvalue">
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label for="loanvalue">{{ 'APC Investment Analysis.Estimated Closing Costs' | translate }}</label>
+                      <div class="input-group">
+
+                        <input type="number" (input)="calculateClosingCost()" autocomplete="off" min="0"
+                          formControlName="FmEstimatedClosingCosts" class="form-control border-left-0">
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label for="loanintrate">{{ 'APC Investment Analysis.Interest Rate' | translate }}</label>
+                      <div class="input-group">
+                        <input type="number" autocomplete="off" min="0" formControlName="FmInterestRate"
+                          class="form-control" id="loanintrate" aria-describedby="loanintrate">
+                        <div class="input-group-append">
+                          <span class="input-group-text" id="loanintrate">%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label for="loanterm">{{ 'APC Investment Analysis.Term' | translate }}</label>
+                      <div class="input-group">
+                        <!-- <input type="number" autocomplete="off"  min="0" formControlName="FmTerm"  class="form-control" id="loanterm" aria-describedby="loanterm" > -->
+                        <select formControlName="FmTerm" class="form-control" id="loanterm" aria-describedby="loanterm">
+                          <option value="0">Select</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                          <option value="13">13</option>
+                          <option value="14">14</option>
+                          <option value="15">15</option>
+                          <option value="16">16</option>
+                          <option value="17">17</option>
+                          <option value="18">18</option>
+                          <option value="19">19</option>
+                          <option value="20">20</option>
+                          <option value="21">21</option>
+                          <option value="22">22</option>
+                          <option value="23">23</option>
+                          <option value="24">24</option>
+                          <option value="25">25</option>
+                          <option value="26">26</option>
+                          <option value="27">27</option>
+                          <option value="28">28</option>
+                          <option value="29">29</option>
+                          <option value="30">30</option>
+                        </select>
+                        <div class="input-group-append">
+                          <span class="input-group-text" id="loanintrate">/ years</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <h3>{{ 'APC Investment Analysis.Second Mortgage' | translate }}</h3>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label
+                        for="loanvalue">{{ 'APC Investment Analysis.Loan to Value % or Loan Amount' | translate }}</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <a (click)="loanValueSm(2)" [ngClass]="{'active': lvalueSm==='lvalue2'}"
+                            href="javascript:void(0)" class="input-group-text">%</a>
+                        </div>
+                        <div class="input-group-prepend">
+                          <a (click)="loanValueSm(1)" [ngClass]="{'active': lvalueSm==='lvalue1'}"
+                            href="javascript:void(0)" class="input-group-text">$</a>
+                        </div>
+                        <input type="number" autocomplete="off" min="0" [max]='maxInputSm'
+                          (input)="calculateDownpaymentorEquity()" formControlName="SmLoantoValueorLoanAmount"
+                          class="form-control border-left-0">
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label for="loanvalue">{{ 'APC Investment Analysis.Estimated Closing Costs' | translate }}</label>
+                      <div class="input-group">
+                        <input (input)="calculateClosingCost()" type="number" autocomplete="off" min="0"
+                          formControlName="SmEstimatedClosingCosts" class="form-control border-left-0">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label for="secondintrate">{{ 'APC Investment Analysis.Interest Rate' | translate }}</label>
+                      <div class="input-group">
+                        <input type="number" autocomplete="off" min="0" formControlName="SmInterestRate"
+                          class="form-control" id="secondintrate" aria-describedby="secondintrate">
+                        <div class="input-group-append">
+                          <span class="input-group-text" id="secondintrate">%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label for="secondterm">{{ 'APC Investment Analysis.Term' | translate }}</label>
+                      <div class="input-group">
+                        <!-- <input type="number" autocomplete="off"  min="0" formControlName="SmTerm"  class="form-control" id="secondterm" aria-describedby="secondterm"
+                          > -->
+                        <select formControlName="SmTerm" class="form-control" id="secondterm"
+                          aria-describedby="secondterm">
+                          <option value="0">Select</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                          <option value="13">13</option>
+                          <option value="14">14</option>
+                          <option value="15">15</option>
+                          <option value="16">16</option>
+                          <option value="17">17</option>
+                          <option value="18">18</option>
+                          <option value="19">19</option>
+                          <option value="20">20</option>
+                          <option value="21">21</option>
+                          <option value="22">22</option>
+                          <option value="23">23</option>
+                          <option value="24">24</option>
+                          <option value="25">25</option>
+                          <option value="26">26</option>
+                          <option value="27">27</option>
+                          <option value="28">28</option>
+                          <option value="29">29</option>
+                          <option value="30">30</option>
+                        </select>
+                        <div class="input-group-append">
+                          <span class="input-group-text" id="secondterm">/ years</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="showHideAddvance">
+                  <div class="row">
+                    <div class="col-12">
+                      <h3>{{ 'APC Investment Analysis.Property Information' | translate }} </h3>
+                    </div>
+
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-12 mb-3">
+                      <div class="row no-gutters wid-50">
+                        <label for="BuildingValue">{{ 'APC Investment Analysis.Building Value' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="BuildingValue">$</span>
+                          </div>
+                          <input type="number" min='0' minlength="" (input)="changeBuildingValue()"
+                            formControlName="BuildingValue" class="form-control" id="BuildingValue"
+                            aria-describedby="BuildingValue">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <h4 class="wid-50 p-0" style="line-height: 12px;"> +</h4>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                      <div class="row no-gutters wid-50">
+                        <label for="landValue">{{ 'APC Investment Analysis.Land Value' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="landValue">$</span>
+                          </div>
+                          <input type="number" min='0' (input)="changelandValue()" formControlName="landValue"
+                            class="form-control" id="landValue" aria-describedby="landValue">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <h4 class="wid-50 p-0" style="line-height: 12px;"> +</h4>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                      <div class="row no-gutters wid-50">
+                        <label for="investment">{{ 'APC Investment Analysis.Improvements' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="investment">$</span>
+                          </div>
+                          <input type="number" min='0' (input)="setTotalImpValue()" formControlName="Improvements"
+                            class="form-control" id="investment" formControlName="Improvements"
+                            aria-describedby="investment">
+                        </div>
+                      </div>
+                    </div>
+
+                    <input type="hidden" formControlName="TotalImprovementValue" class="form-control" id="totalValue"
+                      aria-describedby="totalValue">
+
+                    <!-- <div class="col-12 col-sm-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="totalValue">{{ 'APC Investment Analysis.Total Improvement Value' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="totalValue">$</span>
+                          </div>
+                          <input type="number" formControlName="TotalImprovementValue"  class="form-control" id="totalValue" aria-describedby="totalValue"
+                            >
+                        </div>
+                      </div>
+                    </div> -->
+
+                    <div class="col-12 mb-3">
+                      <div class="row no-gutters wid-50">
+                        <h6 style="border-top: 2px solid #b7b5b5;padding-top: 5px; width: 100%;">Total Adjusted Property
+                          Value: {{propertyAdjustmentValue }}</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <h3>{{ 'APC Investment Analysis.Miscellaneous Rates' | translate }}</h3>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="inflation">{{ 'APC Investment Analysis.Rate of Inflation' | translate }}</label>
+                        <div class="input-group">
+                          <input type="number" autocomplete="off" min="0" formControlName="RateofInflation"
+                            class="form-control" id="inflation" aria-describedby="inflation">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="inflation">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label
+                          for="housevalue">{{ 'APC Investment Analysis.House Value Appreciation' | translate }}</label>
+                        <div class="input-group">
+                          <input type="number" autocomplete="off" min="0" formControlName="HouseValueAppreciation"
+                            class="form-control" id="housevalue" aria-describedby="housevalue">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="housevalue">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="costsale">{{ 'APC Investment Analysis.Cost of Sale' | translate }}</label>
+                        <div class="input-group">
+                          <input type="number" autocomplete="off" min="0" formControlName="CostofSale"
+                            class="form-control" id="costsale" aria-describedby="costsale">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="costsale">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="estimate">{{ 'APC Investment Analysis.Estimated Vacancy' | translate }}</label>
+                        <div class="input-group">
+                          <input type="number" autocomplete="off" min="0" formControlName="EstimatedVacancy"
+                            class="form-control" id="estimate" aria-describedby="estimate">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="estimate">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="nominal">{{ 'APC Investment Analysis.Federal Income Tax Rate' | translate }}</label>
+                        <div class="input-group">
+                          <input type="number" autocomplete="off" min="0" formControlName="NominalFederalIncomeTaxRate"
+                            class="form-control" id="nominal" aria-describedby="nominal">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="nominal">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label
+                          for="nominalstate">{{ 'APC Investment Analysis.State Income Tax Rate' | translate }}</label>
+                        <div class="input-group">
+                          <input type="number" autocomplete="off" min="0" formControlName="NominalStateIncomeTaxRate"
+                            class="form-control" id="nominalstate" aria-describedby="nominalstate">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="nominalstate">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label
+                          for="nominallocal">{{ 'APC Investment Analysis.Local Income Tax Rate' | translate }}</label>
+                        <div class="input-group">
+                          <input type="number" autocomplete="off" min="0" formControlName="NominalLocalIncomeTaxRate"
+                            class="form-control" id="nominallocal" aria-describedby="nominallocal">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="nominallocal">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label
+                          for="nominalline">{{ 'APC Investment Analysis.Straight Line Recapture Tax Rate' | translate }}</label>
+                        <div class="input-group">
+                          <input type="number" autocomplete="off" min="0"
+                            formControlName="NominalStraightLineRecaptureTaxRate" class="form-control" id="nominalline"
+                            aria-describedby="nominalline">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="nominalline">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label
+                          for="nominalfederal">{{ 'APC Investment Analysis.Federal Capital Gain Tax Rate' | translate }}</label>
+                        <div class="input-group">
+                          <input type="number" autocomplete="off" min="0"
+                            formControlName="NominalFederalCapitalGainTaxRate" class="form-control" id="nominalfederal"
+                            aria-describedby="nominalfederal">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="nominalfederal">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label
+                          for="nominalcapital">{{ 'APC Investment Analysis.State Capital Gain Tax Rate' | translate }}</label>
+                        <div class="input-group">
+                          <input type="number" autocomplete="off" min="0"
+                            formControlName="NominalStateCapitalGainTaxRate" class="form-control" id="nominalcapital"
+                            aria-describedby="nominalcapital">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="nominalcapital">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label
+                          for="nominaltax">{{ 'APC Investment Analysis.Local Capital Gain Tax Rate' | translate }}</label>
+                        <div class="input-group">
+                          <input type="number" autocomplete="off" min="0"
+                            formControlName="NominalLocalCapitalGainTaxRate" class="form-control" id="nominaltax"
+                            aria-describedby="nominaltax">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="nominaltax">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <div class="row">
+                  <div class="col-12">
+                    <h3>{{ 'APC Investment Analysis.Cash Investment Required' | translate }}</h3>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label for="closing">{{ 'APC Investment Analysis.Estimated Closing Costs' | translate }}</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="closing">$</span>
+                        </div> -->
+                  <input type="hidden" min="0" formControlName="EstimatedClosingCosts" class="form-control" id="closing"
+                    aria-describedby="closing">
+
+                  <!--  </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <div class="row no-gutters">
+                      <label for="closing">{{ 'APC Investment Analysis.Downpayment or Equity' | translate }}</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="closing">$</span>
+                        </div> -->
+                  <input type="hidden" min="0" formControlName="DownpaymentorEquity" class="form-control" id="closing"
+                    aria-describedby="closing">
+
+                  <!-- </div>
+                    </div>
+                  </div>
+                </div> -->
+
+                  <div class="row">
+                    <div class="col-12">
+                      <h3>{{ 'APC Investment Analysis.Monthly Expenses' | translate }}</h3>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="hoa">{{ 'APC Investment Analysis.HOA Dues' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="hoa">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="hoa" class="form-control"
+                            id="hoa" aria-describedby="hoa">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="property">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="hoa">{{ 'APC Investment Analysis.Regime fees' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="hoa">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="RegimeFee"
+                            class="form-control" id="hoa" aria-describedby="hoa">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="property">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="maint">{{ 'APC Investment Analysis.Repairs & Maintenance' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="maint">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="Repairs" class="form-control"
+                            id="maint" aria-describedby="maint">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="gas">{{ 'APC Investment Analysis.Electric & Gas' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="gas">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="Electric"
+                            class="form-control" id="gas" aria-describedby="gas">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="water">{{ 'APC Investment Analysis.Water & Sewer' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="water">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="Water" class="form-control"
+                            id="water" aria-describedby="water">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="accounting">{{ 'APC Investment Analysis.Accounting' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="accounting">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="Accounting"
+                            class="form-control" id="accounting" aria-describedby="accounting">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="permits">{{ 'APC Investment Analysis.Licenses/Permits' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="permits">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="Liscenses"
+                            class="form-control" id="permits" aria-describedby="permits">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="advertising">{{ 'APC Investment Analysis.Advertising' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="advertising">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="Advertising"
+                            class="form-control" id="advertising" aria-describedby="advertising">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="collection">{{ 'APC Investment Analysis.Trash Collection' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="collection">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="Trash" class="form-control"
+                            id="collection" aria-describedby="collection">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="monitoring">{{ 'APC Investment Analysis.Alarm monitoring' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="monitoring">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="monitoring"
+                            class="form-control" id="monitoring" aria-describedby="monitoring">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="yard">{{ 'APC Investment Analysis.Yard maintenance' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="yard">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="maintenance"
+                            class="form-control" id="yard" aria-describedby="yard">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="pest">{{ 'APC Investment Analysis.Pest Control' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="pest">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="Pest" class="form-control"
+                            id="pest" aria-describedby="pest">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="pmanagement">{{ 'APC Investment Analysis.Property Management' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="pmanagement">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="Management"
+                            class="form-control" id="pmanagement" aria-describedby="pmanagement">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <div class="row no-gutters">
+                        <label for="other">{{ 'APC Investment Analysis.Other' | translate }}</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="other">$</span>
+                          </div>
+                          <input type="number" autocomplete="off" min="0" formControlName="Other" class="form-control"
+                            id="other" aria-describedby="other">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="maint">/ month</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <!-- <div class="form-group row no-gutters mt-3 mb-0 pt-3 pb-3 bg-light">
+                  <label for="totalinvestment" class="col-12 col-sm-6 col-form-label font-weight-bold">
+                    {{ 'APC Investment Analysis.Total Initial Investment' | translate }}</label>
+                  <div class="col-12 col-md-6 input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="totalinvestment">$</span>
+                    </div>
+                    <input type="number" min="0" formControlName="totalInitialInvestment"  class="form-control" id="totalinvestment" aria-describedby="totalinvestment"
+                      >
+
+                  </div>
+                </div> -->
+                </div>
+
+              </div>
+            </div>
+            <div class="row no-gutters">
+              <div class="col-12 text-right">
+                <button type="submit" [disabled]="!confValues.valid"
+                  class="btn btn-default btn-generate">{{ 'APC Investment Analysis.Generate Analysis' | translate }}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

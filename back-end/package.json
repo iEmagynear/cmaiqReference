@@ -1,0 +1,61 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon app.js"
+  },
+  "keywords": [
+    "node",
+    "mongodb",
+    "mongoose"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async-redis": "^1.1.7",
+    "aws-sdk": "^2.509.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "config": "^3.1.0",
+    "connect-multiparty": "^2.2.0",
+    "cors": "^2.8.5",
+    "crypto-random-string": "^3.0.1",
+    "csv-parser": "^2.3.0",
+    "csv-string": "^4.0.1",
+    "csvtojson": "^2.0.10",
+    "express": "^4.17.1",
+    "fast-xml-parser": "^3.17.1",
+    "handlebars": "^4.1.2",
+    "helmet": "^3.18.0",
+    "ioredis": "^4.17.3",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.14",
+    "mongoose": "^5.6.4",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "node-stream-zip": "^1.11.3",
+    "nodejs-base64": "^1.0.3",
+    "nodemailer": "^6.3.0",
+    "passport": "^0.4.1",
+    "passport-saml": "^1.2.0",
+    "redis": "^2.8.0",
+    "redis-clustr": "^1.7.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.6",
+    "shibboleth": "^0.1.4",
+    "shortid": "^2.2.16",
+    "stripe": "^7.13.0",
+    "sync-request": "^6.1.0",
+    "uuid": "^3.3.3",
+    "xml-extract": "^1.1.0",
+    "xml-formatter": "^1.2.0",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}

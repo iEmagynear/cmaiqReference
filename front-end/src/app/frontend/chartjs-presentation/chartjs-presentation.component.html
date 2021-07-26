@@ -1,0 +1,77 @@
+<div style="display: block;">
+  <canvas width="400" height="250" baseChart
+    [datasets]="scatterChartData"
+    [options]="scatterChartOptions"
+    [chartType]="scatterChartType"
+    (chartClick)="chartClicked($event)">
+  </canvas>
+</div>
+<app-header [redirect]="redirect" (childMessage)="showMessageFromChild($event)" (curMessage)="showMessageFromCur($event)"></app-header>
+<ng-template #content let-modal>
+    <div class="modal-content" *ngIf="currentHouse">
+      <div class="modal-header text-center">
+        <h4 class="modal-title" id="modal-basic-title">{{ currentHouse.address}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <i class="pi pi-times-circle"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ngb-carousel *ngIf="currentHouse.photos.length>=0">
+
+          <ng-template *ngFor="let photos of currentHouse.photos;let i=index;" ngbSlide>
+            <div class="picsum-img-wrapper">
+              <img [src]="photos" alt="Random first slide">
+            </div>
+          </ng-template>
+      </ngb-carousel>
+    </div>
+    <div class="modal-footer current-house-info">
+      <div id="addressInfo">
+        <p>
+          <span class="chart-dot" [ngClass]="(currentHouse.status == 'CLOSED' || currentHouse.status == 'Closed' || currentHouse.status == 'Sold') ? 'closed' : (currentHouse.status == 'Active' || currentHouse.status == 'ACTIVE' || currentHouse.status == 'Active - Coming Soon') ? 'active' : 'pending'">&nbsp;</span>
+          {{ ((currentHouse.status == 'Closed')?((chart?.relatedProperty.listing_type == 'Rental')?'NewCharts.Rented':'NewCharts.Closed'):'Sign Out.'+currentHouse.status) | translate}}
+
+        </p>
+        <p>{{ currentHouse.address }}</p>
+        <p>MLS #: {{ currentHouse.mlsNumber }}</p>
+      </div>
+      <div id="vitalInfo">
+        <p>{{"Sign Out.Sq Ft" | translate}}: {{ currentHouse.squareFootage | number }}</p>
+        <p>{{"Sign Out.DOM" | translate}}: {{ currentHouse.days }}</p>
+        <p>{{'Charts.List.LPxDOM' | translate }}: {{ currentHouse.daysPx }}</p>
+      </div>
+      <div id="additionalInfo">
+        <p>{{"Sign Out.Beds" | translate}}: {{ currentHouse.bed }}</p>
+        <p>{{"Sign Out.Baths" | translate}}: {{ currentHouse.bath }}</p>
+        <p>{{"Sign Out.Year Built" | translate}}: {{ currentHouse.yearBuilt }}</p>
+      </div>
+      <div id="priceInfo">
+        <p *ngIf="currentHouse.listPrice">{{"Sign Out.List Price" | translate}}:
+          {{ currentHouse.listPrice | convert:currentcurrency:'1.0-2' }}
+        </p>
+        <p *ngIf="(currentHouse.status != 'Active' && currentHouse.status != 'Pending' && currentHouse.status !== 'Under Contract' && currentHouse.status !== 'Active Contingent' && currentHouse.status !== 'Contingent' && currentHouse.status !== 'Active Option Contract')">
+          {{ ((chart.relatedProperty.listing_type == 'Rental')?"Charts.Chart.Rented Price":"Charts.Chart.Sales Price") | translate}}: {{ currentHouse.closePrice | convert:currentcurrency:'1.0-2' }}
+        </p>
+        <p *ngIf="(currentHouse.status != 'Active' && currentHouse.status != 'Pending' && currentHouse.status !== 'Under Contract' && currentHouse.status !== 'Active Contingent' && currentHouse.status !== 'Contingent' && currentHouse.status !== 'Active Option Contract')">
+          {{((chart.relatedProperty.listing_type == 'Rental')?"Charts.Chart.Rented Date":"Charts.Chart.Sales Date") | translate}}: {{ currentHouse.saleDate | date:"MM/dd/yy" }}
+        </p>
+      </div>
+    </div>
+    <div class="modal-footer text-right" *ngIf="!isSeven || currentHouse.status === 'Active' || currentHouse.status === 'Pending'">
+      <button type="button" class="btn btn-danger" (click)="deleteFromChart(currentHouse.mlsNumber)">{{"Sign Out.Delete" | translate}}</button>
+    </div>
+    <div class="modal-footer text-right" *ngIf="isSeven && currentHouse.status != 'Active' && currentHouse.status != 'Pending'">
+      <i style="color:red;" class="pi pi-exclamation-triangle"></i>
+      <div class="overlay">
+        <h6>{{"Sign Out.Cannot Delete" | translate}}</h6>
+        <p *ngIf="rentalChartDisplay">{{"Sign Out.Cannot DeleteTextRent" | translate}}
+        </p>
+        <p *ngIf="!rentalChartDisplay">{{"Sign Out.Cannot DeleteText" | translate}}
+        </p>
+      </div>
+    </div>
+    <div *ngIf="beachesFlag" class="beachMLS">
+      <p>Licensed Data Source and Copyright 2020 Beaches MLS, Inc., Inc.</p>
+    </div>
+    </div>
+</ng-template>

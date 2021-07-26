@@ -1,0 +1,424 @@
+<div class="Dashboard">
+  <mat-sidenav-container class="Dashboard_Sidenav" autosize>
+
+    <mat-sidenav #sidenav class="Dashboard_Sidenav_Example" [ngClass]="status ? 'slideOn' : 'slideOff'" mode="side"
+      opened="true">
+      <mat-toolbar class="example-toolbar">
+        <span class="example-fill-remaining-space"></span>
+      </mat-toolbar>
+
+      <app-left-sidebar></app-left-sidebar>
+    </mat-sidenav>
+    <button class="menubutton" type="button" (click)="toggle()">
+      <img [src]="menu" alt="menu">
+    </button>
+    <div class="DashboardTab">
+      <mat-card>
+        <mat-card-content>
+          <div class="DashboardLayout">
+            <div class="TopLayout">
+              <div class="TopLayoutCol">
+                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                  <li class="nav-item" (click)="clearTab()">
+                    <a class=" nav-link" [class.active]="activeTab!='mlsGroupTab'" data-toggle="pill" href="#APC1"
+                      role="tab" aria-controls="pills-home" aria-selected="true">
+                      <div class="LayoutCollft">
+                        <h3>{{adminuserslength}}</h3>
+                        <h4>TOTAL USERS</h4>
+                      </div>
+                      <div class="LayoutColrgt">
+                        <i class="material-icons">person</i>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="nav-item" (click)="getGroupMls()">
+                    <a class="nav-link" [class.active]="activeTab=='mlsGroupTab'" data-toggle="pill" href="#APC2"
+                      role="tab" aria-controls="pills-profile" aria-selected="false">
+                      <div class="LayoutCollft">
+                        <h3>{{adminMlsGroupLength}}</h3>
+                        <h4>MLS GROUPS</h4>
+                      </div>
+                      <div class="LayoutColrgt">
+                        <i class="material-icons">people</i>
+                      </div>
+                    </a>
+                  </li>
+
+                  <!-- <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#APC3" role="tab" aria-controls="pills-contact"
+                      aria-selected="false">
+                      <div class="LayoutCollft">
+                        <h3>0</h3>
+                        <h4>OFFICE ASSOCIATIONS</h4>
+                      </div>
+                      <div class="LayoutColrgt">
+                        <i class="material-icons">public</i>
+                      </div>
+                    </a>
+                  </li> -->
+                </ul>
+              </div>
+              <div class="tab-content TableLayout" id="pills-tabContent">
+                <div class="tab-pane fade" [class.show]="activeTab!='mlsGroupTab'"
+                  [class.active]="activeTab!='mlsGroupTab'" id="APC1" role="tabpanel">
+                  <div class="Searchwrp">
+                    <div class="Search-sm-12">
+                      <div class="Searchdropdown">
+                        <!-- <select class="form-control action">
+                          <option disabled selected hidden>Action</option>
+                          <option value="delete">Delete</option>
+                        </select> -->
+                        <!-- <button type="button" (click)="deleteMlsMember()">Delete</button> -->
+                        <div class="has-search">
+                          <button class="form-control-feedback">
+                            <i class="material-icons">
+                              search
+                            </i>
+                          </button>
+                          <input type="text" [value]="searchText?searchText:''"
+                            (input)="searchAllUser($event.target.value)" class="form-control" placeholder="Search">
+                        </div>
+                      </div>
+                      <div class="addbutton">
+                        <button type="button float-right" (click)="addMlsMember()">Add</button>
+                      </div>
+                    </div>
+                    <!--Add MLS Modal-->
+                    <div *ngIf="addMls" class="MLSWrraper">
+                      <div class="MLSWrraper_add">
+                        <a class="closemodal" (click)="closeMlsMember()" href="javascript:void(0)"><i
+                            class="pi pi-times-circle"></i></a>
+                        <h3>ADD MLS USER</h3>
+                        <form [formGroup]="addMlsSuperAdmin" (ngSubmit)="addMlsSuperAdminSubmit()">
+                          <div class="form-group" *ngIf="showMsgSuccess">
+
+                            <div class="col-xs-12">
+                              <p class="alert alert-success">
+                                <strong>MLS User Added Successfully!</strong>
+                              </p>
+                            </div>
+                          </div>
+                          <div class="form-group" *ngIf="showMsgError">
+                            <div class="col-xs-12">
+                              <p class="alert alert-danger">
+                                <strong>{{errormsg}}</strong>
+                              </p>
+                            </div>
+                          </div>
+                          <div class="form-group adduser">
+                            <label>First Name</label>
+                            <input type="email" class="form-control" formControlName="firstName" placeholder="John">
+                          </div>
+                          <div class="form-group adduser">
+                            <label>Last Name</label>
+                            <input type="email" class="form-control" formControlName="lastName" placeholder="Smith">
+                          </div>
+                          <div class="form-group adduser">
+                            <label>Email Id <span class="rqfield">*</span></label>
+                            <input type="email" class="form-control" formControlName="email"
+                              placeholder="john@email.com"
+                              [ngClass]="{ 'is-invalid': submitted && addUserFetch.email.errors }">
+                            <div class="invalid-feedback" *ngIf="addUserFetch.email.errors">
+                              <div *ngIf="addUserFetch.email.errors.required">Email is required</div>
+                              <div *ngIf="addUserFetch.email.errors.email">Email must be a valid email address</div>
+                            </div>
+                          </div>
+                          <div class="form-group w-100 mb-0 adduser">
+                            <label>Role<span class="rqfield">*</span></label>
+                            <label class="adduser_Checkbox">
+                              <input type="checkbox" (change)="checkValue($event)" formControlName="mls_admin">
+                              <span class="checkmark"></span>MLS Admin
+                            </label>
+                            <div class="Listmeber" *ngIf="showmulti">
+                              <angular2-multiselect [data]="mlsData" formControlName="mlsList2" [settings]="settings"
+                                (onSelect)="onItemSelect2($event)" (onDeSelect)="OnItemDeSelect2($event)">
+                              </angular2-multiselect>
+                            </div>
+                            <div class="invalid-feedback mb-2" style="display: block;" *ngIf="showMlsFlag">
+                              Please Select MLS
+                            </div>
+                            <label class="adduser_Checkbox">
+                              <input type="checkbox" formControlName="super_admin" (change)="memberList($event)">
+                              <span class="checkmark"></span>Super Admin
+                            </label>
+                            <div class="invalid-feedback mb-2" style="display: block;" *ngIf="showRoleFlag">
+                              Please Select Role.
+                            </div>
+                          </div>
+                          
+                          <div class="form-group adduser mt-3 mb-0 float-left">
+                            <div class="MLSEmail">
+                              <label class="MLSWrraper_add_Checkbox ">
+                                <input type="checkbox" formControlName="wantsto" />
+                                <span class="checkmark"></span> Email credentials to the user
+                              </label>
+                            </div>
+                          </div>
+                          
+                          <div class="form-group p-2 float-left w-100">
+                            <button type="button" (click)="closeMlsMember()">Cancel</button>
+                            <button type="submit">Confirm</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col" (click)="sortByF('firstname')">
+                            <span>First Name</span>
+                            <a class="sortBy" *ngIf="sortBy != 'firstname'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'firstname' && ascdesc == 'asc'"><i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'firstname' && ascdesc == 'desc'"><i class="pi pi-caret-down"></i> </a>
+                          </th>
+                          <th scope="col" (click)="sortByF('lastname')">
+                            <span>Last Name</span>
+                            <a class="sortBy" *ngIf="sortBy != 'lastname'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'lastname' && ascdesc == 'asc'"><i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'lastname' && ascdesc == 'desc'"><i class="pi pi-caret-down"></i> </a>
+                          </th>
+                          <th scope="col" (click)="sortByF('email')">
+                            <span>Email</span>
+                            <a class="sortBy" *ngIf="sortBy != 'email'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'email' && ascdesc == 'asc'"><i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'email' && ascdesc == 'desc'"><i class="pi pi-caret-down"></i> </a>
+                          </th>
+                          <th scope="col">
+                            <span>Roles</span>
+                          </th>
+                          <th scope="col" (click)="sortByF('created')">
+                            <span>Created Date</span>
+                            <a class="sortBy" *ngIf="sortBy != 'created'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'created' && ascdesc == 'asc'"> <i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'created' && ascdesc == 'desc'"> <i class="pi pi-caret-down"></i> </a>
+                          </th>
+                          <th scope="col" (click)="sortByF('created')">
+                            <span>Updated Date</span>
+                            <a class="sortBy" *ngIf="sortBy != 'created'">
+                              <i class="pi pi-caret-up"></i>
+                              <i class="pi pi-caret-down"></i>
+                            </a>
+                            <a *ngIf="sortBy == 'created' && ascdesc == 'asc'"> <i class="pi pi-caret-up"></i> </a>
+                            <a *ngIf="sortBy == 'created' && ascdesc == 'desc'"> <i class="pi pi-caret-down"></i> </a>
+                          </th>
+                          <th scope="col"><span>Actions</span></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let admin of adminUsers">
+                          <td *ngIf="admin.firstname">{{admin.firstname}}</td>
+                          <td *ngIf="!admin.firstname">-</td>
+                          <td *ngIf="admin.lastname">{{admin.lastname}}</td>
+                          <td *ngIf="!admin.lastname">-</td>
+                          <td>{{admin.email}}</td>
+                          <!-- <td *ngIf="admin.mls_name">{{admin.mls_name}}</td> -->
+                          <!-- <td *ngIf="!admin.mls_name">-</td> -->
+                          <td *ngIf="admin.roles"><span class="MlsRole"
+                              *ngFor="let role of admin.roles">{{role.role}}</span></td>
+                          <td *ngIf="!admin.roles">-</td>
+                          <td *ngIf="admin.created_date">{{admin.created_date | date}}</td>
+                          <td *ngIf="!admin.created_date">-</td>
+                          <td *ngIf="admin.updated_date">{{admin.updated_date | date}}</td>
+                          <td *ngIf="!admin.updated_date">-</td>
+                          <td>
+
+                            <a href="javascript:void(0)" (click)="navigateToView(admin._id)">
+                              <mat-icon aria-hidden="false">edit</mat-icon>
+                              <div class="tooltip">
+                                <h6>Edit member record</h6>
+                              </div>
+                            </a>
+                          </td>
+                        </tr>
+                        <!-- <tr *ngIf="users.length == 0">
+                              <td class="text-center" colspan="8">No Data Found.</td>
+                            </tr> -->
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- <div class="paginate" *ngIf="this.adminUsers.length>0">
+                      <nav aria-label="Page navigation example ">
+                        <ul>
+                          <li class="page-item" [ngClass]="{'disabled': page == 1}">
+                            <a class="page-link" href="javascript:void(0)" (click)="prevPage()" tabindex="-1"><i
+                                class="pi pi-angle-left"></i></a>
+                          </li>
+
+                          <li *ngFor="let item of totalpages;" class="page-item" [ngClass]="{'active': page == item}">
+                            <a class="page-link" href="javascript:void(0)" (click)="changePage(item)">
+                              {{item}}
+                            </a>
+                          </li>
+
+                          <li class="page-item" [ngClass]="{'disabled': totalnumpages == page}">
+                            <a class="page-link" href="javascript:void(0)" (click)="nextPage()"><i
+                                class="pi pi-angle-right"></i></a>
+                          </li>
+                        </ul>
+                        <select [value]="limit" (change)="onChangeLimit($event)">
+                          <option value="10">10</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select>
+                      </nav>
+                    </div> -->
+                  <div class="paginate" *ngIf="this.adminUsers.length>0">
+                    <ul *ngIf="pager.pages && pager.pages.length">
+                      <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a class="page-link" (click)="changePage(1)" href="javascript:void(0)"><i
+                            class="pi pi-angle-double-left"></i></a>
+                      </li>
+                      <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a class="page-link" (click)="changePage(pager.currentPage - 1)" href="javascript:void(0)"><i
+                            class="pi pi-angle-left"></i></a>
+                      </li>
+                      <li class="page-item" [ngClass]="{active:pager.currentPage === item}"
+                        *ngFor="let item of pager.pages;let i = index">
+                        <a class="page-link" (click)="changePage(item)" href="javascript:void(0)">{{item}}</a>
+                      </li>
+                      <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a class="page-link" (click)="changePage(pager.currentPage + 1)" href="javascript:void(0)"><i
+                            class="pi pi-angle-right"></i></a>
+                      </li>
+                      <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a class="page-link" (click)="changePage(pager.totalPages)" href="javascript:void(0)"><i
+                            class="pi pi-angle-double-right"></i></a>
+                      </li>
+                    </ul>
+                    <select [value]="limit" (change)="onChangeLimit($event)">
+                      <option value="10">10</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="tab-pane fade" [class.show]="activeTab=='mlsGroupTab'"
+                  [class.active]="activeTab=='mlsGroupTab'" id="APC2" role="tabpanel">
+                  <div class="Searchwrp">
+                    <div class="Search-sm-12">
+                      <div class="Searchdropdown">
+                        <!-- <select class="form-control action">
+                          <option disabled selected hidden>Action</option>
+                          <option value="delete">Delete</option>
+                        </select>
+                        <button type="button" (click)="deleteMlsMember()">Delete</button> -->
+                        <div class="has-search">
+                          <button class="form-control-feedback">
+                            <i class="material-icons">
+                              search
+                            </i>
+                          </button>
+                          <input type="text" [value]="searchTextGroup?searchTextGroup:''"
+                            (input)="searchUser($event.target.value)" class="form-control" placeholder="Search Name">
+                        </div>
+                      </div>
+                      <!--<div class="addbutton">
+                        <button type="button" (click)="advancedSearch()">Advanced Search</button>
+                         <button type="button">Bulk Remove</button>
+                        <button type="button">Bulk Upload</button>
+                        <button type="button">Add</button> 
+                      </div>-->
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">API</th>
+                            <th scope="col">CSV Is Enable</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let group of mlsGroup">
+                            <td>{{group.group_name}}</td>
+                            <td>{{group.api_name}}</td>
+                            <td>{{group.enableCSVUpload}}</td>
+                            <td> <a href="javascript:void(0)" (click)="navigateToMlsGroup(group._id)">
+                                <mat-icon aria-hidden="false">edit</mat-icon>
+                                <div class="tooltip">
+                                  <h6>Edit member record</h6>
+                                </div>
+                              </a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="paginate" *ngIf="this.mlsGroup.length>0">
+                      <ul *ngIf="pager.pages && pager.pages.length">
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                          <a class="page-link" (click)="changeGroupPage(1)" href="javascript:void(0)"><i
+                              class="pi pi-angle-double-left"></i></a>
+                        </li>
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                          <a class="page-link" (click)="changeGroupPage(pager.currentPage - 1)"
+                            href="javascript:void(0)"><i class="pi pi-angle-left"></i></a>
+                        </li>
+                        <li class="page-item" [ngClass]="{active:pager.currentPage === item}"
+                          *ngFor="let item of pager.pages;let i = index">
+                          <a class="page-link" (click)="changeGroupPage(item)" href="javascript:void(0)">{{item}}</a>
+                        </li>
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                          <a class="page-link" (click)="changeGroupPage(pager.currentPage + 1)"
+                            href="javascript:void(0)"><i class="pi pi-angle-right"></i></a>
+                        </li>
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                          <a class="page-link" (click)="changeGroupPage(pager.totalPages)" href="javascript:void(0)"><i
+                              class="pi pi-angle-double-right"></i></a>
+                        </li>
+                      </ul>
+                      <select [value]="limit" (change)="onChangeGroupLimit($event)">
+                        <option value="10">10</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="APC3" role="tabpanel">
+                  <div class="Norecord">
+                    Comming Soon...
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-sidenav-container>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="confirmwrraper" *ngIf="confirmDailog">
+  <div class="confirmwrraper_confirm">
+    <div class="confirmwrraper_confirm_overlay">
+      <h3></h3>
+      <button type="button" class="float-left" (click)="closeConfirm()">Cancel</button>
+      <button type="submit" class="float-right">Button</button>
+    </div>
+  </div>
+</div>

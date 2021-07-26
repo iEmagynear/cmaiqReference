@@ -1,0 +1,89 @@
+<app-header></app-header>
+<div class="Wrraper" [ngStyle]="{'min-height': innerHeight}">
+  <div class="themeBG">
+  <div class="viewproperty">    
+    <div class="container">
+      <h3>{{ 'Property.ViewPropertyList.label' | translate }}</h3>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="thead-light text-center">
+            <tr>
+              <th>{{ 'Property.AddProperty.PropertyImage' | translate }}</th>
+              <th>{{ 'Property.AddProperty.Address' | translate }}</th>
+              <th>{{ 'Property.AddProperty.City' | translate }}</th>
+              <th>{{ 'Property.AddProperty.SquareFootage' | translate }}</th>
+              <th>{{ 'Property.AddProperty.State' | translate }}</th>
+              <th>{{ 'Property.AddProperty.Zip' | translate }}</th>
+              <th>{{ 'Property.AddProperty.property_type' | translate }}</th>
+              <th>{{ 'Property.AddProperty.bedroom' | translate }}</th>
+              <th>{{ 'Property.AddProperty.bathroom' | translate }}</th>
+              <th>{{ 'Property.AddProperty.mls_number' | translate }}</th>
+              <th>{{ 'Property.AddProperty.Action' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr *ngFor="let client of clients">
+              <td><div class="propertyImg"><img *ngIf="client.property_image" [src]="client.property_image"></div></td>
+              <td>{{client.address}}</td>
+              <td>{{client.city}}</td>
+              <td>{{client.square_footage}}</td>
+              <td>{{client.state}}</td>
+              <td>{{client.zip}}</td>
+              <td>{{client.property_type}}</td>
+              <td>{{client.bedroom}}</td>
+              <td>{{client.bathroom}}</td>
+              <td>{{client.mls_number}}</td>
+              <td>
+                <a href="javascript:void(0)" [routerLink]="['/new-chart/edit-property', client._id]">
+                  <mat-icon aria-hidden="false">edit</mat-icon>
+                  <div class="tooltip">
+                    <h6>{{ 'Property.ViewPropertyList.EditProperty' | translate }}</h6>
+                  </div>
+                </a>
+                <a href="javascript:void(0)" (click)="deleteProperty(client._id)">
+                  <i class="material-icons">delete_forever</i>
+                  <div class="tooltip">
+                      <h6>{{ 'Property.AddProperty.Deletepropertyrecord' | translate }}</h6>
+                    </div>
+                </a>
+              </td>
+            </tr>
+            <tr *ngIf="clients.length == 0" ><td class="text-center" colspan="11">{{ 'Client.ViewClientList.No Data Found' | translate }}.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="paginate" *ngIf="this.clients.length>0">
+        <nav aria-label="Page navigation example ">
+          <ul>
+            <li class="page-item" [ngClass]="{'disabled': page == 1}">
+              <a class="page-link" href="javascript:void(0)" (click)="prevPage()" tabindex="-1"><i class="pi pi-angle-left"></i></a>
+            </li>
+            <li *ngFor="let item of totalpages;" class="page-item" [ngClass]="{'active': page == item}">
+              <a class="page-link" href="javascript:void(0)" (click)="changePage(item)">
+                {{item}}
+              </a>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled': totalnumpages == page}">
+              <a class="page-link" href="javascript:void(0)" (click)="nextPage()"><i class="pi pi-angle-right"></i></a>
+            </li>
+          </ul>
+          <select [value]="limit" (change)="onChangeLimit($event)">
+            <option value="10">10</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="loaderWrraper"  *ngIf="loader">
+    <div class="loader">
+      <div class="outCircle">
+        <div class="icon">
+          <i class="pi pi-home"></i>
+        </div>
+      </div>
+    </div>
+    </div>

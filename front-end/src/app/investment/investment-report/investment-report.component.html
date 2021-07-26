@@ -1,0 +1,213 @@
+<app-header (curMessage)="showMessageFromCur($event)"></app-header>
+
+
+<ng-template #email let-modal>
+  <div class="modal-content">
+
+    <div class="modal-header text-center">
+      <h4 class="modal-title" id="modal-basic-title">Email Chart</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <i class="pi pi-times-circle"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <form [formGroup]="emailUser" (ngSubmit)="emailUserSubmit()">
+        <div class="form-group" *ngIf="showMsgSuccess">
+          <div class="col-xs-12">
+            <p class="alert alert-success">
+              <strong>Your chart has been sent to your recipients!</strong>
+            </p>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="showMsgError">
+          <div class="col-xs-12">
+            <p class="alert alert-danger">
+              <strong>Error sending email. Double check that your client info is correct or try again in a few
+                minutes</strong>
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>To:</label>
+          <input type="email" name="email" formControlName="email" class="form-control">
+        </div>
+        <div class="form-group">
+          <div>
+           <input type="checkbox" id="emailCopyCheck" (click)="setEmailCopy()"><span>&nbsp;<b>*Send me a copy</b></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Subject:</label>
+          <input type="text" name="subject" formControlName="subject" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Message:</label>
+          <textarea name="message" formControlName="message" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <div class="modal-footer">
+            <input type="button" class="btn btn-default pull-left" (click)="clearEmail()" value="DISCARD">
+            <input type="submit" [disabled]="!emailUser.valid" class="btn btn-success" value="SEND">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<div class="Wrraper">
+  <div class="container">
+    <div class="Invstment">
+      <div class="Report" [ngStyle]="{'min-height': innerHeight}">
+        <div class="row no-gutters">
+          <div class="col-12">
+            <div class="Report_bar">
+              <table class="table b-bottom">
+                <tbody>
+                  <tr *ngIf="chart">
+                    <td>
+                      <!-- && chart.userId == accessToken._id -->
+                      <a *ngIf="accessToken && chart.userId == accessToken._id" [routerLink]="['/analysis/'+currentId]"
+                        class="btn btn-primary float-left d-none d-sm-none d-md-none d-lg-block d-print-none">
+                        Modify Input</a>
+                    </td>
+                    <td>
+                      <h1 class="heading" [innerHTML]="'APC Investment Analysis.label' | translate"></h1>
+                    </td>
+                    <td>
+                      <a *ngIf="accessToken && chart.userId == accessToken._id"
+                        class="btn btn-primary float-left d-block d-sm-block d-md-block d-lg-none d-print-none">
+                        Modify Input</a>
+                      <button type="button" (click)="printButton()" class="btn btn-primary d-print-none"><i class="pi pi-print"></i>
+                        {{ 'Charts.Print' | translate }}
+                        <div class="tooltip">
+                          <h6>{{ 'Charts.Print Tooltip' | translate }}</h6>
+                        </div>
+                      </button>
+                      <!-- <button *ngIf="accessToken" (click)="emailButton()" type="button"
+                        class="btn btn-primary d-print-none"><i class="pi pi-envelope"></i>
+                        {{ 'Charts.Email' | translate }}</button> -->
+
+                        <div class="shareBtn d-print-none">
+                          <button type="button" class="btn btn-primary"><i class="pi pi-share-alt mr-2"></i>Share</button>
+                          <div class="ddCustomShare">
+                            <span class="shareCl fb">
+                              <button type="button" (click)="share()">Facebook Share</button>
+                            </span>
+                            <span class="shareCl tt">
+                              <tweet [url]="sharedurl" [text]="socialSubject"></tweet>
+                            </span>
+                            <span class="shareCl ln">
+                              <linkedin-share [url]="sharedurl"></linkedin-share>
+                            </span>
+                            <span class="shareCl em" *ngIf="accessToken && !redirect">
+                              <button (click)="emailButton()" type="button"></button>
+                            </span>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="Report_tab mt-3">
+              <nav>
+                <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" [ngClass]="{'active': tabactive <= 7}" routerLinkActive="active"
+                      data-toggle="dropdown" href="javascript:void(0)">Charts</a>
+                    <div class="dropdown-menu">
+                  <li *ngFor="let tabDropdown of tabDropdownMenu; index as i">
+                    <a (click)="tabActive(i+1)" [ngClass]="{'active': tabactive===i+1}" class="dropdown-item"
+                      href="javascript:void(0)">{{tabDropdown}}</a>
+                  </li>
+            </div>
+            </li>
+            <li *ngFor="let tabList of tabsMenuList; index as j" class="nav-item">
+              <a (click)="tabActive(j+8)" [ngClass]="{'active': tabactive===j+8}" class="nav-link"
+                href="javascript:void(0)">{{tabList}}</a>
+            </li>
+            </ul>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+              <div *ngIf="tabactive == 1" class="tab-pane container active">
+                <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+                  <app-annual-inestment-analysis [plotRespResiDential]="plotRespResiDential"
+                    [plotRespRental]="plotRespRental" [currentcurrencyInt]="currentcurrency" [chartdata]="chartdata"></app-annual-inestment-analysis>
+                </div>
+              </div>
+              <div *ngIf="tabactive == 2" class="tab-pane container active">
+                <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+                  <app-annualized-return [plotRespResiDential]="plotRespResiDential" [plotRespRental]="plotRespRental"
+                    [chartdata]="chartdata"></app-annualized-return>
+                </div>
+              </div>
+              <div *ngIf="tabactive == 3" class="tab-pane container active">
+                <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+                  <app-cash-flow [plotRespResiDential]="plotRespResiDential" [currentcurrencyInt]="currentcurrency" [plotRespRental]="plotRespRental"
+                    [chartdata]="chartdata"></app-cash-flow>
+                </div>
+              </div>
+              <div *ngIf="tabactive == 4" class="tab-pane container active">
+                <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+                  <app-tax-benefit [plotRespResiDential]="plotRespResiDential" [currentcurrencyInt]="currentcurrency" [plotRespRental]="plotRespRental"
+                    [chartdata]="chartdata"></app-tax-benefit>
+                </div>
+              </div>
+              <div *ngIf="tabactive == 5" class="tab-pane container active">
+                <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+                  <app-principal-paydown [plotRespResiDential]="plotRespResiDential" [currentcurrencyInt]="currentcurrency" [plotRespRental]="plotRespRental"
+                    [chartdata]="chartdata"></app-principal-paydown>
+                </div>
+              </div>
+              <div *ngIf="tabactive == 6" class="tab-pane container active">
+                <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+                  <app-home-value [plotRespResiDential]="plotRespResiDential" [currentcurrencyInt]="currentcurrency" [plotRespRental]="plotRespRental"
+                    [chartdata]="chartdata"></app-home-value>
+                </div>
+              </div>
+              <div *ngIf="tabactive == 7" class="tab-pane container active">
+                <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+                  <app-home-equity [plotRespResiDential]="plotRespResiDential" [currentcurrencyInt]="currentcurrency" [plotRespRental]="plotRespRental"
+                    [chartdata]="chartdata"></app-home-equity>
+                </div>
+              </div>
+              <div *ngIf="tabactive == 8" class="tab-pane container active">
+                <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+                  <app-analytics [plotRespResiDential]="plotRespResiDential" [currentcurrencyInt]="currentcurrency" [plotRespRental]="plotRespRental"
+                  [chartdata]="chartdata"></app-analytics>
+                </div>
+              </div>
+              <div *ngIf="tabactive == 9" class="tab-pane container active">
+                <div *ngIf="chartdata && plotRespResiDential && plotRespRental">
+                  <app-notes [currentcurrencyInt]="currentcurrency" [plotRespResiDential]="plotRespResiDential" [plotRespRental]="plotRespRental"
+                  [chartdata]="chartdata"></app-notes>
+                </div>
+              </div>
+              <div *ngIf="tabactive == 10" class="tab-pane container active">
+                <app-reports [currentcurrencyInt]="currentcurrency"></app-reports>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

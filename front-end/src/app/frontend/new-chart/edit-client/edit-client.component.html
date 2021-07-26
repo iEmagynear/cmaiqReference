@@ -1,0 +1,91 @@
+<app-header></app-header>
+<div class="Wrraper" [ngStyle] = "{'height': innerHeight}">
+  <div class="NewClient">   
+    
+    <div class="container">
+      <h3>{{ 'Client.AddClient.EditLabel' | translate }}</h3>
+      <div class="NewClient_add">
+          <form [formGroup]="addClient" (ngSubmit)="addClientSub()">
+          <div class="form-group mb-3" *ngIf="showMsgSuccess">
+              <div class="col-xs-12">
+                <p class="alert alert-success">
+                  <strong>{{successmsg}}</strong>
+                </p>
+              </div>
+          </div>
+          <div class="form-group mb-3" *ngIf="showMsgError">
+              <div class="col-xs-12">
+                <p class="alert alert-danger">
+                  <strong>{{errormsg}}</strong>
+                </p>
+              </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="pi pi-user"></i></span> 
+                <div class="tooltip">
+                  <h6>{{ 'Client.AddClient.FirstName' | translate }}</h6>
+                </div>           
+              </div>
+              <input type="hidden" formControlName="id" class="form-control">
+              <input type="text" class="form-control" formControlName="fname" placeholder="{{ 'Client.AddClient.FirstName' | translate }}">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="pi pi-user"></i></span> 
+                <div class="tooltip">
+                  <h6>{{ 'Client.AddClient.LastName' | translate }}</h6>
+                </div>           
+              </div>
+              <input type="text" class="form-control" formControlName="lname" placeholder="{{ 'Client.AddClient.LastName' | translate }}">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="pi pi-mobile"></i></span>   
+                <div class="tooltip">
+                  <h6>{{ 'Client.AddClient.Phone' | translate }}</h6>
+                </div>           
+              </div>
+              <input type="text" class="form-control" formControlName="phone" 
+                placeholder="{{ 'Client.AddClient.Phone' | translate }} e.g. (123) 456-7890 &nbsp; (Optional)" [textMask]="{mask: phonemask}" pattern="\(\d{3}\) \d{3}-\d{4}">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="pi pi-envelope"></i></span> 
+                <div class="tooltip">
+                  <h6>{{ 'Client.AddClient.Email' | translate }}</h6>
+                </div>             
+              </div>
+              <input type="text" class="form-control" formControlName="email" 
+                placeholder="{{ 'Client.AddClient.Email' | translate }} (Optional)">
+            </div>
+          </div>
+
+          <div class="form-group text-center">
+            <button type="submit" [disabled]="!addClient.valid">{{ 'Client.AddClient.Submit' | translate }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+    <div class="loader">
+      <div class="outCircle">
+        <div class="icon">
+          <i class="pi pi-home"></i>
+        </div>
+      </div>
+    </div>
+    </div>

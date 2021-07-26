@@ -1,0 +1,102 @@
+@import "../../../../assets/scss/mixin";
+@import "../../../../assets/scss/variable";
+
+.CashFlow {
+  @include size(100%, auto);
+  padding: 10px;
+  display: flex;
+
+  h4 {
+    text-align: center;
+    color: rgba($color: $black, $alpha: 0.7);
+    margin: 10px 0 20px;
+  }
+
+  &_col-2 {
+    @include size(70px, auto);
+    float: left;
+
+    .arrow {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      height: 100%;
+
+      &_wrp {
+        display: block;
+        text-align: center;
+
+        p {
+          font-size: 12px;
+          line-height: 18px;
+          font-weight: 500;
+          color: #808080;
+          margin: 0;
+        }
+
+        img {
+          width: 32px;
+        }
+      }
+
+    }
+  }
+
+  &_col-8 {
+    @include size(calc(100% - 140px), auto);
+    float: left;
+  }
+
+  .Legends {
+    width: 100%;
+    float: left;
+    text-align: center;
+    padding: 0px 0 0 85px;
+    &_units{
+        width: auto;
+        height: auto;
+        display: inline-block;
+        padding: 5px 10px 0;
+    }
+    h5 {
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: 500;
+        color: $black;
+        margin: 0;
+        padding: 0 0 0 10px;
+        text-align: left;
+        display: inline-block;
+        vertical-align: top;
+      }
+      .yellow,
+      .green,
+      .blue,
+      .lblue {
+        width: 22px;
+        height: 22px;
+        border-radius: 2px;
+        display: inline-block;
+      }
+
+      .yellow {
+        background-color: #fae232;
+        display: inline-block;
+      }
+
+      .green {
+        background-color: #61d836;
+        display: inline-block;
+      }
+
+      .blue {
+        background-color: #16e7cf;
+        display: inline-block;
+      }
+
+      .lblue {
+        background-color: #00a2ff;
+        display: inline-block;
+      }
+  }
+}

@@ -1,0 +1,36 @@
+<app-header [hidden]="true" (childMessage)="showMessageFromChild($event)"></app-header>
+<div class="Wrraper">
+  <div class="NewClientImport">
+    <h3>{{ 'Sign Out.CSV File Import' | translate }}</h3>
+    <button md-raised-button matDialogClose class="btncancel"><i class="pi pi-times-circle"></i></button>
+    <div class="container">
+      <div class="NewClient_add">
+        <div class="export">
+          <button type="button" class="btn btn-default float-right"><i class="pi pi-info-circle"></i></button>
+          <div class="export-tooltip">
+            <p>Exporting data into a CSV file before importing into cmaIQ allows for the ability to manually enter and
+              manipulate data which has the potential for errors. cmaIQ does not make any representations or guarantees
+              regarding the data, the use or the results derived, including without limitation, in terms of correctness,
+              accuracy, or reliability.</p>
+          </div>
+        </div>
+        <p-fileUpload name="myfile[]" #fileUpload accept=".csv,.zip" maxFileSize="1000000000" cancelLabel="Clear"
+          customUpload="true" auto="true" (uploadHandler)="myUploader($event,fileUpload)">
+        </p-fileUpload>
+        <!-- <button type="submit" class="btn btn-default btn-flsubmit">Submit</button> -->
+      </div>
+      <p>For the cmaIQ Residential Pricing, Investment & Analytics Tool to generate an accurate analysis of home value,
+        only the Active, Pending and Closed property listings will be used. If you included other listing types (ie.
+        Expired, Canceled, Withdrawn, etc.) this data will not be considered in the cmaIQ analysis.</p>
+    </div>
+  </div>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

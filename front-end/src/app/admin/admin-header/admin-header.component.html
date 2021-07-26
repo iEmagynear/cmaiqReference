@@ -1,0 +1,13 @@
+<div class="HeaderWpr">
+  <div class="Headerlft">
+    <a *ngIf="adminURL" class="backbtn" href="javascript:void(0)" [routerLink]="['/admin/dashboard']"><i class="pi pi-arrow-circle-left"></i></a>
+    <h3>{{ 'Dashboard.Welcome' | translate }} {{firstname}} {{lastname}}</h3>
+  </div>
+  <div class="Headerrgt" *ngIf="!adminURL">
+    <div class="userprofile">
+      <select class="classic" [(ngModel)]='nrSelect' (change)="mlsSwitch($event.target.value)">
+        <option *ngFor="let mls of mls_array" value="{{mls.mls_id}}">{{mls.mls_name}}</option>
+      </select>
+    </div>
+  </div>
+</div>

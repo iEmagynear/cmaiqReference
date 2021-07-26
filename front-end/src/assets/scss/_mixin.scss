@@ -1,0 +1,210 @@
+//triangale on box width height
+@mixin size($width, $height: $width) {
+    width: $width;
+    height: $height;
+  }
+  //border radius
+  @mixin radius($radius){
+      border-radius: $radius;
+  }
+  
+  //position of div
+  @mixin position($position, $args) {
+  @each $o in top right bottom left {
+        $i: index($args, $o);
+  
+    @if $i and $i + 1 <= length($args) and type-of(nth($args, $i + 1)) == number  {
+          #{$o}: nth($args, $i + 1);
+    }
+  }
+  position: $position;
+  }
+  @mixin absolute($args) {
+        @include position(absolute, $args);
+  }
+  @mixin fixed($args) {
+    @include position(fixed, $args);
+  }
+  @mixin relative($args) {
+    @include position(relative, $args);
+  }
+  //triangle
+  @mixin triangle($direction, $position, $color: currentcolor, $size: 1em) {
+      border-#{opposite-position($direction)}: $size * 1.5 solid $color;
+          $perpendicular-border: $size solid transparent;
+    
+      @if $direction == top or $direction == bottom {
+        border-left:   $perpendicular-border;
+            border-right:  $perpendicular-border;
+      }
+    
+      @else if $direction == right or $direction == left {
+        border-bottom: $perpendicular-border;
+            border-top:    $perpendicular-border;
+      }
+  }
+  //text overflow
+  @mixin text-truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  
+    @mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+      @if $inset {
+        -webkit-box-shadow:inset $top $left $blur $color;
+        -moz-box-shadow:inset $top $left $blur $color;
+        box-shadow:inset $top $left $blur $color;
+      } @else {
+        -webkit-box-shadow: $top $left $blur $color;
+        -moz-box-shadow: $top $left $blur $color;
+        box-shadow: $top $left $blur $color;
+      }
+    }
+    
+    @mixin button($color: $red, $text_color: $white) {
+      display: inline-block;
+      outline: none;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      font: 14px/100% Arial, Helvetica, sans-serif;
+      padding: .5em 2em .55em;
+      text-shadow: 0 1px 1px rgba(0,0,0,.3);
+      @include rounded();
+      @include box-shadow(0, 1px, 2px, rgba(0, 0, 0, 0.2));
+    
+      color: $text_color !important;
+      font-weight: bold;
+      border: solid 1px darken($color, 18%);
+      background: $color;
+      @include gradient(saturate($color, 15%), darken($color, 15%));
+    
+      &:hover {
+        text-decoration: none;
+        background: saturate($color, 10%);
+        @include gradient(saturate($color, 5%), darken($color, 5%));
+      }
+    
+      &:active {
+        position: relative;
+        top: 1px;
+        color: saturate($color, 15%);
+        @include gradient(saturate($color, 15%), lighten($color, 15%));
+      }
+    }
+    
+    @mixin breakpoint($class) {
+      @if $class == xs {
+        @media (max-width: 767px) { @content; }
+      }
+     
+      @else if $class == sm {
+        @media (max-width: 991px) { @content; }
+      }
+     
+      @else if $class == md {
+        @media (max-width: 1199px) { @content; }
+      }
+     
+      @else if $class == lg {
+        @media (max-width: 1440px) { @content; }
+      }
+     
+      @else {
+        @warn "Breakpoint mixin supports: xs, sm, md, lg";
+      }
+    }
+
+// Browser Prefixes
+@mixin transform($transforms) {
+	-webkit-transform: $transforms;
+	-moz-transform: $transforms;
+	-ms-transform: $transforms;
+	transform: $transforms;
+}
+
+// Rotate
+@mixin rotate ($deg) { 
+	@include transform(rotate(#{$deg}deg));
+}
+
+// Scale
+@mixin scale($scale) {
+	@include transform(scale($scale));
+}
+
+// Translate
+@mixin translate ($x, $y) {
+	@include transform(translate($x, $y));
+}
+
+// Skew
+@mixin skew ($x, $y) {
+	@include transform(skew(#{$x}deg, #{$y}deg));
+}
+
+
+@keyframes antiClockwiseSpin {
+	0%  {transform: rotate(360deg);}
+	100% {transform: rotate(0deg);}	
+}
+
+@keyframes antiClockwiseSpin {
+	0%  {transform: rotate(360deg);}
+	100% {transform: rotate(0deg);}	
+}
+
+
+
+@-webkit-keyframes clockwiseSpin {
+	0%  {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+	100% {-webkit-transform: rotate(360deg);transform: rotate(360deg);}
+    
+}@keyframes clockwiseSpin {
+	0%  {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+	100% {-webkit-transform: rotate(360deg);transform: rotate(360deg);}	
+}
+
+@mixin placeholder($color) {
+  &::-webkit-input-placeholder { /* WebKit browsers */
+      color: $color;
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: $color;
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: $color;
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10+ */
+      color: $color;
+  }
+}
+
+@-webkit-keyframes slide-down {
+  0% { opacity: 0; -webkit-transform: translateY(-10%); }   
+100% { opacity: 1; -webkit-transform: translateY(0); }
+}
+@-moz-keyframes slide-down {
+  0% { opacity: 0; -moz-transform: translateY(-10%); }   
+100% { opacity: 1; -moz-transform: translateY(0); }
+}
+@keyframes slide-down {
+  0% { opacity: 0; -webkit-transform: translateY(-10%); }   
+100% { opacity: 1; -webkit-transform: translateY(0); }
+}
+
+
+/* Redesign */
+
+@mixin transition($property){
+  -webkit-transition: $property;
+  -moz-transition: $property;
+  transition: $property;  
+}
+
+@mixin shadow($property) {
+  -webkit-box-shadow: $property;
+  -moz-box-shadow: $property;
+  box-shadow: $property; 
+}

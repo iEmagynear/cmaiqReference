@@ -1,0 +1,310 @@
+@import "../../../../assets/scss/mixin";
+@import "../../../../assets/scss/variable";
+
+.reports {
+  @include size(100%, auto);
+  padding: 10px;
+
+  .ReportAnalytics {
+    @include size(100%, auto);
+    float: left;
+    // border: 1px solid rgba($color: $black, $alpha: 0.2);
+    padding: 0;
+    @include radius(5px);
+
+    .jumbotron {
+      background-color: rgba($color: $primary, $alpha: 0.8);
+      padding: 0.75rem 1rem 1rem;
+      h1 {
+        color: $white;
+        text-align: center;
+        &.display-4 { 
+          font-size: 3.2rem; 
+          @include breakpoint(xs) {
+            font-size: 2rem; 
+          }
+        }
+      }
+
+      h3 {
+        text-align: center;
+        color: $white;
+      }
+    }
+
+    h2 {
+      text-align: center;
+      color: $secondry;
+    }
+
+    .estimated_mlsDetail {
+      @include size(100%, auto);
+      float: left;
+      padding: 0;
+
+      &_property {
+        float: left;
+        border: 1px solid rgba(171, 171, 171, 0.22);
+      }
+
+      &.Profilelogo {
+        width: 30%;
+        float: left;
+        height: 130px;
+
+        img {
+          object-fit: cover;
+          height: 100px;
+        }
+      }
+
+      &.ProfileImg {
+        width: calc(100% - 10px);
+        float: left;
+
+        img {
+          object-fit: cover;
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      @include breakpoint(xs) {
+
+        &.ProfileImg,
+        &.Profilelogo {
+          width: 100%;
+
+          img {
+            object-fit: cover;
+            width: 120px;
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+
+  .ReportProfiletop {
+    background-color: rgba($color: $primary, $alpha: 0.08);
+    margin: 20px 20px 40px;
+    padding: 15px;
+
+    &.noBG { 
+      margin-bottom: 20px; background-color: transparent; 
+      .estimated_mlsDetail_property { margin-bottom: 0; border: 0; min-height: 180px; max-height: 300px; overflow: hidden; }
+    }
+
+    .table {
+      tr {
+        td {
+          font-weight: 500;
+          font-size: 16px;
+          padding: 10px;
+        }
+      }
+    }
+
+    .estimated_mlsDetail_property {
+      @include size(100%, 220px);
+      float: left;
+      margin-bottom: 0;
+      padding: 0;
+      @include breakpoint(xs) {
+        margin-bottom: 20px;        
+      }
+
+      img {
+        display: block;
+        @include size(100%, 100%);
+        margin: 0 auto;
+
+        @include breakpoint(xs) {
+          object-fit: cover;
+          height: 200px;
+          width: -webkit-fill-available;
+        }
+      }
+    }
+  }
+
+  .aboutAPC {
+    @extend .ReportAnalytics;
+    margin: 20px 0 0;
+    padding: 0;
+
+    h3 {
+      background-color: rgba($color: $primary, $alpha: 0.8);
+      color: $white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    &.logo {
+      text-align: center;
+      padding: 20px 0;
+
+      img {
+        margin: 0 10px;
+      }
+    }
+  }
+
+  .reportchart {
+    @extend .ReportAnalytics;
+    margin: 20px 0 0;
+    padding: 0;
+
+    &>h3 {
+      background-color: rgba($color: $primary, $alpha: 0.8);
+      color: $white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    p {
+      font-weight: 400;
+      text-align: justify;
+      padding: 20px;
+      border-top: 1px solid rgba($color: $black, $alpha: 0.2);
+      clear: both;
+      margin-top: 10px;
+    }
+
+    h6 {
+      text-align: right;
+      font-size: 14px;
+      padding: 10px 0;
+    }
+  }
+
+  .ChartDesign {
+    width: 100%;
+    height: auto;
+    display: block;
+    float: left;
+    margin: 0 0 30px;
+    border-bottom: 20px solid $primary;
+    &:last-child{
+        border-bottom: 0;
+    }
+  }
+  .analytics {
+    @include size(100%, auto);
+    padding: 10px;
+  
+    .table {
+      &.headColor {
+        tr {
+          &:first-child {
+            th {
+              background-color: $primary;
+              color: $white;
+              text-align: center;
+              padding: 10px 0;
+            }
+          }
+  
+          td {
+            border: 1px solid #dee2e6;
+            text-align: center;
+            color: $black;
+          }
+  
+          th {
+            text-align: center;
+            font-size: 14px;
+            border: 1px solid #dee2e6;
+          }
+        }
+      }
+  
+      &.calculation {
+        thead {
+          tr {
+            th {
+              background-color: $primary;
+              color: $white;
+              text-align: center;
+              vertical-align: middle;
+              padding: 10px 0 0 0;
+              border: 0;
+              font-size: 14px;
+              white-space: nowrap;
+            }
+  
+            &:last-child {
+              th {
+                padding: 5px 10px;
+                border: 0;
+                width: 100px;
+                //border: 1px solid #dee2e6;
+                // span {
+                //   border: 1px solid #f1f1f1;
+                //   padding: 3px 10px;
+                // }
+                &:first-child{
+                    border: 0;
+                }
+              }
+            }
+          }
+        }
+  
+        tbody {
+          tr {
+            td {
+              border: 1px solid #dee2e6;
+              text-align: center;
+              width: 115px;
+              white-space: nowrap;
+              &:first-child {
+                width: 250px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .assumtion{
+      border: 1px solid #dee2e6;
+      border-top: 0;
+        .table{
+            &.calculation{
+              thead{
+                  tr {
+                      th {
+                        background-color: $primary;
+                        color: $white;
+                        text-align: center;
+                        vertical-align: middle;
+                        padding: 10px;
+                        border: 0;
+                        font-size: 14px;
+                      }
+                  }
+              }
+          }
+            thead{
+                tr{
+                    th{
+                        background-color: #e2e1e1;
+                    }
+                }
+            }
+        }
+        .lborder{
+          border-right: 2px solid #e2e1e1;
+            .table{
+              margin-bottom: 0;
+            }
+         
+        }
+        .rborder{
+            .table{
+              margin-bottom: 0;
+          }
+        }
+    }
+  }
+}

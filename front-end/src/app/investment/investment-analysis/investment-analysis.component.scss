@@ -1,0 +1,161 @@
+@import "../../../assets/scss/mixin";
+@import "../../../assets/scss/variable";
+
+
+.Invstment {
+  @include size(100%, 100%);
+  float: left;
+  .heading{
+    font-size: 30px;
+    color: $secondry;
+    border-bottom: 2px solid $secondry;
+    padding: 0 0 5px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  @include breakpoint(sm) {
+    .heading {
+      font-size: 26px;
+      line-height: 30px;
+    }
+
+  }
+  @include breakpoint(xs) {
+    .heading {
+      font-size: 22px;
+      line-height: 26px;
+    }
+
+   
+  }
+  .btn-analysis {
+    background-color: $primary;
+    color: $white;
+    @include radius(25px);
+    padding: 12px 25px;
+    border: 0;
+    @include box-shadow(0px, 2px, 3px, rgba($color: $black, $alpha: 1.0));
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba($color: $silver, $alpha: 1.0);
+    }
+  }
+  p{
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 500;
+    color: $black;
+    text-align: justify;
+  }
+  &_Box{
+    background-color: rgba($color: $black, $alpha: 0.08);
+    @include radius(10px);
+    padding: 60px;
+    h4{
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      line-height: 36px;
+      color: rgba($color: $black, $alpha: 0.55);
+    }
+    label{
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    @include breakpoint(sm){
+      padding: 15px;
+    }
+  }
+  &_type{
+    @include size(100%,38px);
+    margin: 0;
+    padding: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    list-style: none;
+    position: relative;
+    .dropdown{
+        @include size(100%, auto);
+        float: left;
+
+        .dropdown-toggle{
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            color: $black;
+            display: block;
+            padding: .375rem .75rem;
+            margin: 0;
+            text-decoration: none;
+            @include relative(top 0 left 0);
+            &:after{
+                @include absolute(top 17px right 5px);
+            }
+        }
+        .thumbnail{
+            @include size(24px,24px);
+            float: left;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin-right: 5px;
+        }
+    }
+    .dropdown-menu{
+        padding: 10px;
+        @include size(100%,auto);
+        max-height: 200px;
+        overflow-y: auto;
+        li{
+            font-size: 14px;
+            line-height: 18px;
+            font-weight: 400;
+            display: table;
+            width: 100%;
+            border-bottom: 1px solid $secondry;
+            a{
+                color: $black;
+                text-decoration: none;
+                display: block;
+                line-height: 26px;
+                padding: 5px 0;
+                &:hover{
+                  background-color: #f1f1f1;
+                }
+            }
+            &:last-child{
+              border-bottom: 0;
+            }
+        }
+    }
+    .clearSelect{
+        @include absolute(top 8px right 16px);
+        color: $red;
+        font-size: 18px;
+        cursor: pointer;
+    }
+  }
+  .addclient{
+    float: right;
+    @include relative(top 0 left 0);
+    text-align: right;
+    background-color: $secondry;
+    color: $white;
+    cursor: pointer;
+    padding: 2px 10px;
+    @include radius(3px);
+    @include breakpoint(sm){
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

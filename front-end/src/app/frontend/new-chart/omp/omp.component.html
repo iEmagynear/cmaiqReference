@@ -1,0 +1,159 @@
+    <div class="container-fluid clearfix"> 
+      <!-- <a class="backLink" (click)="hideMe()" href="javascript:void(0);"><i class="pi pi-arrow-left mr-2"></i>Back</a>      -->
+      <div class="omp">        
+        <h3>Add Off Market Properties</h3>
+
+        <div class="MultiDelete">
+          <!-- <button type="button" (click)="deleteChartlist()">{{ 'MyCharts.Delete' | translate }}</button> -->
+          <button (click)="deleteAllSelected();" type="button"><i class="material-icons">delete_forever</i> <span>Delete</span></button>        
+        </div>
+        <span *ngIf="maxclosedlimit">You can add maximum {{maxclosedlimit}} more closed properties.</span>
+        <form [formGroup]="ompForm" (ngSubmit)="onSubmit()">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th>
+                    <label class="omp_Checkbox">
+ 
+                      <input type="checkbox" [checked]="selectedAll" (change)="selectAll();">
+                      <span class="checkmark"></span>
+                    </label>
+                </th>
+                <th class="mw">Address</th>
+                <th class="">State</th>
+                <th class="">City</th>
+                <th class="">Zip</th>
+                <th class="">DOM</th>
+                <th>Sold Price</th>
+                <th>Sold Date</th>
+                <th>SqFt</th>
+                <th>Status</th>
+                <th>Year Built</th>
+                <th>Bed</th>
+                <th>Bath</th>
+                <th>List Price</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Picture</th>  
+                <th class="sw">Action</th>
+              </tr>
+            </thead>
+            
+            <tbody formArrayName="omp">
+              <tr *ngFor="let omp of ompForm.controls.omp['controls']; let i=index" [formGroupName]="i">                
+                <td>
+                    <label class="omp_Checkbox">
+                      <input type="checkbox" formControlName="selected">
+                      <span class="checkmark"></span>
+                    </label>
+                </td>
+                <td>
+                  <input type="text" formControlName="address" class="txtFld">
+                </td>
+                <td>
+                  <input type="text" formControlName="state" class="txtFld">
+                </td>
+                
+                <td>
+                  <input type="text" formControlName="city" class="txtFld">
+                </td>
+                <td>
+                  <input type="text" formControlName="zip" class="txtFld">
+                </td>
+                <td>
+                  <input type="text" formControlName="days" class="txtFld">
+                </td>
+                <td>
+                  <input type="text" formControlName="sold_price" class="txtFld">
+                </td>
+                <td>
+                  <!-- <input type="text" formControlName="sold_date" class="txtFld"> -->
+                  <p-calendar [minDate]="minimumDate" [yearNavigator]="true" [monthNavigator]="true"
+                    yearRange="2000:2050" dateFormat="yy-mm-dd" dataType="string" placeholder="YYYY-MM-DD"
+                    formControlName="sold_date">
+                  </p-calendar>
+                </td>
+                <td>
+                  <input type="text" formControlName="sqft" class="txtFld">
+                </td>
+                <td>
+                  <!-- <input type="text" formControlName="status" class="txtFld"> -->
+                  <select class="custom-select" (change)="onStatusChange($event.target.value)" formControlName="status">
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Closed">Closed</option>
+                  </select>
+                </td>
+                <td>
+                  <input type="text" formControlName="year_built" class="txtFld">
+                </td>
+                <td>
+                  <input type="text" formControlName="bedroom" class="txtFld">
+                </td>
+                <td>
+                  <input type="text" formControlName="bathroom" class="txtFld">
+                </td>
+                <td>
+                  <input type="text" formControlName="listing_price" class="txtFld">
+                </td>
+                <td>
+                  <input type="text" formControlName="latitude" class="txtFld">
+                </td>
+                <td>
+                  <input type="text" formControlName="longitude" class="txtFld">
+                </td>
+                <td>
+                  <input type="text" formControlName="photos" class="txtFld">
+                </td>
+                <td>
+                  <button (click)="deleteOmpOne(i)" type="button" class="mx-1" title="Delete">
+                    <i class="material-icons">delete_forever</i>
+                  </button>
+                  
+                </td>
+              </tr>
+              
+              <!-- <tr><td class="text-center" colspan="17">No Data Found</td></tr> -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row">          
+          <div class="col-12 col-lg-6 order-lg-2">
+            <div class="text-center pb-4">
+              <button class="cstBtn" type="button" (click)="openFloating()">Upload CSV</button>
+              <button class="cstBtn" type="button" (click)="addOmp()">Add Property</button>
+              
+              
+              <button class="cstBtn" *ngIf="!maxclosedlimit" [disabled]="!ompForm.valid || genChartButtonError" type="submit">{{ 'NewCharts.Generate Chart' | translate }}
+
+                <div *ngIf="genChartButtonError || !ompForm.valid" class="tooltip">
+                  <h6 *ngIf="genChartButtonError">{{ 'NewCharts.Searchmust' | translate }}</h6>
+                  <h6 *ngIf="!ompForm.valid">There must be a validation error.</h6>
+                </div>
+
+              </button>
+              
+              <button class="cstBtn" *ngIf="maxclosedlimit" [disabled]="!ompForm.valid || genChartButtonErrorNew || ompForm.controls.omp.value.length == 0" (click)="generate_chart_with_searchdata()" type="button">{{ 'NewCharts.Generate Chart with search data' | translate }}
+
+                <div *ngIf="genChartButtonErrorNew || !ompForm.valid || ompForm.controls.omp.value.length == 0" class="tooltip">
+                  <h6 *ngIf="genChartButtonErrorNew">{{ 'NewCharts.Searchmust' | translate }}</h6>
+                  <h6 *ngIf="ompForm.controls.omp.value.length == 0">Add Few OMPs</h6>
+                  <h6 *ngIf="!ompForm.valid">There must be a validation error.</h6>
+                </div>
+
+              </button>
+            </div>
+          </div>
+          <div class="col-12 col-lg-3 order-lg-1">
+            <div class="text-left">
+              <button class="silverBtn" type="button" (click)="hideMe()"><i class="pi pi-arrow-left mr-2"></i>Back</button>
+            </div>
+          </div>
+        </div>
+
+        </form>
+              
+      </div>
+    </div>

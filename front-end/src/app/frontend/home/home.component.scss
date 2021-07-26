@@ -1,0 +1,1010 @@
+@import '../../../assets/scss/variable';
+@import '../../../assets/scss/mixin';
+// @import '../../../assets/scss/owl.theme.default.min';
+// @import '../../../assets/scss/owl.carousel';
+// @import '../../../assets/scss/templatemo-style';
+
+.home{
+    @include size(100%,auto);
+    //display: table;
+    h2{
+        font-size: 30px;
+        line-height: 36px;
+        font-weight: 400;
+        color: $white;
+        margin: 0;
+        padding: 0;
+    }
+    h3{
+        font-size: 24px;
+        line-height: 34px;
+        font-weight: 600;
+        color: $primary;
+        text-align: center;
+        padding: 0 0 20px;
+        margin: 0;
+        
+        span{
+            display: inline-block;
+            @include relative(top 0 left 0);
+            &:after{
+                content: '';
+                @include absolute(top 0 left 23px);
+                @include size(calc(100% - 23px),2px);
+                background-color: $secondry;
+            }
+            &:before{
+                content: '';
+                @include absolute(top -16px left 0px);
+                @include size(24px,24px);
+                //@include translate(-50%,0);
+                background: url(../../../assets/images/roof.png) no-repeat;
+            }
+        }
+        
+    }
+    h4{
+        font-size: 18px;
+        line-height: 25px;
+        font-weight: 500;
+        color: $white;
+        padding: 0 0 10px;
+        margin: 0;
+    }
+    h5{
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        color: $white;
+        margin: 0;
+        padding: 0;
+    }
+    h6{
+        font-size: 14px;
+        color: $white;
+        line-height: 18px;
+        font-weight: 400;
+        margin: 0;
+    }
+    p{
+        font-size: 18px;
+        line-height: 28px;
+        color: $black;
+        padding: 15px 0;
+        margin: 0;
+        &.alert { padding: .75rem 1.25rem; }
+    }
+    @include breakpoint(sm){
+        h2{
+            font-size: 27px;
+        }
+        h3{
+            font-size: 21px;
+        }
+        h4{
+            font-size: 18px;
+        }
+        h5{
+            font-size: 16px;
+        }
+        p{
+            font-size: 16px;
+            line-height: 22px;
+        }
+    }
+    @include breakpoint(sm){
+        h2{
+            font-size: 22px;
+        }
+        h3{
+            font-size: 19px;
+        }
+        h4{
+            font-size: 16px;
+        }
+        h5{
+            font-size: 15px;
+        }
+        p{
+            font-size: 14px;
+            line-height: 22px;
+        }
+    }
+    &_banner{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include size(100%,360px);
+        border-radius: 0px;
+        background-repeat: no-repeat;
+        background-image: url("../../../assets/images/Charleston-iStock.jpg");
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: 0 center;
+        background-size: cover;
+        position: relative;
+        // @media (max-width: 1920px){
+        //     @include size(100%,500px);
+        // }
+        // @media (max-width: 1679px){
+        //     @include size(100%,440px);
+        // }
+        // @media (max-width: 1440px){
+        //     @include size(100%,365px);
+        // }
+        @include breakpoint(md){
+            @include size(100%,280px);
+        }
+        @include breakpoint(sm){
+            @include size(100%,210px);
+            background-position: center;
+        }
+        @include breakpoint(xs){
+            @include size(100%,160px);
+            background-position: center;
+        }
+        // @media (max-width: 479px){
+        //     @include size(100%,120px);
+        //     padding: 0 1em;
+        //     margin-top: 0px;
+        // }
+        // @media (max-width: 375px){
+        //     @include size(100%,90px);
+        //     margin-top: 0px;
+        // }
+        &_caption{
+            h1{
+                font-size: 62px;
+                line-height: 62px;
+                color: $white;
+                text-align: center;
+                font-weight: 400;
+            }
+            h5{
+                font-size: 24px;
+                line-height: 24px;
+                color: $white;
+                text-align: center;
+                font-weight: 400;
+            }
+            @include breakpoint(sm){
+                h1{
+                    font-size: 44px;
+                }
+            }
+            @include breakpoint(sm){
+                h1{
+                    font-size: 21px;
+                    line-height: 30px;
+                }
+                h5{
+                    font-size: 15px;
+                    line-height: 21px;
+                }
+            }
+            .QuickButton{
+                @include size(100%,auto);
+                float: left;
+                text-align: center;
+                padding: 20px 0 0;
+                a{
+                    font-size: 14px;
+                    line-height: 20px;
+                    font-weight: 500;
+                    color: $white;
+                    background-color: $secondry;
+                    @include radius(5px);
+                    padding: 10px 25px;
+                    display: inline-block;
+                    margin: 0 5px;
+                    @include box-shadow(0px, 1px, 5px, $black);
+                    &:hover{
+                        background-color: rgba($color: $primary, $alpha: 1.0);
+                        text-decoration: none;
+
+                    }
+                }
+            }
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background-color: rgba(0,0,0,0.22);
+            z-index: 2;
+        }
+        &_tag{
+            background-color: $silver;
+            max-width: 680px;
+            margin: 0;
+            padding: 14px 20px;
+            border-right: solid 8px $primary;
+            @include shadow(0px 0px 6px #000000);
+            color: $black;
+            font-size: 1.6em;
+            font-weight: 600;
+            line-height: 1.4;
+            position: absolute;
+            top: 50%;
+            right: 2em;
+            @include transform(translateY(-50%));
+            z-index: 3;
+            @include breakpoint(sm){
+                right: 1em;
+                font-size: 1em;
+                padding: 6px 12px;
+            }
+        }
+    }
+    &_about{
+        padding: 30px 0 50px;
+        @include breakpoint(sm){
+            padding: 20px 0 20px;
+        }
+        &_banner{
+            
+            img{
+                @include size(100%,auto);
+            }
+        }
+        .btn-default{
+            font-size: 18px;
+            line-height: 21px;
+            font-weight: normal;
+            color: $white;
+            background-color: $secondry;
+            padding: 10px 20px;
+            border: 0;
+            border-radius: 5px;
+            margin: 0 25px;
+            &:hover{
+                background-color: $primary;
+            }
+        }
+        &_text{
+            padding: 30px 0 0;
+            h3{
+                text-align: left;
+                padding: 0;
+                color: $grey;
+            }
+            p{
+                text-align: justify;
+            }
+            h5{
+                font-size: 20px;
+                line-height: 26px;
+                font-weight: bold;
+                color: $grey;
+                text-transform: uppercase;
+                padding: 15px 0;
+                text-align: center;
+            }
+            h6{
+                font-size: 17px;
+                line-height: 21px;
+                font-weight: 500;
+                color: $grey;
+                padding: 25px 0 20px;
+                text-align: center;
+            }
+        }
+    }
+    &_apc{
+        @include size(100%,auto);
+        padding: 0px 0 30px;
+        &_column{
+            @include size(100%,100%);
+            text-align: center;
+            padding: 20px 15px;
+            @include box-shadow(0px, 2px, 4px, rgba($color: $primary, $alpha: 1.0));
+            &:hover{
+                background: rgba($color: $primary, $alpha: 0.87);
+                h3,p{
+                    color: $white;
+                }
+            }
+            img{
+                @include size(200px,auto);
+            }
+            h3{
+                padding: 10px 0 1px;
+                margin: 0;
+                color: $black;
+            }
+            p{
+                text-align: justify;
+                margin: 0;
+            }
+            @include breakpoint(xs){
+               margin: 0 0 20px;
+            }
+        }
+    }
+    &_testimonial{
+        background-color: $white;
+        @include  size(100%,auto);
+        margin: 0px 0 0px;
+        padding: 50px 0;
+        &_icon{
+            @include size(100px,100px);
+            display: block;
+            @include radius(100px);
+            margin: 0 auto;
+            overflow: hidden;
+            border: 1px solid $primary;
+            img{
+                @include size(100%,auto);
+            }
+        }
+        .lead{
+            @include size(70%,auto);
+            margin: 0 auto;
+            h3{
+                padding-top: 15px;
+            }
+            p{
+                color: $primary;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: block;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                line-height: 30px;
+                height: 80px;
+                opacity: 1;
+                font-weight: 500;
+            }
+            h6{
+                color: $primary;
+            }
+            &_star{
+                padding: 10px 0;
+                .pi{
+                    color: $secondry ;
+                }
+            }
+            @include breakpoint(xs){
+                p{
+                    height: auto;
+                }
+            }
+        }
+        .carousel-inner{
+            &:focus{
+                outline: none;
+            }
+        }
+    }
+    &_team{
+        @include size(100%,auto);
+        margin: 2px 0;
+        padding: 30px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-repeat: no-repeat;
+        background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) 0% 0%, url("../../../assets/images/ourteam_paralax.jpg");
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
+        
+        &_row{
+            @include size(100%,auto);
+            display: table;
+           margin: 0 auto;
+           text-align: center ;
+           padding: 10px 0;
+        }
+        &_onecol{
+           @include size(640px,250px);
+           @include radius(100%);
+           display: block;
+           margin: 0 auto;
+           background-color: rgb(228, 228, 228);
+            overflow: hidden;
+            @include relative(top 0 left 0);
+            .teamoverlay{
+                @include size(100%,100%);
+                @include radius(100%);
+                @include absolute(top 0 left 0);
+                
+                &:after{
+                    content: '';
+                    @include size(100%,100%);
+                    background-image: linear-gradient(to top right, rgba($color:$black,$alpha:0.5) 50%, rgba($color:$white,$alpha:0.3)100%);
+                    float: left;
+                }
+                &:hover{
+                    &:after{
+                        background-image: none;
+                    }
+                }
+            }
+            img{
+                @include size(100%,auto);
+            }
+            
+            @include breakpoint(xs){
+                @include size(250px,250px);
+                padding: 60px 0;
+                background-color: $primary;
+                img{
+                    -webkit-filter: inherit;
+                    -moz-filter: inherit;
+                    -ms-filter: inherit;
+                    filter: inherit;
+                }
+            }
+        }
+        &_threecol{
+            @include size(200px,200px);
+            @include radius(100%);
+            display: inline-block;
+            margin: 0 10px;
+            background-color: #000;
+            overflow: hidden;
+            .colwrraper{
+                @include size(100%,100%);
+                @include relative(top 0 left 0);
+                img{
+                    @include size(100%,auto);
+                    -webkit-filter: grayscale(1);
+                    -moz-filter: grayscale(1);
+                    -ms-filter: grayscale(1);
+                    filter: grayscale(1);
+                }
+                &:hover{
+                    img{
+                        -webkit-filter: none;
+                        -moz-filter: none;
+                        -ms-filter: none;
+                        filter: none;
+                    }
+                    .home_team_threecol_overlay{
+                        display: none;
+                        
+                    }
+                }
+            }
+            &_overlay{
+                @include absolute(top 0 left 0);
+                @include size(100%,100%);
+                background-color: rgba($color: $black, $alpha: 0.75);
+                padding: 50px 10px 0;
+                display: block;
+                transition: background-color 2s ease-out;
+               
+            }
+         }
+    }
+    &_incity{
+        @include size(100%,auto);
+        display: table;
+        background-color: rgba($color: $black, $alpha: 0.1);
+        margin: 20px 0 0px;
+        padding: 30px 0 40px;
+        &_list{
+            background-color: rgba($color: $primary, $alpha: 0.75);
+            &_lft{
+                @include size(100%,auto);
+                overflow: hidden;
+                @include breakpoint(md){
+
+                }
+                img{
+                    @include size(100%, auto);
+                }
+            }
+            &_rgt{
+                padding: 10px 10px 10px 20px;
+                h2{
+                    color: $secondry;
+                    padding: 10px 0;
+                }
+                h4{
+                    margin: 0;
+                }
+                h5{
+                    line-height: 30px;
+                    span{
+                        font-size: 26px;
+                    }
+                }
+                button{
+                    background-color: $secondry;
+                    color: $white;
+                    @include radius(25px);
+                    padding: 8px 20px;
+                    border: 0;
+                    @include box-shadow(0px,2px,3px, rgba($color: $black,$alpha: 1.0));
+                    cursor: pointer;
+                    &:hover{
+                        background-color: rgba($color: $primary, $alpha: 1.0);
+                    }
+                }
+                @include breakpoint(md){
+                    padding: 10px;
+                    h4{
+                        font-size: 18px;
+                        line-height: 22px;
+                        padding: 0 0 5px;
+                    }
+                    h5{
+                        line-height: 24px;
+                        span{
+                            font-size: 21px;
+                        }
+                    }
+                    h2{
+                        font-size: 22px;
+                        line-height: 24px;
+                        padding: 5px 0;
+                    }
+                }
+                @include breakpoint(sm){
+                    padding: 3px 10px 0 10px;
+                    h2{
+                        font-size: 18px;
+                        padding: 0;
+                    }
+                    h4{
+                        font-size: 15px;
+                        line-height: 20px;
+                    }
+                    h5{
+                        font-size: 14px;line-height: 20px;
+                        span{
+                            font-size: 17px;
+                        }
+                    }
+                    button{
+                        font-size: 12px;
+                        padding: 5px 15px;
+                    }
+                }
+                @include breakpoint(xs){
+                    padding: 20px 10px;
+                }
+            }
+            &:nth-child(2),&:nth-child(3){
+                background-color: rgba($color: $primary, $alpha: 0.40);
+            }
+            @include breakpoint(xs){
+                .order-first{
+                    order: inherit;
+                }
+            }
+        }
+    }
+    &_service{
+        @include size(100%,auto);
+        display: table;
+        padding: 30px 10px;
+        margin: 3px 0 0;
+        @include box-shadow(0px,2px,5px,rgba($color:$black,$alpha: 0.6));
+        background-color: rgba($color: $black, $alpha: 0.1);
+       
+        &_provide{
+            @include size(100%,300px);
+            display: table;
+            @include relative(top 0 left 0);
+            img{
+                @include size(100%,100%);
+            }
+            .servicelogo{
+                @include size(80px,80px);
+                background-color: rgba($color: $white, $alpha: 0.7);
+                @include absolute(top 0 left 0);
+                display: table;
+                padding: 15px 0;
+                img{
+                    @include size(50px,50px);
+                    margin: 0 auto;
+                    display: table-cell;
+                }
+            }
+            .servicetitle{
+                @include size(100%,auto);
+                @include absolute(bottom 20px left 0);
+                background-color: $secondry;
+                padding: 5px 20px;
+                
+                h4{
+                    padding: 0;
+                    margin: 0;
+                }
+                @include breakpoint(md){
+                    padding: 5px;
+                    h4{
+                        font-size: 18px;
+                        
+                    }
+                }
+            }
+            &:after{
+                content: '';
+                @include absolute(bottom 0 right 0);
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 70px 70px 0 0;
+                border-color: $white transparent transparent transparent;
+                margin: 0;
+                display: inline-block;
+                filter: drop-shadow(0 2px 0 rgba($color: $secondry, $alpha: 1.0));
+                @include rotate(180);
+            }
+            @include breakpoint(md){
+                @include size(100%,270px);
+            }
+            @include breakpoint(sm){
+                @include size(100%,225px);
+                .servicetitle{
+                    h4{
+                        font-size: 12px;
+                    }
+                }
+            }
+            @include breakpoint(xs){
+                @include size(100%,auto);
+                margin: 0 0 10px;
+            }
+        }
+    }
+    &_ourmission{
+        @include size(100%,auto);
+        display: table;
+        &_space{
+            @include size(100%,auto);
+            background-size: 47% 100%;
+            background-repeat: no-repeat;
+            background-position: 0 50%;
+        }
+        &_folio{
+            background-color: $white;
+            padding: 30px;
+            &_list{
+                @include size(100%,auto);
+                display: table;
+                padding: 20px 0 0;
+                &_item{
+                    @include size(50%,auto);
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    position: relative;
+                    min-height: 1px;
+                    float: left;
+                    margin-bottom: 15px;
+                    .icon{
+                        @include size(100%,auto);
+                        float: left;
+                    }
+                } 
+            }
+            h3{
+                text-align: left;
+            }
+            h6{
+                font-size: 18px;
+                line-height: 24px;
+                color: $black;
+                padding: 0 0 20px 0;
+                text-align: justify;
+            }
+            p{
+                text-align: justify;
+            }
+        }
+    }
+    &_stisfy{
+        @include size(100%,auto);
+        display: table;
+        //background-image: url(../../../assets/images/bg-achievement.jpg);
+        background-color: #d9d9d9;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: 50px 0;
+        &_customer{
+            @include size(100%,auto);
+            display: table;
+            text-align: center;
+            h2{
+                color: $secondry;
+                font-size: 42px;
+                line-height: 42px;
+            }
+            h4{
+                font-size: 16px;
+                color: $secondry;
+                padding-top: 20px;
+            }
+            .icon{
+                margin-bottom: 50px;
+            }
+        }
+    }
+}
+
+.newsBar { height: 40px; }
+
+.newBanner {
+    background-color: $white;
+    position: relative;
+    padding: 3rem 0 16rem;
+    @include breakpoint(md){
+        padding-bottom: 13em;
+    }
+    @include breakpoint(sm){
+        padding-bottom: 10em;
+    }
+    @media (min-width:1600px) and (max-width:1750px) {
+        padding-bottom: 22em;
+    }
+    @media (min-width:1751px) and (max-width:2200px) {
+        padding-bottom: 26em;
+    }
+    @media (min-width:2201px) and (max-width:2600px) {
+        padding-bottom: 32em;
+    }
+    @media (min-width:2601px) and (max-width:3000px) {
+        padding-bottom: 34em;
+    }
+    @media (min-width:3001px) and (max-width:3500px) {
+        padding-bottom: 42em;
+    }
+    @media (min-width:3501px) and (max-width:4000px) {
+        padding-bottom: 50em;
+    }
+    @media (min-width:4001px) and (max-width:4500px) {
+        padding-bottom: 58em;
+    }
+    @media (min-width:4501px) {
+        padding-bottom: 64em;
+    }
+    h1 { 
+        font-size: 3.5em; font-weight: 700; color: #22283d; 
+        @include breakpoint(md){
+            font-size: 2.2em;
+        }
+    }
+    .cont { position: relative; z-index: 2; }
+    .banBtmFlot { 
+        position: absolute; z-index: 1; width: 100%; height: 21em; left: 0; bottom: 0; background-repeat: no-repeat; background-position: 0 0; background-size: contain; background-image: url('../../../assets/images/home/banner-bottom.png');  
+        @include breakpoint(md){
+            height: 15em;
+        }
+        @include breakpoint(sm){
+            height: 8em;
+        }
+        @media (min-width:1500px) and (max-width:1750px) {
+            height: 24em;
+        }
+        @media (min-width:1751px) and (max-width:2200px) {
+            height: 28em;
+        }
+        @media (min-width:2201px) and (max-width:2600px) {
+            height: 34em;
+        }
+        @media (min-width:2601px) and (max-width:3000px) {
+            height: 42em;
+        }
+        @media (min-width:3001px) and (max-width:3500px) {
+            height: 48em;
+        }
+        @media (min-width:3501px) and (max-width:4000px) {
+            height: 54em;
+        }
+        @media (min-width:4001px) and (max-width:4500px) {
+            height: 62em;
+        }
+        @media (min-width:4501px) {
+            height: 70em;
+        }
+    }
+    .banBtn { background-color: $primary; color: $white; padding: 0.5em 1.25em; @include radius(50rem); margin: 0 1em 1em 0;
+        @media (min-width:1300px) {
+            font-size: 1.15em; min-width: 150px;
+        }
+        &:hover, &:focus { background-color: $deepGray; }
+    }
+}
+
+.featuredGrid {
+    .featIco{
+        display: inline-block; width: 110px; height: 110px; @include radius(50%); background-color: $primary; margin: 0 0 0.75em;
+        background-repeat: no-repeat; background-size: 60% auto; background-position: center;
+        &.pricing { background-image: url("../../../assets/images/home/pricing-ico.png"); }
+        &.property { background-image: url("../../../assets/images/home/property-ico.png"); }
+        &.investment { background-image: url("../../../assets/images/home/investment-ico.png"); }
+        @include breakpoint(xs){
+            width: 82px; height: 82px;
+        }
+    }
+    label { margin: 0 auto; font-size: 1.8em; color: $black; display: block; font-weight: 600; cursor: pointer;
+        @include breakpoint(sm){
+            font-size: 1.2em;
+        }
+    }
+    
+    .col-12 {
+        position: relative; cursor: pointer;     
+        @media (min-width:768px){
+            &.selected::after {
+                content: ''; width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 20px solid #ffffff;
+                position: absolute; top: 100%; left:calc(50% - 20px); z-index: 9;
+            }
+        }
+        &:hover, &.selected {
+            label{color: $secondry;}
+        }
+    }
+}
+
+.featDescSec {
+    @media (min-width: 1500px) {
+        .container-fluid {
+            max-width: 1410px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    // background-color: $silver;
+    color: #595959;
+    font-size: 1.5em;
+    h4 { font-size: 1.5em !important; color: #595959; }
+    @include breakpoint(sm){
+        font-size: 0.85em;
+        h4 { font-size: 0.85em !important; }
+    }
+    .imgB {
+        text-align:center;
+        position: relative;
+        min-height: 510px;
+        overflow: hidden;
+        background-color: #ffffff;
+        @include breakpoint(sm){
+            min-height: 0;
+        }
+        img { 
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            @include transform(translate(-50%, -50%));
+            object-fit: cover;
+            @include breakpoint(sm){
+                position: static;
+                max-width: 90%;
+                @include transform(translate(0, 0));
+            }
+         }        
+    }
+    ul { 
+        margin: 10px 0 0; padding: 0; list-style: none; 
+        li {
+            list-style: none; padding: 0 0 0 20px; margin: 0 0 4px; position: relative;
+            &::before { content: ''; width: 7px; height: 7px; @include radius(50%); position: absolute; left: 0; top: 50%; @include transform(translateY(-50%)); background-color: $primary; }
+        }
+        &.cList {
+            li {
+                padding-left: 45px; font-size: 1.5em;
+                &::before { display: none; }
+                > i.pi { @include transform(translateY(12px)); font-size: 90%; color: $primary; position: absolute; top: 0; left: 0; }
+                @include breakpoint(sm){
+                    font-size: 1.2em; padding-left: 20px;
+                    > i.pi { @include transform(translateY(5px)); }
+                }
+            }            
+        }
+    }
+}
+.quickLinksSec {
+    background-color: $primary;
+    h2, h6 { margin: 0 0 1em;color:$white; font-weight: 600; }
+    h2{font-size:2em;}
+    h6{opacity:0.7;}
+    .lnkB {
+        .btn{ display:inline-block;margin:0 0.6em 1em;min-width:220px;padding:8px 14px;
+            background-color:rgba(255,255,255,0.85);color:#000000;font-weight:600;
+            &:hover, &:focus { background-color: $deepGray; color: #ffffff; }
+        }
+    }
+    @include breakpoint(sm) {
+        h2 { font-size: 1.2em; line-height: 1.4; }
+    }
+}
+
+.testimonialSec {  
+    .container { padding-left: 40px; padding-right: 40px; }  
+    background-color: $lightGray; text-align: center;
+    h2 { text-transform: uppercase; color: $black; font-size: 1.7em; font-weight:700; margin: 0 0 1.2em; }
+    .carousel-control-prev-icon, .carousel-control-next-icon { 
+        color: $black; background-size: contain; background-image: url('../../../assets/images/chevron-left.png'); 
+    }
+    .carousel-control-next-icon {@include rotate(180deg);}
+    .item.carousel-item, .slideBox {
+        background-color: #ffffff; float:none; @include radius(6px); @include shadow(0 0 10px rgba(0,0,0,0.7)); width: 75% !important; margin: 0.6em auto !important; padding: 1.2em 2em;
+        p,.descTxt{font-size:13px;line-height:1.4;}
+        .descTxt { height: 145px; margin-bottom: 5px; overflow: hidden; }
+        .lead_star,.home_testimonial_icon{margin:0 auto 1em;}
+        h3{margin:0;color:$black;padding:0;}
+        h6{margin:0;color:$black;height:50px;}
+        .testIco{display:inline-block;width:32px;height:32px;margin:0;background-repeat:no-repeat;
+            background-image:url('../../../assets/images/home/quote-ico.png');background-size:contain;
+        }
+    }
+    .slideBox { width: 95% !important; }
+    @include breakpoint(sm) {
+        h2 { font-size: 1.2em; line-height: 1.4; }
+    }
+}
+.homeStat {
+    background-color: $secondry; color: #ffffff; text-align: center;
+    .home_stisfy_customer {
+        .icon img { max-height: 99px; }
+        h2,h4{color:$white;}
+        @include breakpoint(sm) {
+            h2 { font-size: 30px; }
+            h4 { padding-top: 0 !important; }
+            .icon { 
+                margin-bottom: 0.5em;
+                img { max-height: 66px; }                
+            }
+        }
+    }
+    @include breakpoint(sm) {
+        .col-xs-12 {
+            padding-bottom: 1.5em;
+            &:last-of-type { padding: 0; }
+        }
+    }
+}
+
+.getInTouch {
+    min-height: 800px; position: relative; overflow: hidden;
+    &::after { 
+        content: ''; position: absolute; z-index: 1; left: 0; top: 50%; width: 100%; height: 95%; @include transform(translateY(-50%)); background-repeat: no-repeat; background-size: contain; background-position: center; background-image: url('../../../assets/images/globe.svg'); opacity: 0.2; 
+        @media (min-width:1500px) {
+            left: 50%; width: 800px; height: 800px; @include transform(translate(-50%, -50%));
+        }
+    } 
+    .cont {
+        position: relative; z-index: 2;
+        h2 { 
+            text-transform: uppercase; text-align: center; color: $black; font-size: 1.7em; font-weight:700; margin: 0 0 1.2em; padding-bottom: 0.5em; position: relative; 
+            &::after { content: ''; position: absolute; left: 50%; bottom: 0; @include transform(translateX(-50%)); width: 80px; height: 4px; background-color: $primary; }
+            @include breakpoint(sm) {
+                font-size: 1.2em; line-height: 1.4;
+                &::after { height: 2px; }
+            }
+        }
+        .gtFormBx {
+            width: 95%; max-width: 420px; margin: 0 auto; background-color: $white; padding: 1em;
+            dl, dt, dd { float: none; margin: 0; width: 100%; }
+            dt, dd { padding-bottom: 0.5em; }
+            dt { color: $black; font-weight: 600; font-size: 1em; }
+            dd { 
+                .txtFld, .custom-select.txtFld { 
+                    margin-bottom: 6px; width: 100%; display: block; padding: 0 0 6px; height: 38px; font-size: 1em; color: $primary; font-weight: 600; border-style: dotted; border-width: 0 0 6px; border-color: $primary;
+                    &:focus { outline: 0 !important; @include shadow(0 0 0 transparent); }
+                }
+                textarea.txtFld { height: 100px; resize: vertical; }                
+             }
+             .btn.btn-primary { 
+                 background-color: $primary; @include radius(50rem); color: $black; border: 0; padding: 0.4em 1.2em;
+                 &:focus { outline: 0 !important; }
+                 &:hover, &:focus { background-color: $silver; }
+             }
+        }
+    }
+    @include breakpoint(xs){
+        min-height: 600px;
+    }
+}

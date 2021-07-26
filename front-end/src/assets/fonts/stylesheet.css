@@ -1,0 +1,103 @@
+@font-face {
+    font-family: 'DINCond';
+    src: url('DINCond-Black.woff2') format('woff2'),
+        url('DINCond-Black.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DINCond-MediumAlternate';
+    src: url('DINCond-MediumAlternate.woff2') format('woff2'),
+        url('DINCond-MediumAlternate.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DINCond-LightAlternate';
+    src: url('DINCond-LightAlternate.woff2') format('woff2'),
+        url('DINCond-LightAlternate.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DINCond';
+    src: url('DINCond-Bold.woff2') format('woff2'),
+        url('DINCond-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'DINCond';
+    src: url('DINCond-Regular.woff2') format('woff2'),
+        url('DINCond-Regular.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DIN';
+    src: url('DIN-Bold.woff2') format('woff2'),
+        url('DIN-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DIN';
+    src: url('DIN-Light.woff2') format('woff2'),
+        url('DIN-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DIN';
+    src: url('DIN-Regular.woff2') format('woff2'),
+        url('DIN-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DIN';
+    src: url('DIN-MediumAlternate.woff2') format('woff2'),
+        url('DIN-MediumAlternate.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DIN';
+    src: url('DIN-LightAlternate.woff2') format('woff2'),
+        url('DIN-LightAlternate.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DIN';
+    src: url('DIN-BlackAlternate.woff2') format('woff2'),
+        url('DIN-BlackAlternate.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DIN';
+    src: url('DIN-Medium.woff2') format('woff2'),
+        url('DIN-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DIN';
+    src: url('DIN-RegularAlternate.woff2') format('woff2'),
+        url('DIN-RegularAlternate.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+

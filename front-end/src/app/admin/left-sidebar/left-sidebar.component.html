@@ -1,0 +1,60 @@
+
+<mat-nav-list class="Dashboard_Leftsidebar">
+  <div class="navbar-header">
+    <a href="javascript:void(0)" [routerLink]="['/']">
+    <img src="assets/images/apc_logo.png" alt="logo" width="180">
+  </a>
+  </div>
+  <mat-list-item *ngIf="checkmlsadmin" [routerLink]="['/admin/dashboard']">
+    <div class="nav-item">
+      <!-- <mat-icon aria-hidden="false">dashboard</mat-icon> -->
+      <img src="../../../assets/icon/mlsadmin.png" alt="super admin">
+      <p matLine>MLS Admin</p>
+    </div>
+  </mat-list-item>
+  <mat-list-item *ngIf="checkSuperAdmin" [routerLink]="['/admin']">
+    <div class="nav-item">
+      <img src="../../../assets/icon/superadmin.png" alt="super admin">
+      <p matLine>Super Admin</p>
+    </div>
+  </mat-list-item>
+  <!-- <mat-list-item *ngIf="superAdminDashboard" routerLinkActive="active">
+    <div class="nav-item">
+      <mat-icon aria-hidden="false">group</mat-icon>
+      <p matLine>MLS</p>
+    </div>
+  </mat-list-item> -->
+  <mat-list-item routerLinkActive="active" [routerLink]="['/admin/profile']">
+    <div class="nav-item">
+      <i class="material-icons">
+        person_pin
+        </i>
+      <p matLine>PROFILE</p>
+    </div>
+  </mat-list-item>
+  <mat-list-item *ngIf="checkSuperAdmin" routerLinkActive="active" [routerLink]="['/admin/conf-values']">
+    <div class="nav-item">
+      <i class="material-icons">
+        assessment
+        </i>
+      <p matLine>Default Values</p>
+    </div>
+  </mat-list-item>
+  <mat-list-item *ngIf="checkSuperAdmin" routerLinkActive="active" [routerLink]="['/admin/apc-news-manager']">
+    <div class="nav-item">
+      <i class="material-icons">
+        new_releases
+        </i>
+      <p matLine>News Manager</p>
+    </div>
+  </mat-list-item>
+  <mat-list-item (click)="signout()">
+    <div class="nav-item logout">
+      <span class="icon"></span>
+      <p matLine>LOGOUT</p>
+    </div>
+  </mat-list-item>
+</mat-nav-list>
+<div class="Sidebarupdate">
+  <h4>{{currentDate}}</h4>
+</div>

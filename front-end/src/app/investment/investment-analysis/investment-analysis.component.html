@@ -1,0 +1,71 @@
+<app-header (childMessage)="showMessageFromChild($event)"></app-header>
+<div class="Wrraper">
+  <div class="container">
+    <div class="Invstment">
+      <h1 class="heading" [innerHTML]="'APC Investment Analysis.label' | translate"></h1>
+      <section class="mt-5 mb-5">
+        <p>{{'APC Investment Analysis.content paragraph1' | translate}}</p>
+        <p>{{'APC Investment Analysis.content paragraph2' | translate}}</p>
+        <p>{{'APC Investment Analysis.content paragraph3' | translate}}</p>
+        <p>{{'APC Investment Analysis.content paragraph4' | translate}}</p>
+      </section>
+      <div class="row no-gutters">
+        <div class="col-10 m-auto">
+          <form [formGroup]="addChart" (ngSubmit)="addChartSub()">
+            <div class="form-group row Invstment_Box">
+              <div class="col-12 col-md-5 mb-3">
+                <label>{{ 'NewCharts.Select Property' | translate }}</label>
+                <input type="hidden" formControlName="propertyId" class="form-control">
+                <ul class="Invstment_type">
+                  <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                      <span class="thumbnail" *ngIf="selectedImg" [ngStyle]="{'background-image': 'url(' + selectedImg + ')'}"></span>
+                      {{groupName}}
+                    </a>
+                    <input type="hidden" formControlName="groupName" />
+                    <ul class="dropdown-menu">
+                      <li *ngFor="let label of properties">
+                        <a (click)="onGroup(label)" href="javascript:void(0)">
+                          <span class="thumbnail" [ngStyle]="{'background-image': 'url(' + label.property_image + ')'}"></span>
+                          {{label.address}}</a>
+                      </li>
+                    </ul>
+                    
+                  </li>
+                  <a *ngIf="clearSelect" class="clearSelect" (click)="clearPropertType()"><i class="pi pi-times-circle"></i></a>
+                </ul>
+                <a (click)="openDialog()" class="addclient mt-3">{{ 'NewCharts.Add Property' | translate }}</a>
+              </div>
+              <div class="col-12 col-md-2 mb-3">
+                <h4>{{ 'NewCharts.OR' | translate }}</h4>
+              </div>
+              <div class="col-12 col-md-5 mb-3">
+                <label for="enterpropertyvalue">{{ 'NewCharts.Address/Title' | translate }}</label>
+                <div class="input-group">
+                  <input type="text" autocomplete="off" (input)="enterTitle($event)" class="form-control" id="enterpropertyvalue" formControlName="chart_title" aria-describedby="enterpropertyvalue" placeholder="{{ 'NewCharts.ChartTitle' | translate }}"> 
+                </div>
+              </div>
+            </div>
+            <div class="row no-gutters">
+              <div class="col-12 mt-3 mb-4 text-center">
+                <button [disabled]="!addChart.valid" type="submit" class="btn btn-group-sm btn-analysis">{{'APC Investment Analysis.Begin Analysis' | translate}}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,137 @@
+<app-header
+  [hidden]="true"
+  (childMessage)="showMessageFromChild($event)"
+></app-header>
+<div class="new-client">
+  <div class="container">
+    <button md-raised-button matDialogClose class="btncancel">
+      <i class="pi pi-times-circle"></i>
+    </button>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="new-client_list">
+          <!-- <h5>{{mls_name}}</h5> -->
+          <form [formGroup]="addChart">
+            <h6 class="text-right">
+              <a class="btn addclient" (click)="openDialog()">{{
+                "NewCharts.Add Property" | translate
+              }}</a>
+            </h6>
+            <div class="showft">
+              <div class="form-group">
+                <label
+                  >{{ "NewCharts.Select Property" | translate }}
+                  <span class="rqfield">*</span></label
+                >
+                <ul class="property_type">
+                  <li class="dropdown Commontooltipwrp">
+                    <a
+                      href="javascript:void(0)"
+                      class="dropdown-toggle"
+                      data-toggle="dropdown"
+                    >
+                      <span
+                        class="thumbnail"
+                        *ngIf="selectedImg"
+                        [ngStyle]="{
+                          'background-image': 'url(' + selectedImg + ')'
+                        }"
+                      ></span>
+                      {{ groupName }}
+                    </a>
+                    <input type="hidden" formControlName="groupName" />
+                    <ul class="dropdown-menu">
+                      <li *ngFor="let label of properties">
+                        <a (click)="onGroup(label)" href="javascript:void(0)">
+                          <span
+                            class="thumbnail"
+                            [ngStyle]="{
+                              'background-image':
+                                'url(' + label.property_image + ')'
+                            }"
+                          ></span>
+                          {{ label.address }}</a
+                        >
+                      </li>
+                      <li *ngIf="properties.length == 0">
+                        {{ "Charts.List.No Data Found" | translate }}
+                      </li>
+                      <!-- <li *ngIf="!client_id">{{ 'Charts.List.Select a client first' | translate }}</li> -->
+                    </ul>
+                    <a
+                      *ngIf="clearSelect"
+                      class="clearSelect"
+                      (click)="clearPropertType()"
+                      ><i class="pi pi-times-circle"></i
+                    ></a>
+                  </li>
+                </ul>
+                <p class="selectPropertyerror" *ngIf="selectPropertyMsg">
+                  Select a property from list
+                </p>
+              </div>
+            </div>
+
+            <h6 class="text-right">
+              <a class="btn addclient" (click)="openDialogClient()">{{
+                "Client.AddClient.label" | translate
+              }}</a>
+            </h6>
+            <div class="showft">
+              <div class="form-group">
+                <label
+                  >{{ "Property.AddProperty.Select client" | translate }}
+                </label>
+                <ul class="Client_type">
+                  <li class="dropdown Commontooltipwrp">
+                    <a
+                      href="javascript:void(0)"
+                      class="dropdown-toggle"
+                      data-toggle="dropdown"
+                    >
+                      {{ groupNameClient }}
+                    </a>
+                    <input type="hidden" formControlName="groupNameClient" />
+                    <ul class="dropdown-menu">
+                      <li
+                        *ngFor="let client of clients"
+                        (click)="selectClientNew(client)"
+                      >
+                        <a href="javascript:void(0)"
+                          >{{ client.firstname }} {{ client.lastname }}
+                          <span>{{ client.email }} {{ client.phone }}</span></a
+                        >
+                      </li>
+                      <li *ngIf="clients.length == 0">No Data Found.</li>
+                    </ul>
+                    <a class="clearSelect" (click)="clearClientNew()"
+                      ><i class="pi pi-times-circle"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="form-group text-right">
+              <button
+                type="submit"
+                [disabled]="!addChart.valid"
+                (click)="next()"
+              >
+                Next
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

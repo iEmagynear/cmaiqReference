@@ -1,0 +1,245 @@
+@import '../../../assets/scss/variable';
+@import '../../../assets/scss/mixin';
+
+.container {
+    position: relative; z-index: 2;
+    padding: 40px 0;
+}
+h3{
+    font-size: 32px;
+    line-height: 1.4;
+    font-weight: 500;
+    color: $white;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.DashboardTab{
+    @include size(100%, auto);
+    float: left;    
+    .mat-card{
+        box-shadow: none;
+        width: 100%;
+        float: left;
+    }
+    &_profile{
+        @include size(100%,auto);
+        background-color: rgba($color: $deepGray, $alpha: 0.8);
+        @include box-shadow(0px,0px,3px,rgba($color:$black,$alpha:0.8));
+        padding: 20px;
+        margin: 0 auto;
+        @include radius(5px);
+        
+        label{
+            font-size: 16px;
+            line-height: 20px;
+            font-weight: 500;
+            color: rgba($color: $black, $alpha: 1.0);
+        }
+        .form-control{
+            font-size: 15px;
+            line-height: 20px;
+            font-weight: 400;
+            color: rgba($color: $black, $alpha: 1.0);
+           @include placeholder($black);
+            &[readonly]{
+                background-color: $white;
+                pointer-events: none;
+                color: rgba($color: $black, $alpha: 0.5);
+            }
+        }
+        button[type="submit"],.btn{
+            background-color: $secondry;
+            color: $white;
+            @include radius(25px);
+            padding: 10px 20px;
+            border: 0;
+            @include box-shadow(0px,2px,3px, rgba($color: $black,$alpha: 1.0));
+            cursor: pointer;
+            &:hover{
+                background-color: rgba($color: $silver, $alpha: 1.0);
+            }
+            &:disabled{
+                background-color: rgba($color: $secondry, $alpha: 0.7);
+                cursor: default;
+            }
+        }
+        .adduser{
+            @include size(calc(100% - 245px),auto);
+            float: left;
+        }
+        .expiry{
+            @include size(235px,auto);
+            float: left;
+            margin-left: 10px;
+        }
+        .Profile_image{
+            @include size(250px,250px);
+            background-color: rgba($color: $black, $alpha: 0.4);
+            color: $white;
+            text-align: center;
+            @include box-shadow(0px, 0px, 5px,$secondry);
+            @include radius(5px);
+            overflow: hidden;
+            @include relative(top 0 left 0);
+            p,h6{
+                margin: 0;
+                padding: 12px 0;
+                color: $white;
+            }
+            img{
+                @include size(100%,100%);
+            }
+            @include breakpoint(xs){
+                @include size(100%, 250px);
+            }
+            .caption{
+                @include absolute(bottom 0 left 0);
+                @include size(100%, auto);
+                margin: 0;
+                text-align: center;
+                background-color: rgba($color: $black, $alpha: 0.5);
+                cursor: pointer;
+                .pi{
+                    vertical-align: bottom;
+                }
+            }
+            &.cmpLogo{
+                @include size(250px,250px);
+                text-align: center;
+                padding: 15px 0;
+                img{
+                    @include size(100%,100%);
+                   margin: 0 auto;
+                }
+            }
+        }
+        @include breakpoint(xs){
+            @include size(100%,auto);
+            h3{
+                font-size: 18px;
+                line-height: 24px;
+            }
+        }
+    }
+}
+
+.navbar-nav{
+    .nav-item{
+        .MLS_type{
+            padding: 0;
+            list-style: none;
+            .dropdown{
+                @include size(100%, auto);
+                float: left;
+                .dropdown-toggle{
+                    width: 100%;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: block;
+                    margin: 0;
+                    text-decoration: none;
+                    padding: 8px 25px 7px .75rem;
+                    color: $black;
+                    @include relative(top 0 left 0);
+                    &:after{
+                        @include absolute(top 16px right 6px);
+                    }
+                    @include breakpoint(sm){
+                        max-width: inherit;
+                        width: auto;
+                        display: inline-block;
+                        &:after{
+                            @include absolute(top 19px right 0px);
+                        }
+                    }
+                }
+                .thumbnail{
+                    @include size(24px,24px);
+                    float: left;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    margin-right: 5px;
+                }
+            }
+            .dropdown-menu{
+                padding: 0px;
+                max-height: 200px;
+                width: 100%;
+                min-width: 270px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding: .25rem .75rem;
+                li{
+                    font-size: 14px;
+                    line-height: 18px;
+                    font-weight: 400;
+                    display: table;
+                    padding: .25rem 1.5rem;
+                    width: 100%;
+                    border-bottom: 1px solid $secondry;
+                    a{
+                        color: $black;
+                        text-decoration: none;
+                        display: block;
+                    }
+                }
+                .dropdown-item{
+                    white-space: normal;
+                }
+                @include breakpoint(sm){
+                    min-width: inherit;
+                }
+            }
+        }
+    }
+}
+.modal{
+    .modal-body{
+        image-cropper{
+            @include size(100%,340px);
+            background-color: rgba($color: $black, $alpha: 0.3);
+            @include breakpoint(xs){
+                @include size(100%,240px);
+            }
+        }
+    }
+    h5{
+        text-align: center;
+        color: $secondry;
+    }
+    .footer{
+        padding: 0 15px 20px;
+    }
+    .file-upload {
+        width: 200px;
+        float: left;
+        vertical-align: bottom;
+        &__label {
+            display: block;
+            padding: 6px 20px;
+            color: $white;
+            background: $secondry;
+            transition: background .3s;
+            @include radius(3px);
+            margin: 0;
+
+            &:hover {
+               cursor: pointer;
+               background: rgba($color: $secondry, $alpha: 0.7);
+            }
+        }
+        &__input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            font-size: 1;
+            width:0;
+            height: 100%;
+            opacity: 0;
+        }
+    }
+}

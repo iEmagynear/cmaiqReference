@@ -1,0 +1,121 @@
+@import "../../../../assets/scss/mixin";
+@import "../../../../assets/scss/variable";
+
+.analytics {
+  @include size(100%, auto);
+  padding: 10px;
+
+  .table {
+    &.headColor {
+      tr {
+        &:first-child {
+          th {
+            background-color: $primary;
+            color: $white;
+            text-align: center;
+            padding: 10px 0;
+          }
+        }
+
+        td {
+          border: 1px solid #dee2e6;
+          text-align: center;
+          color: $black;
+        }
+
+        th {
+          text-align: center;
+          font-size: 14px;
+          border: 1px solid #dee2e6;
+        }
+      }
+    }
+
+    &.calculation {
+      thead {
+        tr {
+          th {
+            background-color: $primary;
+            color: $white;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0 0 0;
+            border: 0;
+            font-size: 14px;
+            white-space: nowrap;
+          }
+
+          &:last-child {
+            th {
+              padding: 5px 10px;
+              border: 0;
+              width: 100px;
+              //border: 1px solid #dee2e6;
+              // span {
+              //   border: 1px solid #f1f1f1;
+              //   padding: 3px 10px;
+              // }
+              &:first-child{
+                  border: 0;
+              }
+            }
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          td {
+            border: 1px solid #dee2e6;
+            text-align: center;
+            width: 115px;
+            white-space: nowrap;
+            &:first-child {
+              width: 250px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .assumtion{
+    border: 1px solid #dee2e6;
+    border-top: 0;
+      .table{
+          &.calculation{
+            thead{
+                tr {
+                    th {
+                      background-color: $primary;
+                      color: $white;
+                      text-align: center;
+                      vertical-align: middle;
+                      padding: 10px;
+                      border: 0;
+                      font-size: 14px;
+                    }
+                }
+            }
+        }
+          thead{
+              tr{
+                  th{
+                      background-color: #e2e1e1;
+                  }
+              }
+          }
+      }
+      .lborder{
+        border-right: 2px solid #e2e1e1;
+          .table{
+            margin-bottom: 0;
+          }
+       
+      }
+      .rborder{
+          .table{
+            margin-bottom: 0;
+        }
+      }
+  }
+}

@@ -1,0 +1,153 @@
+@import '../../../../assets/scss/variable';
+@import '../../../../assets/scss/mixin';
+
+.Wrraper{
+    display: block;
+    height: 100% !important;
+    .container { position: relative; z-index: 9; }
+    &::after {
+        content: ''; width: 0; height: 0; clear: both; visibility: hidden; display: block;
+    }
+    .themeBG { 
+        // height: 100% !important;
+        width: 100%;
+        min-height: 170vh !important;
+        // float: left;
+    }
+}
+.viewproperty{
+    @include size(100%,auto);
+    float: left;
+    margin: 20px 0;
+    h3{
+        font-size: 24px;
+        line-height: 30px;
+        font-weight: 400;
+        text-align: center;
+        color: $white;
+        padding: 0 0 10px;
+        margin: 0;
+        @include breakpoint(sm){
+            font-size: 21px;
+            line-height: 25px;
+        }
+        @include breakpoint(xs){
+            font-size: 18px;
+            line-height: 24px;
+        }
+    }
+    .table-responsive{
+        padding: 10px;
+    }
+    .table{
+        @include size(100%,auto);
+        @include box-shadow(0px,3px,7px,rgba($color:$black,$alpha:0.7));
+        background-color: rgba($color: $deepGray, $alpha: 0.8);
+        thead{
+            th{
+                font-size: 16px;
+                line-height: 20px;
+                font-weight: 500;
+                color: $black;
+                border: 0;
+                padding: 20px 10px;
+                vertical-align: top;
+                a{
+                    color: rgba($color: $black, $alpha: 0.6);
+                    vertical-align: sub;
+                    cursor: pointer;
+                }
+            }
+        }
+        td{
+            font-size: 15px;
+            line-height: 20px;
+            font-weight: 400;
+            color: $black;
+            padding: 20px 10px;
+            vertical-align: top;
+            border-top: 0;
+            border-bottom: 1px solid rgba($color: #666, $alpha: 1.0);
+            a{  
+                font-size: 18px;
+                color: $black;
+                cursor: pointer;
+                @include relative(top 0 left 0);
+                display: inline-block;
+                &:hover{
+                    color: $black;
+                    &:before{
+                        content: '';
+                        @include size(35px,35px);
+                        background-color: rgba($color: $black, $alpha: 0.12);
+                        @include radius(100px);
+                        @include absolute(top -6px left -6px);
+                    }
+                    .tooltip{
+                        display: block;
+                    }
+                }
+            }
+            .tooltip{
+                @include size(170px,auto);
+                @include absolute(bottom 35px right 0);
+                background-color: rgba($color: $primary, $alpha: 1.0);
+                padding: 10px 15px;
+                display: none;
+                opacity: 1;
+                @include radius(3px);
+                &:after{
+                    content: '';
+                    @include absolute(bottom -5px right 9px);
+                    border-right: 10px solid $primary;
+                    border-top: 10px solid transparent;
+                    @include rotate(45);
+                }
+                h6{
+                    font-size: 14px;
+                    line-height: 18px;
+                    font-weight: 400;
+                    color: $white;
+                }
+            }
+            &:last-child{
+                a:first-child{
+                    padding-right: 10px;
+                }
+            }
+        }  
+        th,td{
+            &:last-child{
+                @include size(80px,auto);
+            }
+            &:nth-child(2){
+                min-width: 200px;
+            }
+            &:nth-child(1){
+                max-width: 120px;
+            }
+        } 
+    }
+    .table-hover tbody tr:hover{
+        background-color: transparent;
+        @include box-shadow(0px, 3px, 6px, rgba($color: $black,$alpha:0.6));
+    }
+    .Norecord{
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 400;
+        color: $black;
+        text-align: center;
+        padding: 10px;
+    }
+    .propertyImg{
+        @include size(50px,50px);
+        overflow: hidden;
+        display: block;
+        margin: 0 auto;
+        img{
+            @include size(100%,100%);
+            object-fit: cover;
+        }
+    }
+}

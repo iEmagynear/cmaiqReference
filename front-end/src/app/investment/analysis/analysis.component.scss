@@ -1,0 +1,228 @@
+@import "../../../assets/scss/mixin";
+@import "../../../assets/scss/variable";
+
+.heading{
+  font-size: 30px;
+  color: $secondry;
+  border-bottom: 2px solid $secondry;
+  padding: 0 0 5px;
+  margin: 20px 0;
+  text-align: center;
+  @include breakpoint(sm) {
+    font-size: 26px;
+    line-height: 30px;
+  }
+  @include breakpoint(xs) {
+    font-size: 22px;
+    line-height: 26px;
+  }
+}
+.Analysis {
+  @include size(100%, 100%);
+  float: left;
+  margin: 0;
+  
+  &_Box{
+    background-color: rgba($color: $black, $alpha: 0.08);
+    padding: 0;
+    @include radius(10px);
+    
+    h2{
+      font-size: 21px;
+      line-height: 30px;
+      font-weight: 600;
+      text-align: left;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: rgba($color: $black, $alpha: 0.1);
+      @include radius(10px 10px 0 0);
+    }
+    h4{
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      line-height: 36px;
+      color: rgba($color: $black, $alpha: 0.55);
+      padding-bottom: 20px;
+      margin: 0;
+      @include breakpoint(xs){
+        padding: 0;
+        margin: 0;
+      }
+    }
+    .form-group{
+      padding: 10px 40px 25px;
+      label{
+        font-weight: 400;
+        margin-bottom: 0.1rem;
+        padding: 0;
+        @include breakpoint(lg){
+          display: flex;
+          height: 48px;
+          align-items: flex-end;
+        }
+        @include breakpoint(xs){
+          height: auto;
+        }
+      }
+      .select{
+        width: calc(100% - 0px);
+        float: left;
+      }
+      .refresh{
+        padding: 8px 0 0;
+        font-size: 17px;
+        color: $secondry !important;
+        &:focus{
+          outline: none;
+          box-shadow: none;
+        }
+      }
+      .loanPlaceholder{
+        .input-group-text{
+          background-color: $white;
+          border-right: 0;
+        }
+      }
+    }
+    .addclient{
+      width: calc(100% - 30px);
+      @include relative(top 0 left 0);
+      text-align: right;
+      background-color: $secondry;
+      color: $white;
+      cursor: pointer;
+      padding: 2px 10px;
+      @include radius(3px);
+      text-align: center;
+    }
+  }
+  h5{
+    font-weight: 600;
+    text-transform: uppercase;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: start;
+  }
+  h3 {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 600;
+    color: $black;
+    padding: 10px 40px;
+    margin: 0;
+    background-color: #f1f1f1;
+  }
+  a{
+    text-decoration: none;
+    &.input-group-text{
+      background-color: $white;
+      color: $primary;
+    &.active{
+      background-color: $deepGray;
+      color: $white;
+    }
+  }
+  }
+  .btn-generate {
+    background-color: $secondry;
+    color: $white;
+    @include radius(25px);
+    padding: 12px 25px;
+    border: 0;
+    @include box-shadow(0px, 2px, 3px, rgba($color: $black, $alpha: 1.0));
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba($color: $deepGray, $alpha: 1.0);
+    }
+
+    &:disabled {
+      background-color: rgba($color: $secondry, $alpha: 0.7);
+      cursor: default;
+    }
+  }
+  .input-group-append, .input-group-prepend{
+    height: 38px;
+  }
+  .btn-color{
+    padding: 0.25rem .75rem;
+  }
+  .infoBtn{
+    position: relative;
+    font-size: 21px;
+    color: $secondry;
+    padding: 3px 0 0;
+    
+    .infoToolTip{
+      @include absolute(top 0 right 35px);
+      background-color: $white;
+      @include box-shadow(0, 0px, 5px, $black);
+      width: 300px;
+      padding: 15px;
+      @include radius(3px);
+      display: none;
+      z-index: 91;
+      &:after{
+        content: '';
+        border-left: 15px solid $white;
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        @include absolute(top 5px right -12px);
+      }
+      p{
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: 400;
+        color: rgba($color: $black, $alpha: 0.79);
+        text-align: left;
+      }
+      @media (max-width: 479px){
+        width: 245px;
+      }
+    }
+    &:hover{
+      .infoToolTip{
+        display: block;
+      }
+    }
+  }
+  .btn-color{
+    &.active{
+      background-color: $white!important;
+      color: $secondry;
+      .pi-minus{
+        vertical-align: text-bottom;
+      }
+      .pi-plus{
+        display: none;
+      }
+    }
+    &.inactive{
+      .pi-plus{
+        vertical-align: text-bottom;
+      }
+      .pi-minus{
+        display: none;
+      }
+    }
+  }
+  .wid-50{
+    width: 50%;
+    @include breakpoint(sm){
+      width: 100%;
+    }
+  }
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+input[type='number'] {
+  -moz-appearance:textfield;
+}

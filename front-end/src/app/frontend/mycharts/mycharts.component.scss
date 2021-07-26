@@ -1,0 +1,239 @@
+
+@import '../../../assets/scss/variable';
+@import '../../../assets/scss/mixin';
+
+.Wrraper{
+    display: block;
+    min-height: calc(100vh - 21px) !important;
+    height: calc(100vh - 21px) !important;
+    .container { position: relative; z-index: 9; }    
+}
+
+.mycharts{
+    @include size(100%,auto);
+    float: left;
+    margin: 20px 0;
+    @include relative(top 0 left 0);
+    .table-responsive { max-height: calc(100vh - 150px); }
+    h3{
+        font-size: 24px;
+        line-height: 30px;
+        font-weight: 400;
+        text-align: center;
+        color: $white;
+        padding: 0 0 10px;
+        margin: 0;
+        @include breakpoint(sm){
+            font-size: 21px;
+            line-height: 25px;
+        }
+        @include breakpoint(xs){
+            font-size: 18px;
+            line-height: 24px;
+        }
+    }
+    .table{
+        @include size(100%,auto);
+        background-color: rgba($color: $deepGray, $alpha: 0.8);
+        @include box-shadow(0px,3px,7px,rgba($color:$black,$alpha:0.7));
+        margin: 0;
+
+        th{
+            font-size: 16px;
+            line-height: 20px;
+            font-weight: 500;
+            color: $black;
+            border: 0;
+            padding: 20px 10px;
+            vertical-align: top;
+          
+            a{
+                color: rgba($color: $black, $alpha: 0.6);
+                vertical-align: sub;
+                cursor: pointer;
+            }
+        }
+        td{
+            font-size: 15px;
+            line-height: 20px;
+            font-weight: 400;
+            color: $black;
+            padding: 20px 10px;
+            vertical-align: top;
+            border-top: 0;
+            border-bottom: 1px solid rgba($color: #666, $alpha: 1.0);
+            a{
+                color: $black; font-weight: 600;
+                &:hover{
+                    color: $black;
+                    text-decoration: none;
+                }
+            }
+            
+        }
+        th,td{
+            &:first-child{
+                min-width: 35px;
+                padding: 18px 8px;
+            }
+            button{
+                font-size: 18px;
+                color: rgba($color: $black, $alpha: 1.0);
+                border: 0;
+                background-color: transparent;
+                padding: 0;
+                margin-right: 15px; 
+                cursor: pointer;
+                @include relative(top 0 left 0);
+                display: inline-block;
+                &:hover{
+                    color: $black;
+                    &:before{
+                        content: '';
+                        @include size(35px,35px);
+                        background-color: rgba($color: $black, $alpha: 0.12);
+                        @include radius(100px);
+                        @include absolute(top -6px left -6px);
+                    }
+                    .tooltip{
+                        display: block;
+                    }
+                }
+            }
+            .tooltip{
+                @include size(170px,auto);
+                @include absolute(bottom 35px right 0);
+                background-color: rgba($color: $primary, $alpha: 1.0);
+                padding: 10px 15px;
+                display: none;
+                opacity: 1;
+                @include radius(3px);
+                &:after{
+                    content: '';
+                    @include absolute(bottom -5px right 9px);
+                    border-right: 10px solid $primary;
+                    border-top: 10px solid transparent;
+                    @include rotate(45);
+                }
+                h6{
+                    font-size: 14px;
+                    line-height: 18px;
+                    font-weight: 400;
+                    color: $white;
+                    margin: 0;
+                }
+            }
+            &:last-child{
+                a:first-child{
+                    padding-right: 10px;
+                }
+            }
+        }
+        th{
+            .tooltip{
+                bottom: initial;
+                top: 35px;
+                width: 230px;
+                &:after{
+                    bottom: initial;
+                    top: -5px;
+                    @include rotate(-135);
+                }
+            } 
+        }
+        @include breakpoint(lg){
+            white-space: nowrap;
+        }
+    }
+    .table-hover tbody tr:hover{
+        background-color: transparent;
+        @include box-shadow(0px, 3px, 6px, rgba($color: $black,$alpha:0.6));
+    }
+    .Norecord{
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 400;
+        color: $black;
+        text-align: center;
+        padding: 10px;
+    }
+    &_Checkbox{
+        display: inline-block;
+        position: relative;
+        left: 5px;
+        padding: 0px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        margin: 5px 0 0;
+        vertical-align: top;
+        @include size(18px,18px);
+        &:hover{
+            &:before{
+                content: '';
+                @include size(35px,35px);
+                background-color: rgba($color: $black, $alpha: 0.12);
+                @include radius(100px);
+                @include absolute(top -8px left -8px);
+            }
+        }
+        input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+            &:checked ~ .checkmark {
+                background-color: $black;
+                border-color: $black;
+            }
+            &:checked ~ .checkmark:after {
+                display: block;
+            }
+        }
+        .checkmark {
+            @include absolute(top 0 left 0);
+            @include size(18px,18px);
+            @include radius(2px);
+            border: 2px solid rgba($color: $black, $alpha: 1);
+            &:after {
+                content: "";
+                @include absolute(top 0px left 4px);
+                display: none;
+                @include size(6px,12px);
+                border: solid $white;
+                border-width: 0 2px 2px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+        }
+        &:hover input ~ .checkmark {
+            border-color: rgba($color: $white, $alpha: 1.0);
+        }
+    }
+    .MultiDelete{
+        @include absolute(top 0 left 0);
+        button{
+            font-size: 12px;
+            font-weight: 600;
+            color: $white;
+            background-color: transparent;
+            border: 0;
+            @include radius(25px);
+            // padding: 6px 30px;
+            cursor: pointer;
+            &:focus{
+                outline: none;
+            }
+            &:hover{
+                background-color: transparent;
+            }
+            i { margin-right: 3px; vertical-align: middle; color: rgba($color: $primary, $alpha: 1.0); }
+            > span { display: inline-block; @include transform(translateY(2px)); }
+        }
+    }
+}

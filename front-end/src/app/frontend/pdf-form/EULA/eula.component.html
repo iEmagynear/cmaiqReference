@@ -1,0 +1,28 @@
+<app-header></app-header>
+<div class="Wrraper" [ngStyle]="{'min-height': innerHeight}">
+  <div class="Flexmls">
+    <div class="container">
+      <a *ngIf="toaFlag" [routerLink]="['/toa']" class="btn btn-primary float-left d-block d-sm-block d-md-block d-lg-none d-print-none">
+        Back</a>
+      <iframe src="assets/pdf/APC_EULA.pdf" width="1200px" height="1300px"></iframe>
+      <div *ngIf="agreeView && !toaFlag">
+        <p>By clicking the check, you agree to the statements made above. Please submit your confirmation to proceed.</p>
+        <a [routerLink]="['/privacy']" routerLinkActive="active" (click)="setFromEula()" href="javascript:void(0)">View Privacy Policy</a>
+        <div>
+          <input type="checkbox" id="eulaCheckInput" (click)="eulaCheckValid()">I AGREE&nbsp;&nbsp;&nbsp;
+          <input type="submit" [disabled]="!eulaCheckAgree" class="btn btn-success" value="Submit" (click)="eulaCheckSubmit()">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

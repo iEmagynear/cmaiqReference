@@ -1,0 +1,100 @@
+<div class="Dashboard">
+  <mat-sidenav-container class="Dashboard_Sidenav" autosize>
+
+    <mat-sidenav #sidenav class="Dashboard_Sidenav_Example" [ngClass]="status ? 'slideOn' : 'slideOff'" mode="side"
+      opened="true">
+      <mat-toolbar class="example-toolbar">
+        <mat-icon class="navtoggle" (click)="toggle()">menu</mat-icon>
+        <span class="example-fill-remaining-space"></span>
+      </mat-toolbar>
+      <app-left-sidebar></app-left-sidebar>
+    </mat-sidenav>
+
+    <div class="DashboardTab">
+      <mat-card>
+        <app-admin-header></app-admin-header>
+      </mat-card>
+      <mat-card>
+        <form [formGroup]="editMlsUser" (ngSubmit)="editMlsUserSubmit()">
+          <div class="DashboardTab_update">
+            <h3>Edit User</h3>
+            <div class="form-group" *ngIf="showMsgSuccess">
+              <div class="col-xs-12">
+                <p class="alert alert-success">
+                  <strong>MLS User Updated Successfully!</strong>
+                </p>
+              </div>
+            </div>
+            <div class="form-group" *ngIf="showMsgError">
+              <div class="col-xs-12">
+                <p class="alert alert-danger">
+                  <strong>{{errormsg}}</strong>
+                </p>
+              </div>
+            </div>
+            <div class="form-group adduser">
+              <label>First Name:</label>
+              <input type="text" class="form-control" autocomplete="off" formControlName="firstname">
+            </div>
+            <div class="form-group adduser">
+              <label>Last Name:</label>
+              <input type="text" class="form-control" autocomplete="off" formControlName="lastname">
+            </div>
+            <div class="form-group adduser">
+              <label>Email:</label>
+              <input readonly type="text" class="form-control" autocomplete="off" formControlName="email">
+            </div>
+            <div class="form-group adduser">
+              <label>Subscription expiry:</label>
+              <p-calendar [yearNavigator]="true" [minDate]="minimumDate" [monthNavigator]="true" yearRange="2019:2050"
+                dateFormat="yy-mm-dd" dataType="string" placeholder="YYYY-MM-DD" [showIcon]="true"
+                formControlName="expiry"></p-calendar>
+            </div>
+            <div class="form-group adduser">
+              <label>Market Center</label>
+              <input type="text" formControlName="market_center" class="form-control" placeholder="Market center name">
+            </div>
+            <div class="form-group payPlan">
+              <!--<label class="adduser_Checkbox ">
+                <input type="checkbox" formControlName="payer_type_online" />
+                <span class="checkmark"></span> Pay Online<small> ( uncheck for offline payment )</small>
+              </label>-->
+              <label for="offline">Pay Handled Offline</label>
+              <input type="radio" id="offline" value="Offline" formControlName="payer_type_online" />
+              <div class="check"><div class="inside"></div></div>
+            </div>
+            <div class="form-group payPlan">
+              <label for="online">Pay Online Individual Plan</label>
+              <input type="radio" id="online" value="Individual" formControlName="payer_type_online" />
+              <div class="check"><div class="inside"></div></div>
+            </div>
+            <div class="form-group payPlan">
+              <label for="plan">Pay Online Group Plan</label>
+              <input type="radio" id="plan" value="Group" formControlName="payer_type_online" />
+              <div class="check"><div class="inside"></div></div>
+            </div>
+            <div class="form-group adduser">
+              <label class="adduser_Checkbox ">
+                <input type="checkbox" formControlName="wantsto" />
+                <span class="checkmark"></span> Email credentials<small> (if password does not exists)</small>
+              </label>
+            </div>
+
+            <div class="form-group text-right">
+              <button type="submit">Update</button>
+            </div>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </mat-sidenav-container>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

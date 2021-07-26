@@ -1,0 +1,27 @@
+<app-header></app-header>
+<div class="Wrraper" [ngStyle]="{'min-height': innerHeight}">
+  <div class="Flexmls">
+    <div class="container">
+      <h3>WELCOME!</h3>
+      <div>
+        <h4 style="text-align: center;"> You are now being redirected. This page may reload several times. Please stand by...</h4>
+      </div>
+      <br>
+      <br>
+      <br>
+      <h5 style="text-align: center;">
+        <strong>{{errormsg}}</strong>
+      </h5>
+    </div>
+  </div>
+</div>
+
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

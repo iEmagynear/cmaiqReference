@@ -1,0 +1,7 @@
+@import "../../../../assets/scss/mixin";
+@import "../../../../assets/scss/variable";
+
+.charts{
+    @include size(100%,auto);
+    padding: 10px;
+}

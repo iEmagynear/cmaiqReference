@@ -1,0 +1,69 @@
+<app-header (childMessage)="showMessageFromChild($event)"></app-header>
+<div class="Wrraper clr" [ngStyle]="{'height': innerHeight}">
+  <div class="Login">
+    <div class="Login_wrraper">
+
+      <h1>{{ 'Sign Out.Sign In' | translate }}</h1>
+      <form *ngIf='!samlFlag' [formGroup]="userLogin" (ngSubmit)="loginUser()">
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"><i class="pi pi-envelope"></i></span>   
+            <div class="tooltip">
+              <h6>{{ 'Sign Out.Email' | translate }}</h6>
+            </div>          
+          </div>
+          <input type="text" class="form-control" formControlName="email" placeholder="{{ 'Sign Out.Email' | translate }}">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"><i class="pi pi-lock"></i></span>   
+            <div class="tooltip">
+              <h6>{{ 'Sign Out.Password' | translate }}</h6>
+            </div>          
+          </div>
+          <input type="password" class="form-control" formControlName="password" placeholder="{{ 'Sign Out.Password' | translate }}">
+        </div>
+
+        <div class="form-group alert alert-danger error" *ngIf="showMsgError">
+          <div class="col-xs-12">
+            <p>
+              <strong>{{errormsg}}</strong>
+            </p>
+          </div>
+        </div>
+        <div class="text-center mb-3">
+          <a class="d-inline-block mb-2" href="javascript:void(0)" [routerLink]="['/forgot-password']"><small>{{ 'Sign Out.Forgot Password?' | translate }}</small></a>
+          <button type="submit" [disabled]="!userLogin.valid">{{ 'Sign Out.Sign In' | translate }}</button>
+        </div>
+        <p class="text-center mb-4">{{ 'Sign Out.NoAccount' | translate }} <a class="clrSec" [routerLink]="['/signup']" href="javascript:void(0)">{{ 'Sign Out.Sign Up' | translate }}</a></p>
+      </form>
+      <p *ngIf='samlFlag'>
+        You have been logged out due to inactivity. Please login in via Clareity or Paragon to continue.
+      </p>
+      <div class="row loginWSocial">
+        <div class="col-6 pb-3">
+          <button class="btn btnF" (click)="socialSignIn('facebook')"><span class="ico"></span>Facebook Sign In</button>
+        </div>
+        <div class="col-6 pb-3">
+          <button class="btn btnG" (click)="socialSignIn('google')"><span class="ico"></span>Google Sign In</button>
+        </div>
+        <!-- <div class="col-6 pb-3">
+          <button class="btn btnL" ><span class="ico"></span>LinkedIn Sign In</button>
+        </div> -->
+      </div>      
+      
+      
+    </div>
+  </div>
+</div>
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

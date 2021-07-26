@@ -1,0 +1,302 @@
+@import '../../../assets/scss/variable';
+@import '../../../assets/scss/mixin';
+
+.themeBG { min-height: 700px !important; }
+
+h3{
+    font-size: 32px;
+    line-height: 1.4;
+    font-weight: 500;
+    text-align: center;
+    color: $white;
+    padding: 0 0 20px;
+    margin: 0;
+    @include breakpoint(sm){
+        font-size: 21px;
+        line-height: 25px;
+    }
+    @include breakpoint(xs){
+        font-size: 18px;
+        line-height: 24px;
+    }
+}
+
+textarea {
+    overflow-y: scroll;
+    height: 75px;
+    width: 500px;
+    resize: none;
+}
+
+.Flexmls{
+    @include size(100%,auto);
+    float: left;
+    padding: 40px 0;
+    position: relative;
+    z-index: 2;
+    &_list{
+        max-width: 600px;
+        width: 100%;
+        display: table;
+        margin:  0 auto;
+        background-color: rgba($color: $deepGray, $alpha: 0.8);
+        @include box-shadow(0px,0px,3px,rgba($color:$black,$alpha:0.8));
+        padding: 20px;
+        @include radius(3px);
+        .form-group{
+            width: 100%;
+            float: left;
+            select{
+                option:disabled{
+                    color: rgba($color: $black, $alpha: 0.7);
+                }
+            }
+        }
+        h5{
+            font-size: 16px;
+            line-height: 22px;
+            font-weight: 500;
+            color: $black;
+            text-align: center;
+            padding: 0 0 15px;
+            margin: 0;
+        }
+        h6{
+            margin: 0;
+            padding: 5px 0;
+        }
+        p{
+            font-size: 13px;
+            line-height: 18px;
+            font-weight: 400;
+            color: rgba($color: $black, $alpha: 0.8);
+            text-align: left;
+            padding: 5px 0 0;
+            margin: 0;
+        }
+        .selectPropertyerror{
+            font-size: 13px;
+            line-height: 18px;
+            font-weight: 400;
+            color: rgba($color: red, $alpha: 1.0);
+            text-align: left;
+            padding: 5px 0 0;
+            margin: 0;
+        }
+        .addclient{
+            display: inline-block;
+            font-size: 14px;
+            line-height: 18px;
+            font-weight: 400;
+            background-color: $secondry;
+            color: $white;
+            border: 0;
+            cursor: pointer;
+            &:hover { background-color: $silver; }
+        }
+        label{
+            font-size: 16px;
+            line-height: 20px;
+            font-weight: 600;
+            display: block;
+
+        }
+        .showsqr{
+            color: rgba($color: $black, $alpha: 0.7);
+            padding: 0;
+            text-align: center;
+        }
+        .showft{
+            // border: 1px solid rgba($color: $black, $alpha: 0.25);
+            // padding: 5px;
+            // margin-bottom: 15px;
+            @include size(100%,auto);
+            float: left;
+            @include radius(3px);
+            // background-color: rgba($color: $white, $alpha: 0.7);
+        }
+        input[type=text]{
+            font-size: 15px;
+            line-height: 20px;
+            font-weight: 400;
+            color: $black;
+            @include placeholder(rgba($color: $black,$alpha: 0.7));
+        }
+        .sub_zip{
+            padding: 0;
+            margin: 0 0 5px;
+            max-height: 100px;
+            overflow-y: auto;
+            list-style: none;
+            li{
+                display: inline-block;
+                font-size: 14px;
+                @include relative(top 0 left 0);
+                padding: 5px 15px;
+                background-color: rgba($color: $primary, $alpha: 0.7);
+                @include radius(15px);
+                margin: 4px;
+                color: $white;
+                &:nth-child(odd){
+                    background-color: rgba($color: $primary, $alpha: 0.85);
+                }
+                a{
+                    color: red;
+                    vertical-align: sub;
+                    margin-left: 10px;
+                    @include absolute(top -6px right -6px);
+                }
+            }
+        }
+        .addnew{
+            @include size(calc(100% - 75px), auto);
+            float: left;
+            @include radius(3px 0 0 3px);
+        }
+        .addbtn{
+            @include size(75px,auto);
+            background-color: $secondry;
+            color: $white;
+            @include radius(0 3px 3px 0);
+            padding: 7px 25px;
+            border: 0;
+            display: inline-block;
+            cursor: pointer;
+            &:hover{
+                background-color: rgba($color: $silver, $alpha: 1.0);
+            }
+            &:disabled{
+                background-color: rgba($color: $secondry, $alpha: 0.7);
+                cursor: default;
+            }
+        }
+        .property_type{
+            @include size(100%,38px);
+            margin: 0;
+            padding: 0;
+            padding: 0;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            list-style: none;
+            .dropdown{
+                @include size(100%, auto);
+                float: left;
+
+                .dropdown-toggle{
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    color: $black;
+                    display: block;
+                    padding: .375rem .75rem;
+                    margin: 0;
+                    text-decoration: none;
+                    @include relative(top 0 left 0);
+                    &:after{
+                        @include absolute(top 17px right 5px);
+                    }
+                }
+                .thumbnail{
+                    @include size(24px,24px);
+                    float: left;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    margin-right: 5px;
+                }
+            }
+            .dropdown-menu{
+                padding: 10px;
+                @include size(100%,auto);
+                max-height: 200px;
+                overflow-y: auto;
+                li{
+                    font-size: 14px;
+                    line-height: 18px;
+                    font-weight: 400;
+                    display: table;
+                    padding: 5px 0;
+                    width: 100%;
+                    border-bottom: 1px solid $secondry;
+                    a{
+                        color: $black;
+                        text-decoration: none;
+                        display: block;
+                    }
+                }
+            }
+            .clearSelect{
+                @include absolute(top 8px right 16px);
+                color: $red;
+                font-size: 18px;
+                cursor: pointer;
+            }
+        }
+        .range{
+            @include size(calc(50% - 15px),auto);
+            float: left;
+            .input-group-addon {
+                font-size: 16px;
+                background-color: $primary;
+                padding: 0 5px;
+                color: $white;
+                line-height: 36px;
+                @include radius(3px 0 0 3px);
+            }
+        }
+        .joint{
+            width: 30px;
+            text-align: center;
+            font-size: 14px;
+            line-height: 36px;
+            color: $black;
+            float: left;;
+        }
+        button[type="submit"]{
+            background-color: $secondry;
+            color: $white;
+            @include radius(25px);
+            padding: 7px 25px;
+            border: 0;
+            @include box-shadow(0px,2px,3px, rgba($color: $black,$alpha: 1.0));
+            cursor: pointer;
+            &:hover{
+                background-color: rgba($color: $silver, $alpha: 1.0);
+            }
+            &:disabled{
+                background-color: rgba($color: $secondry, $alpha: 0.7);
+                cursor: default;
+            }
+
+        }
+        .AddRemove{
+            @include size(100%,auto);
+            float: left;
+        }
+        .btn-primary{
+            padding: 5px 10px;
+            font-size: 16px;
+            float: right;
+            line-height: initial;
+            background-color: $secondry;
+            border: 0;
+            margin: 0 0 10px 0;
+            width: 130px;
+            &:focus{
+                box-shadow: none;
+            }
+        }
+        .askClient{
+            @extend .showft;
+            -webkit-animation: slide-down .3s ease-in-out;
+            -moz-animation: slide-down .3s ease-in-out;
+            animation: slide-down .3s ease-in-out;
+        }
+    }
+}

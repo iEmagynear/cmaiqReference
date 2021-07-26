@@ -1,0 +1,67 @@
+<app-header></app-header>
+<div class="Wrraper clearfix" [ngStyle]="{'min-height': innerHeight}">
+  <div class="themeBG">
+    <div class="Flexmls">
+      <div class="container">
+        <h3>cmaIQ Market Analysis</h3>
+        
+        <div class="Flexmls_list">
+
+          <form [formGroup]="paragon" (ngSubmit)="paragonSubmit()">
+            <h6 class="text-right"><a class="btn addclient" (click)="openDialog()">Add Subject Property</a></h6>
+            <div class="showft">
+              <div class="form-group">
+                <label>Select Subject Property <span class="rqfield">*</span></label>
+                <ul class="property_type">
+                  <li class="dropdown Commontooltipwrp">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                      <span class="thumbnail" *ngIf="selectedImg" [ngStyle]="{'background-image': 'url(' + selectedImg + ')'}"></span>
+                      {{mlsName}}
+                    </a>
+                    <input type="hidden" formControlName="mlsName" />
+                    <ul class="dropdown-menu">
+                      <li *ngFor="let label of properties">
+                        <a (click)="onGroup(label)" href="javascript:void(0)">
+                          <span class="thumbnail" [ngStyle]="{'background-image': 'url(' + label.property_image + ')'}"></span>
+                          {{label.address}}</a>
+                      </li>
+                    </ul>
+                    <a *ngIf="clearSelect" class="clearSelect" (click)="clearParagonPropert()"><i class="pi pi-times-circle"></i></a>
+                  </li>
+                </ul>
+                <!--                 <p class="selectPropertyerror" *ngIf="selectPropertyMsg">Select a property from list</p> -->
+              </div>
+            </div>
+            <div class="form-group" [hidden]="!showft">
+              <h6 class="showsqr">OR</h6>
+            </div>
+            <div class="showft" [hidden]="!showft">
+              <div class="form-group">
+                <label>Address/Title<span class="rqfield">*</span></label>
+                <input type="text" formControlName="chart_title" placeholder="Chart title" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Property Square Footage <span class="rqfield">*</span></label>
+                <input [ngClass]="{'border-danger': (f.sqr_ft.errors?.pattern || f.sqr_ft.errors?.minlength || f.sqr_ft.errors?.maxlength)}" type="text" formControlName="sqr_ft" placeholder="Enter 3-5 digit number" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group text-right">
+              <button type="submit" [disabled]="!paragon.valid">Submit</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loaderWrraper" *ngIf="loader">
+  <div class="loader">
+    <div class="outCircle">
+      <div class="icon">
+        <i class="pi pi-home"></i>
+      </div>
+    </div>
+  </div>
+</div>

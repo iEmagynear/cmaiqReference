@@ -1,0 +1,321 @@
+
+@import '../../../../assets/scss/variable';
+@import '../../../../assets/scss/mixin';
+
+.container-fluid { 
+ padding-left: 1rem; padding-right: 1rem;
+ @media (min-width: 1200px) {
+    padding-left: 2rem; padding-right: 2rem;
+ }
+}
+a.backLink { color: $primary; display: inline-block; i.pi { @include transform(translateY(3px)); } }
+.omp{
+    @include size(100%,auto);
+    float: left;
+    margin: 0;
+    @include relative(top 0 left 0);
+    .table-responsive { 
+        overflow: auto;
+        width: 100%;
+        height: calc(100vh - 250px); 
+    }    
+    .silverBtn {
+        background-color: $silver;
+        color: $white;
+        @include radius(25px);
+        padding: 7px 25px;
+        border: 0;
+        @include relative(top 0 left 0);
+        @include box-shadow(0px,2px,3px, rgba($color: $black,$alpha: 1.0));
+        margin: 0 10px 10px 0;
+        cursor: pointer;
+        &:hover{
+            background-color: rgba($color: $primary, $alpha: 1.0);
+        }
+        i.pi { @include transform(translateY(3px)); }
+    }
+    .cstBtn {
+        background-color: $secondry;
+        color: $white;
+        @include radius(25px);
+        padding: 7px 25px;
+        border: 0;
+        @include relative(top 0 left 0);
+        @include box-shadow(0px,2px,3px, rgba($color: $black,$alpha: 1.0));
+        margin: 0 10px 10px 0;
+        cursor: pointer;
+        &:hover{
+            background-color: rgba($color: $lightGreen, $alpha: 1.0);
+            .tooltip{
+                display: block;
+            }
+        }
+        &:disabled{
+            background-color: rgba($color: $secondry, $alpha: 0.7);
+            cursor: default;
+        }
+
+        .tooltip{
+            @include size(280px,auto);
+            @include absolute(bottom 50px left 50%);
+            background-color: rgba($color: $primary, $alpha: 1.0);
+            padding: 10px 15px;
+            display: none;
+            opacity: 1;
+            @include radius(3px);
+            @include translate(-50%, 0);
+            &:after{
+                content: '';
+                @include absolute(bottom -5px left 50%);
+                border-right: 10px solid $primary;
+                border-top: 10px solid transparent;
+                -webkit-transform: translate(-50%,0) rotate(45deg);
+                -moz-transform: translate(-50%,0) rotate(45deg);
+                -ms-transform: translate(-50%,0) rotate(45deg);
+                -o-transform: translate(-50%,0) rotate(45deg);
+                transform: translate(-50%,0) rotate(45deg);
+            }
+            h6{
+                font-size: 14px;
+                line-height: 18px;
+                font-weight: 400;
+                color: $white;
+                text-align: center;
+            }
+        }
+
+    }
+    h3{
+        font-size: 32px;
+        line-height: 30px;
+        font-weight: 400;
+        text-align: center;
+        padding: 0 0 30px;
+        color: $primary;
+        margin: 0;
+        @include breakpoint(sm){
+            font-size: 21px;
+            line-height: 25px;
+        }
+        @include breakpoint(xs){
+            font-size: 18px;
+            line-height: 24px;
+        }
+    }
+    .table{
+        min-width: 2200px;
+        width: 100%;
+        white-space: nowrap;
+        background-color: rgba($color: $white, $alpha: 0.8);
+        @include box-shadow(0px,3px,7px,rgba($color:$black,$alpha:0.7));
+        margin: 0;
+
+        @include breakpoint(md){
+            width: 2200px;
+        }
+
+        th{
+            font-size: 16px;
+            line-height: 20px;
+            font-weight: 500;
+            color: $black;
+            border: 0;
+            padding: 20px 10px;
+            vertical-align: top;
+          
+            a{
+                color: rgba($color: $black, $alpha: 0.6);
+                vertical-align: sub;
+                cursor: pointer;
+            }
+            &.sw { width: 100px; }
+            &.mw { width: 200px; }
+        }
+        td{
+            font-size: 15px;
+            line-height: 20px;
+            font-weight: 400;
+            color: $black;
+            padding: 20px 10px;
+            vertical-align: top;
+            border-top: 0;
+            border-bottom: 1px solid rgba($color: #666, $alpha: 1.0);
+            a{
+                color: $secondry; font-weight: 700;
+                &:hover{
+                    color: $black;
+                    text-decoration: none;
+                }
+            }
+            .txtFld, .custom-select { width: 100%; min-width: 100px; border-style: solid; @include radius(4px); border-width: 1px; border-color: $primary; padding: 4px 8px; height: 32px; background-color: transparent; }
+            
+        }
+        th,td{
+            &:first-child{
+                min-width: 35px;
+                padding: 18px 8px;
+            }
+            button{
+                font-size: 18px;
+                color: rgba($color: $secondry, $alpha: 1.0);
+                border: 0;
+                background-color: transparent;
+                padding: 0;
+                margin-right: 15px; 
+                cursor: pointer;
+                @include relative(top 0 left 0);
+                display: inline-block;
+                &:hover{
+                    color: $secondry;
+                    &:before{
+                        content: '';
+                        @include size(35px,35px);
+                        background-color: rgba($color: $black, $alpha: 0.12);
+                        @include radius(100px);
+                        @include absolute(top -6px left -6px);
+                    }
+                    .tooltip{
+                        display: block;
+                    }
+                }
+            }
+            .tooltip{
+                @include size(170px,auto);
+                @include absolute(bottom 35px right 0);
+                background-color: rgba($color: $primary, $alpha: 1.0);
+                padding: 10px 15px;
+                display: none;
+                opacity: 1;
+                @include radius(3px);
+                &:after{
+                    content: '';
+                    @include absolute(bottom -5px right 9px);
+                    border-right: 10px solid $primary;
+                    border-top: 10px solid transparent;
+                    @include rotate(45);
+                }
+                h6{
+                    font-size: 14px;
+                    line-height: 18px;
+                    font-weight: 400;
+                    color: $white;
+                    margin: 0;
+                }
+            }
+            &:last-child{
+                a:first-child{
+                    padding-right: 10px;
+                }
+            }
+        }
+        th{
+            .tooltip{
+                bottom: initial;
+                top: 35px;
+                width: 230px;
+                &:after{
+                    bottom: initial;
+                    top: -5px;
+                    @include rotate(-135);
+                }
+            } 
+        }
+        @include breakpoint(lg){
+            white-space: nowrap;
+        }
+    }
+    .table-hover tbody tr:hover{
+        background-color: transparent;
+        @include box-shadow(0px, 3px, 6px, rgba($color: $black,$alpha:0.6));
+    }
+    .Norecord{
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 400;
+        color: $black;
+        text-align: center;
+        padding: 10px;
+    }
+    &_Checkbox{
+        display: inline-block;
+        position: relative;
+        left: 5px;
+        padding: 0px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        margin: 5px 0 0;
+        vertical-align: top;
+        @include size(18px,18px);
+        &:hover{
+            &:before{
+                content: '';
+                @include size(35px,35px);
+                background-color: rgba($color: $black, $alpha: 0.12);
+                @include radius(100px);
+                @include absolute(top -8px left -8px);
+            }
+        }
+        input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+            &:checked ~ .checkmark {
+                background-color: $secondry;
+                border-color: $secondry;
+            }
+            &:checked ~ .checkmark:after {
+                display: block;
+            }
+        }
+        .checkmark {
+            @include absolute(top 0 left 0);
+            @include size(18px,18px);
+            @include radius(2px);
+            border: 2px solid rgba($color: $secondry, $alpha: 1);
+            &:after {
+                content: "";
+                @include absolute(top 0px left 4px);
+                display: none;
+                @include size(6px,12px);
+                border: solid $white;
+                border-width: 0 2px 2px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+        }
+        &:hover input ~ .checkmark {
+            border-color: rgba($color: $secondry, $alpha: 1.0);
+        }
+    }
+    .MultiDelete{
+        @include absolute(top 0 left 0);
+        button{
+            font-size: 12px;
+            font-weight: 600;
+            color: $black;
+            background-color: transparent;
+            border: 0;
+            @include radius(25px);
+            // padding: 6px 30px;
+            cursor: pointer;
+            &:focus{
+                outline: none;
+            }
+            &:hover{
+                background-color: transparent;
+            }
+            i { margin-right: 2px; vertical-align: middle; color: $primary; }
+            > span { display: inline-block; @include transform(translateY(2px)); }
+        }
+    }
+    .ng-invalid {
+        border-color: red !important;
+    }
+}

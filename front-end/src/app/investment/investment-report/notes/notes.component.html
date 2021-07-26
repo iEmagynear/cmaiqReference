@@ -1,0 +1,64 @@
+<div class="notes">
+	<div class="table-responsive">
+    <table class="table table-bordered ng-star-inserted">
+        <tbody>
+          <tr>
+            <td>{{'APC Investment Analysis.Annual Investment Analysis' | translate}} 
+              <p>Year 5 – {{CashFlowAfterTaxes[4]+TotalPrincipalPayments[4]+AnnualHomeValueAppreciation[4] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 10 – {{CashFlowAfterTaxes[9]+TotalPrincipalPayments[9]+AnnualHomeValueAppreciation[9] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 30 – {{CashFlowAfterTaxes[29]+TotalPrincipalPayments[29]+AnnualHomeValueAppreciation[29] | convert:currentcurrency:'1.0-0'}}</p>
+            </td>
+            <td [innerHTML]="'APC Investment Analysis.Investment text' | translate: { className:  'font-bold' }"></td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Annualized Rate of Return' | translate}} 
+              <p>Year 5 – {{AnnualizedRateofReturn[4] | number:'1.1-1'}}%</p>
+              <p>Year 10 – {{AnnualizedRateofReturn[9] | number:'1.1-1'}}%</p>
+              <p>Year 30 – {{AnnualizedRateofReturn[29] | number:'1.1-1'}}%</p>
+            </td>
+            <td [innerHTML]="'APC Investment Analysis.Annualized text' | translate: { className:  'font-bold' }"></td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Cash Flow(Before tax)' | translate}} 
+              <p>Year 5 – {{cashFlowBeforeTaxes[4] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 10 – {{cashFlowBeforeTaxes[9] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 30 – {{cashFlowBeforeTaxes[29] | convert:currentcurrency:'1.0-0'}}</p>
+            </td>
+            <td [innerHTML]="'APC Investment Analysis.Cash Flow text' | translate: { className:  'font-bold' }"></td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Tax Benefit / Liability_' | translate}} 
+              <p>Year 5 – {{TaxSavings[4] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 10 – {{TaxSavings[9] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 30 – {{TaxSavings[29] | convert:currentcurrency:'1.0-0'}}</p>
+            </td>
+            <td [innerHTML]="'APC Investment Analysis.Tax text' | translate: { className:  'font-bold' }"></td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Principal Paydown' | translate}} 
+              <p>Year 5 – {{TotalPrincipalPayments[4] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 10 – {{TotalPrincipalPayments[9] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 30 – {{TotalPrincipalPayments[29] | convert:currentcurrency:'1.0-0'}}</p>
+            </td>
+            <td [innerHTML]="'APC Investment Analysis.Principal text' | translate: { className:  'font-bold' }"></td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Home Value Appreciation' | translate}} 
+              <p>Year 5 – {{AnnualHomeValueAppreciation[4] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 10 – {{AnnualHomeValueAppreciation[9] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 30 – {{AnnualHomeValueAppreciation[29] | convert:currentcurrency:'1.0-0'}}</p>
+            </td>
+            <td [innerHTML]="'APC Investment Analysis.Appreciation text' | translate: { className:  'font-bold' }"></td>
+          </tr>
+          <tr>
+            <td>{{'APC Investment Analysis.Home Equity' | translate}} 
+              <p>Year 5 – {{HomeEquity[4] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 10 – {{HomeEquity[9] | convert:currentcurrency:'1.0-0'}}</p>
+              <p>Year 30 – {{HomeEquity[29] | convert:currentcurrency:'1.0-0'}}</p>
+            </td>
+            <td [innerHTML]="'APC Investment Analysis.Equity text' | translate: { className:  'font-bold' }"></td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
